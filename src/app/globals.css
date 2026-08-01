@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+/*
+================================================================================
+  INVOICE APP TYPOGRAPHY CHEAT SHEET & LOOKUP GUIDE
+================================================================================
+
+  HOW TO IDENTIFY WHICH UTILITY TO USE IN FIGMA:
+  ------------------------------------------------------------------------------
+  1. Click the text element in Figma and check the Font Size first:
+     • 36px  ==> heading-L
+     • 24px  ==> heading-M
+     • 15px  ==> Check Line Height in Figma:
+                   - Line Height ~24px  ==> heading-S
+                   - Line Height ~15px  ==> heading-S2
+     • 13px  ==> Check Font Weight in Figma:
+                   - Font Weight 500 & Spacing -0.25px ==> body-variant
+                   - Default text / inputs / copy       ==> Applied by <body> automatically!
+
+  ------------------------------------------------------------------------------
+  QUICK LOOKUP MATRIX:
+  ------------------------------------------------------------------------------
+  UTILITY            | SIZE | WEIGHT    | LINE-HEIGHT | SPACING  | UI COMPONENTS / USAGE IN INVOICE APP
+  -------------------|------|-----------|-------------|----------|--------------------------------------------------
+  heading-L          | 36px | Bold (700)| 33px        | -1px     | Total invoice amount ($556.00) in detail drawer
+  heading-M          | 24px | Bold (700)| 22px        | -0.75px  | Main page titles ("Invoices"), grand total price
+  heading-S          | 15px | Bold (700)| 24px        | -0.25px  | Invoice IDs (#RT3080), client names in card list
+  heading-S2         | 15px | Bold (700)| 15px        | -0.25px  | Table item prices/totals ($156.00), compact headers
+  body-variant       | 13px | Med (500) | 15px        | -0.25px  | Invoice due dates, item quantity details (1x $156)
+  body (default)     | 13px | Med (500) | 18px        |  0.1px   | Form input fields, status badges, global copy
+================================================================================
+*/
+
+:root {
+  --color-purple-500: #7c5dfa;
+  --color-purple-300: #9277ff;
+
+  --color-slate-900: #0c0e16;
+  --color-slate-800: #141625;
+  --color-slate-700: #1e2139;
+  --color-slate-600: #252945;
+  --color-slate-550: #373b53;
+  --color-slate-500: #494e6e;
+  --color-slate-400: #7e88c3;
+  --color-slate-350: #858bb2;
+  --color-slate-300: #888eb0;
+  --color-slate-200: #dfe3fa;
+  --color-slate-100: #f8f8fb;
+
+  --color-red-500: #ec5757;
+  --color-red-300: #ff9797;
+
+  --line-height-100: 0.9375rem; /* 15px */
+  --letter-spacing-100: -0.25px;
+
+  --duration-fast: 150ms;
+  --duration-medium: 250ms;
+  --duration-slow: 350ms;
+  --ease-default: ease-in-out;
+}
+
+.light {
+  --color-surface-app: var(--color-slate-100);
+  --color-surface-sidebar: var(--color-slate-550);
+}
+
+.dark {
+  --color-surface-app: var(--color-slate-800);
+  --color-surface-sidebar: var(--color-slate-700);
+}
+
+@theme {
+  --font-sans: var(--font-league-spartan);
+  --color-surface-app: var(--color-surface-app);
+  --color-surface-sidebar: var(--color-surface-sidebar);
+
+  /* Logo */
+  --color-brand-primary: var(--color-purple-500);
+  --color-brand-accent: var(--color-purple-300);
+
+  /* Dark/Light theme swticher icons */
+  --color-icon-theme-light: var(--color-slate-400);
+  --color-icon-theme-dark: var(--color-slate-350);
+  --color-icon-theme-hover: var(--color-slate-200);
+
+  /* Focus ring */
+  --color-focus-ring: var(--color-purple-500);
+
+  /* Border colors */
+  --color-border-divider: var(--color-slate-500);
+}
+
+@utility heading-L {
+  font-family: var(--font-sans);
+  font-weight: 700; /* bold */
+  font-size: rem(36px);
+  line-height: rem(33px);
+  letter-spacing: -1px;
+}
+
+@utility heading-M {
+  font-family: var(--font-sans);
+  font-weight: 700; /* bold */
+  font-size: rem(24px);
+  line-height: rem(22px);
+  letter-spacing: -0.75px;
+}
+
+@utility heading-S {
+  font-family: var(--font-sans);
+  font-weight: 700; /* bold */
+  font-size: rem(15px);
+  line-height: rem(24px);
+  letter-spacing: var(--letter-spacing-100);
+}
+
+@utility heading-S2 {
+  font-family: var(--font-sans);
+  font-weight: 700; /* bold */
+  font-size: rem(15px);
+  line-height: var(--line-height-100);
+  letter-spacing: var(--letter-spacing-100);
+}
+
+@utility body-variant {
+  font-family: var(--font-sans);
+  font-weight: 500; /* Medium */
+  font-size: rem(13px);
+  line-height: var(--line-height-100);
+  letter-spacing: var(--letter-spacing-100);
+}
+
+@utility transition-fast {
+  transition-property:
+    color, background-color, border-color, text-decoration-color, fill, stroke,
+    opacity, box-shadow, transform;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-default);
+}
+
+@utility transition-medium {
+  transition-property: all;
+  transition-duration: var(--duration-medium);
+  transition-timing-function: var(--ease-default);
+}
+
+@utility transition-slow {
+  transition-property: all;
+  transition-medium: var(--duration-slow);
+  transition-timing-function: var(--ease-default);
+}
+
+@utility focusable-ring {
+  outline: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--ring-color, var(--color-focus-ring));
+    outline-offset: var(--ring-offset, 2px);
+  }
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: rem(13px);
+  line-height: rem(18px);
+  letter-spacing: 0.1px;
+}
+
+.logo::after {
+  content: "";
+  display: block;
+  background-color: var(--color-brand-accent);
+  height: 50%;
+  width: 100%;
+  border-bottom-right-radius: 20px;
+  border-top-left-radius: 20px;
+  position: absolute;
+  bottom: 0;
+}
