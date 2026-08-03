@@ -1,7 +1,30 @@
-import Image from "next/image";
-import ThemeToggler from "@/components/ui/ThemeToggler";
-import Link from "next/link";
+import { ArrowDownIcon } from "../components/icons";
+import PlusIcon from "../components/icons/PlusIcon";
 
 export default function Home() {
-  return <div>Home page</div>;
+  return (
+    <div className="px-6 py-8">
+      <div className="flex justify-between">
+        <div>
+          <h1 className="heading-M text-content-primary mb-0.75">Invoices</h1>
+          <p className="text-content-tertiary">7 invoices</p>
+        </div>
+
+        <div className="flex gap-[1.159rem] items-center">
+          <button className="flex gap-3 items-center heading-S2 text-content-primary">
+            Filter
+            <ArrowDownIcon className={"w-2.75 h-1.75 text-brand-primary"} />
+          </button>
+
+          <button className="bg-brand-primary  flex gap-2 items-center pt-1.5 pl-1.5 pb-1.5 pr-3.75 rounded-3xl heading-S2">
+            <span className="bg-white w-8 h-8 rounded-full flex items-center justify-center shrink-0">
+              <PlusIcon className={"w-2.5 h-2.5 text-brand-primary"} />
+            </span>
+
+            <span className="text-white">New</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }

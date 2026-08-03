@@ -32,6 +32,7 @@
 */
 
 :root {
+  --color-white: #fff;
   --color-purple-500: #7c5dfa;
   --color-purple-300: #9277ff;
 
@@ -62,11 +63,15 @@
 .light {
   --color-surface-app: var(--color-slate-100);
   --color-surface-sidebar: var(--color-slate-550);
+  --color-content-primary: var(--color-slate-900);
+  --color-content-tertiary: var(--color-slate-300);
 }
 
 .dark {
   --color-surface-app: var(--color-slate-800);
   --color-surface-sidebar: var(--color-slate-700);
+  --color-content-primary: var(--color-white);
+  --color-content-tertiary: var(--color-slate-200);
 }
 
 @theme {
@@ -88,6 +93,11 @@
 
   /* Border colors */
   --color-border-divider: var(--color-slate-500);
+
+  /* Text Colors */
+  --color-white: var(--color-white);
+  --color-content-primary: var(--color-content-primary);
+  --color-content-tertiary: var(--color-content-tertiary);
 }
 
 @utility heading-L {
