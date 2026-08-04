@@ -63,21 +63,32 @@
 .light {
   --color-surface-app: var(--color-slate-100);
   --color-surface-sidebar: var(--color-slate-550);
+  --color-surface-overlay: var(--color-white);
+
   --color-content-primary: var(--color-slate-900);
   --color-content-tertiary: var(--color-slate-300);
+
+  --color-control-border: var(--color-slate-200);
+  --color-control-bg: var(--color-slate-200);
 }
 
 .dark {
   --color-surface-app: var(--color-slate-800);
   --color-surface-sidebar: var(--color-slate-700);
+  --color-surface-overlay: var(--color-slate-600);
+
   --color-content-primary: var(--color-white);
   --color-content-tertiary: var(--color-slate-200);
+
+  --color-control-border: var(--color-slate-700);
+  --color-control-bg: var(--color-slate-700);
 }
 
 @theme {
   --font-sans: var(--font-league-spartan);
   --color-surface-app: var(--color-surface-app);
   --color-surface-sidebar: var(--color-surface-sidebar);
+  --color-surface-overlay: var(--color-surface-overlay);
 
   /* Logo */
   --color-brand-primary: var(--color-purple-500);
@@ -98,6 +109,12 @@
   --color-white: var(--color-white);
   --color-content-primary: var(--color-content-primary);
   --color-content-tertiary: var(--color-content-tertiary);
+
+  /* Input Controls */
+  --color-control-bg: var(--color-control-bg);
+  --color-control-border: var(--color-control-border);
+
+  --shadow-dropdown: 0 10px 20px 0 rgba(72, 84, 159, 0.25);
 }
 
 @utility heading-L {
@@ -187,4 +204,16 @@ body {
   border-top-left-radius: 20px;
   position: absolute;
   bottom: 0;
+}
+
+.sr-only {
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  position: absolute;
+  clip-path: inset(50%);
+  white-space: no-wrap;
+  padding: 0;
+  margin: -1px;
+  border: 0;
 }
