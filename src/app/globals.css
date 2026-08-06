@@ -51,6 +51,12 @@
   --color-red-500: #ec5757;
   --color-red-300: #ff9797;
 
+  --color-shadow-ambient: #48549f;
+  --color-shadow-dark: #000;
+
+  --color-status-pending: #ff8f00;
+  --color-status-paid: #33d69f;
+
   --line-height-100: 0.9375rem; /* 15px */
   --letter-spacing-100: -0.25px;
 
@@ -62,31 +68,50 @@
 
 .light {
   --color-surface-app: var(--color-slate-100);
+  --color-surface-primary: var(--color-white);
   --color-surface-sidebar: var(--color-slate-550);
   --color-surface-overlay: var(--color-white);
+
+  --shadow-dropdown: 0 10px 20px 0
+    color-mix(in srgb, var(--color-shadow-ambient) 25%, transparent);
 
   --color-content-primary: var(--color-slate-900);
   --color-content-tertiary: var(--color-slate-300);
 
   --color-control-border: var(--color-slate-200);
   --color-control-bg: var(--color-slate-200);
+
+  --color-invoice-owner: var(--color-slate-350);
+  --color-date-label: var(--color-slate-300);
+  --color-date-value: var(--color-slate-400);
+  --color-status-draft: #373853;
 }
 
 .dark {
   --color-surface-app: var(--color-slate-800);
+  --color-surface-primary: var(--color-slate-700);
   --color-surface-sidebar: var(--color-slate-700);
   --color-surface-overlay: var(--color-slate-600);
+
+  --shadow-dropdown: 0 10px 20px 0
+    color-mix(in srgb, var(--color-shadow-dark) 25%, transparent);
 
   --color-content-primary: var(--color-white);
   --color-content-tertiary: var(--color-slate-200);
 
   --color-control-border: var(--color-slate-700);
   --color-control-bg: var(--color-slate-700);
+
+  --color-invoice-owner: var(--color-white);
+  --color-date-label: var(--color-slate-200);
+  --color-date-value: var(--color-slate-200);
+  --color-status-draft: #dfe3fa;
 }
 
 @theme {
   --font-sans: var(--font-league-spartan);
   --color-surface-app: var(--color-surface-app);
+  --color-surface-primary: var(--color-surface-primary);
   --color-surface-sidebar: var(--color-surface-sidebar);
   --color-surface-overlay: var(--color-surface-overlay);
 
@@ -109,12 +134,26 @@
   --color-white: var(--color-white);
   --color-content-primary: var(--color-content-primary);
   --color-content-tertiary: var(--color-content-tertiary);
+  --color-slate-400: var(--color-slate-400);
 
   /* Input Controls */
   --color-control-bg: var(--color-control-bg);
   --color-control-border: var(--color-control-border);
 
-  --shadow-dropdown: 0 10px 20px 0 rgba(72, 84, 159, 0.25);
+  /* Shadow 48549f */
+  --shadow-dropdown: var(--shadow-dropdown);
+  --shadow-card: 0 10px 10px -10px
+    color-mix(in srgb, var(--color-shadow-ambient) 10.04%, transparent);
+
+  /* Invoice card */
+  --color-invoice-owner: var(--color-invoice-owner);
+  --color-date-label: var(--color-date-label);
+  --color-date-value: var(--color-date-value);
+
+  /* Invoice status */
+  --color-status-pending: var(--color-status-pending);
+  --color-status-paid: var(--color-status-paid);
+  --color-status-draft: var(--color-status-draft);
 }
 
 @utility heading-L {

@@ -26,7 +26,7 @@ function FilterComponent() {
       {isOpen && (
         <fieldset
           id="filter-menu"
-          className="flex flex-col gap-3.75 shadow-dropdown absolute top-10 -left-10 mx-auto bg-surface-overlay pt-6 pl-6 pb-6 w-48"
+          className="flex flex-col gap-3.75 shadow-dropdown absolute top-10 -left-10 mx-auto bg-surface-overlay pt-6 pl-6 pb-6 w-48 z-10"
         >
           <legend className="sr-only">Status</legend>
 
