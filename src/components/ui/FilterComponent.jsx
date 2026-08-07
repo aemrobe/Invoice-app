@@ -3,7 +3,13 @@
 import { ArrowDownIcon, CheckMarkIcon } from "@/components/icons";
 import { useState } from "react";
 
-function FilterComponent() {
+const DEFAULT_OPTIONS = [
+  { label: "Draft", value: "draft" },
+  { label: "Pending", value: "Pending" },
+  { label: "Paid", value: "paid" },
+];
+
+function FilterComponent({ options = DEFAULT_OPTIONS }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleDropDown = function () {
@@ -30,30 +36,37 @@ function FilterComponent() {
         >
           <legend className="sr-only">Status</legend>
 
-          {["draft", "pending", "paid"].map((status) => (
-            <label
-              key={status}
-              htmlFor={status}
-              className="flex gap-3.25 items-center group cursor-pointer capitalize heading-S2"
-            >
-              <input
-                type="checkbox"
-                id={status}
-                name="filter status"
-                className="peer sr-only"
-              />
+          {options.map((option) => {
+            const label = typeof option === "string" ? option : option.label;
+            const value = typeof option === "string" ? option : option.value;
 
-              <span className="flex items-center justify-center border border-control-border group-hover:border-brand-primary peer-checked:border-brand-primary peer-checked:bg-brand-primary peer-checked:[&>svg]:opacity-100 peer-focusable-ring  bg-control-bg rounded-xs w-4 h-4 shrink-0 transition-fast">
-                <CheckMarkIcon
-                  className={"text-white w-[7.45px] opacity-0 transition-fast"}
+            return (
+              <label
+                key={value}
+                htmlFor={value}
+                className="flex gap-3.25 items-center group cursor-pointer capitalize heading-S2"
+              >
+                <input
+                  type="checkbox"
+                  id={value}
+                  name="filter status"
+                  className="peer sr-only"
                 />
-              </span>
 
-              <span className="inline-block leading-none translate-y-[1.5px]">
-                {status}
-              </span>
-            </label>
-          ))}
+                <span className="flex items-center justify-center border border-control-border group-hover:border-brand-primary peer-checked:border-brand-primary peer-checked:bg-brand-primary peer-checked:[&>svg]:opacity-100 peer-focusable-ring  bg-control-bg rounded-xs w-4 h-4 shrink-0 transition-fast">
+                  <CheckMarkIcon
+                    className={
+                      "text-white w-[7.45px] opacity-0 transition-fast"
+                    }
+                  />
+                </span>
+
+                <span className="inline-block leading-none translate-y-[1.5px]">
+                  {label}
+                </span>
+              </label>
+            );
+          })}
         </fieldset>
       )}
     </div>
