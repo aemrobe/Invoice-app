@@ -5,13 +5,15 @@ import InvoiceList from "@/components/invoice/InvoiceList";
 export default function Home() {
   return (
     <div className="px-6 py-8">
-      <div className="flex justify-center  sm:justify-between flex-wrap gap-2">
+      <div className="flex justify-center gap-y-2 gap-x-7.5  sm:justify-between flex-wrap ">
         <div>
           <h1 className="heading-M text-content-primary mb-0.75">Invoices</h1>
-          <p className="text-content-tertiary">7 invoices</p>
+          <p className="text-content-tertiary text-center sm:text-left ">
+            7 invoices
+          </p>
         </div>
 
-        <div className="flex gap-[1.159rem] items-center ">
+        <div className="flex flex-wrap justify-center sm:justify-stretch gap-[1.159rem] items-center ">
           <FilterComponent />
 
           <button className="bg-brand-primary focusable-ring  flex gap-2 items-center pt-1.5 pl-1.5 pb-1.5 pr-3.75 rounded-3xl heading-S2">

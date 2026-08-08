@@ -1,38 +1,72 @@
 "use client";
 
 import { ArrowDownIcon, CheckMarkIcon } from "@/components/icons";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { ANIMATION_DURATION_FILTER_MENU } from "@/lib/constants/durations";
+import { useOutsideClicks } from "@/hooks/useOutsideClicks";
 
 const DEFAULT_OPTIONS = [
   { label: "Draft", value: "draft" },
-  { label: "Pending", value: "Pending" },
+  { label: "Pending", value: "pending" },
   { label: "Paid", value: "paid" },
 ];
 
 function FilterComponent({ options = DEFAULT_OPTIONS }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const buttonRef = useRef(null);
 
-  const handleDropDown = function () {
-    setIsOpen((open) => !open);
+  const closeDropdown = () => {
+    setVisible(false);
+    buttonRef.current?.focus();
+
+    setTimeout(() => {
+      setIsOpen(false);
+    }, ANIMATION_DURATION_FILTER_MENU);
   };
 
+  const handleDropDown = function () {
+    if (isOpen) {
+      closeDropdown();
+    } else {
+      setIsOpen(true);
+      setVisible(true);
+    }
+  };
+
+  const handleKeyDown = function (e) {
+    if (e.key === "Escape" && isOpen) {
+      closeDropdown();
+    }
+  };
+
+  const dropdownRef = useOutsideClicks(() => {
+    if (isOpen) closeDropdown();
+  });
+
   return (
-    <div className=" relative">
+    <div className="relative" ref={dropdownRef}>
       <button
-        className="flex gap-3 items-center heading-S2 text-content-primary focusable-ring rounded-md py-1 px-2 "
+        type="button"
+        ref={buttonRef}
+        className="flex gap-3 items-center heading-S2 text-content-primary focusable-ring rounded-md py-1 px-2"
         aria-expanded={isOpen}
         aria-haspopup="true"
         aria-controls="filter-menu"
         onClick={handleDropDown}
+        onKeyDown={handleKeyDown}
       >
         Filter
-        <ArrowDownIcon className={"w-2.75 h-1.75 text-brand-primary"} />
+        <ArrowDownIcon
+          className={`w-2.75 h-1.75 text-brand-primary transition-fast ${visible ? "rotate-180" : "rotate-0"}`}
+        />
       </button>
 
       {isOpen && (
         <fieldset
           id="filter-menu"
-          className="flex flex-col gap-3.75 shadow-dropdown absolute top-10 -left-10 mx-auto bg-surface-overlay pt-6 pl-6 pb-6 w-48 z-10"
+          onKeyDown={handleKeyDown}
+          className={`flex flex-col  w-[calc(100vw-1rem)] max-w-48 rounded-lg gap-3.75 shadow-dropdown absolute top-10 left-1/2 xs:left-0 -translate-x-1/2 xs:translate-x-0  mx-auto bg-surface-overlay pt-6 pl-6 pb-6  z-10 ${visible ? "open" : "close"}`}
         >
           <legend className="sr-only">Status</legend>
 

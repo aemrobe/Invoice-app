@@ -4,7 +4,7 @@ import ThemeToggler from "@/components/ui/ThemeToggler";
 
 function Header() {
   return (
-    <header className="bg-surface-sidebar flex justify-between">
+    <header className="bg-surface-sidebar flex flex-wrap gap-x-31.75 gap-y-5 sm:gap-0 justify-center sm:justify-between">
       <Link
         href={"/"}
         aria-label="Go to home page"
@@ -23,7 +23,8 @@ function Header() {
         />
       </Link>
 
-      <div className="flex items-center">
+      {/* mx-auto sm:ml-auto sm:mr-0 */}
+      <div className="flex  items-center">
         <ThemeToggler />
 
         <div
@@ -31,7 +32,7 @@ function Header() {
           aria-hidden="true"
         ></div>
 
-        <div className="px-6">
+        <div className="px-6 shrink-0">
           <Image
             src={"/image-avatar.jpg"}
             width={32}
