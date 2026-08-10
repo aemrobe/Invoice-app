@@ -23,7 +23,6 @@ function Header() {
         />
       </Link>
 
-      {/* mx-auto sm:ml-auto sm:mr-0 */}
       <div className="flex  items-center">
         <ThemeToggler />
 

@@ -1,15 +1,18 @@
 import { PlusIcon } from "@/components/icons";
 import FilterComponent from "@/components/ui/FilterComponent";
+import invoices from "@/lib/data.json";
 import InvoiceList from "@/components/invoice/InvoiceList";
 
 export default function Home() {
   return (
     <div className="px-6 py-8">
-      <div className="flex justify-center gap-y-2 gap-x-7.5  sm:justify-between flex-wrap ">
+      <div className="flex justify-center gap-y-2 gap-x-7.5  sm:justify-between flex-wrap">
         <div>
           <h1 className="heading-M text-content-primary mb-0.75">Invoices</h1>
           <p className="text-content-tertiary text-center sm:text-left ">
-            7 invoices
+            {invoices.length === 0
+              ? "No invoices"
+              : `${invoices.length} invoices`}
           </p>
         </div>
 
