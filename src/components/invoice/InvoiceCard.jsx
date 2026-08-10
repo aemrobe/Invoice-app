@@ -5,10 +5,11 @@ import Link from "next/link";
 function InvoiceCard({ invoice }) {
   const { id, clientName, paymentDue, total, status } = invoice;
 
+  console.log("invoice", invoice);
   return (
     <li className="max-w-81.75 w-full">
       <Link
-        href={"/"}
+        href={`/${id}`}
         className="shadow-card focusable-ring px-6 pt-6.25 pb-5.5 bg-surface-primary rounded-lg  grid grid-cols-[auto] sm:grid-cols-[auto_auto] gap-3 sm:gap-0  justify-center sm:justify-between text-center sm:text-left "
       >
         <h2 className="heading-S2 text-content-primary ">

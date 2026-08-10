@@ -78,13 +78,18 @@
   --color-content-primary: var(--color-slate-900);
   --color-content-tertiary: var(--color-slate-300);
 
+  /* Input Controls */
   --color-control-border: var(--color-slate-200);
   --color-control-bg: var(--color-slate-200);
 
+  /* Invoice Card */
   --color-invoice-owner: var(--color-slate-350);
   --color-date-label: var(--color-slate-300);
   --color-date-value: var(--color-slate-400);
   --color-status-draft: #373853;
+
+  /* Invoice Detail */
+  --color-status-label: var(--color-slate-350);
 }
 
 .dark {
@@ -99,13 +104,18 @@
   --color-content-primary: var(--color-white);
   --color-content-tertiary: var(--color-slate-200);
 
+  /* Input Controls */
   --color-control-border: var(--color-slate-700);
   --color-control-bg: var(--color-slate-700);
 
+  /* Invoice Card */
   --color-invoice-owner: var(--color-white);
   --color-date-label: var(--color-slate-200);
   --color-date-value: var(--color-slate-200);
   --color-status-draft: #dfe3fa;
+
+  /* Invoice Detail */
+  --color-status-label: var(--color-slate-200);
 }
 
 @theme {
@@ -154,6 +164,9 @@
   --color-status-pending: var(--color-status-pending);
   --color-status-paid: var(--color-status-paid);
   --color-status-draft: var(--color-status-draft);
+
+  /* Invoice Detail */
+  --color-status-label: var(--color-status-label);
 
   /* Breakpoints */
   --breakpoint-*: initial;
