@@ -66,7 +66,7 @@ function FilterComponent({ options = DEFAULT_OPTIONS }) {
         <fieldset
           id="filter-menu"
           onKeyDown={handleKeyDown}
-          className={`flex flex-col  w-[calc(100vw-1rem)] max-w-48 rounded-lg gap-3.75 shadow-dropdown absolute top-10 left-1/2 xs:left-0 -translate-x-1/2 xs:translate-x-0  mx-auto bg-surface-overlay pt-6 pl-6 pb-6  z-10 ${visible ? "open" : "close"}`}
+          className={`flex flex-col  w-[calc(100vw-1rem)] max-w-48 rounded-lg gap-3.75 shadow-dropdown absolute top-10 left-1/2 -translate-x-1/2   mx-auto bg-surface-overlay pt-6 pl-6 pb-6  z-10 ${visible ? "open" : "close"}`}
         >
           <legend className="sr-only">Status</legend>
 

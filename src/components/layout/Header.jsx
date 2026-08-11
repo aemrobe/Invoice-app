@@ -4,7 +4,7 @@ import ThemeToggler from "@/components/ui/ThemeToggler";
 
 function Header() {
   return (
-    <header className="bg-surface-sidebar flex flex-wrap gap-x-31.75 gap-y-5 sm:gap-0 justify-center sm:justify-between">
+    <header className="bg-surface-sidebar flex justify-between">
       <Link
         href={"/"}
         aria-label="Go to home page"

@@ -5,7 +5,7 @@ function StatusBadge({ status = "draft" }) {
 
   return (
     <div
-      className="heading-S2 sm:row-start-2 sm:row-span-2 self-end flex justify-center items-center gap-2 pt-3.5 pb-2.75 w-26 rounded-md"
+      className="heading-S2 row-start-2 row-span-2 self-end flex justify-center items-center gap-2 pt-3.5 pb-2.75 w-26 rounded-md"
       style={{
         backgroundColor: `color-mix(in srgb, ${config.colorVar} 5.71%, transparent)`,
         color: `${config.colorVar}`,
