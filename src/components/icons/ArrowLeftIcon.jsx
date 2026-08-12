@@ -1,6 +1,7 @@
 function ArrowLeftIcon({ className }) {
   return (
     <svg
+      aria-hidden="true"
       className={className}
       viewBox="0 0 7 10"
       xmlns="http://www.w3.org/2000/svg"

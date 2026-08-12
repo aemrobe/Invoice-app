@@ -83,6 +83,10 @@
   --color-content-tertiary: var(--color-slate-300);
   --color-content-variant: var(--color-slate-400);
 
+  /* Action Buttons */
+  --color-action-secondary-hover: var(--color-slate-200);
+  --color-action-secondary-text: var(--color-slate-400);
+
   /* Input Controls */
   --color-control-border: var(--color-slate-200);
   --color-control-bg: var(--color-slate-200);
@@ -113,6 +117,10 @@
   --color-content-tertiary: var(--color-slate-200);
   --color-content-variant: var(--color-slate-300);
 
+  /* Action Buttons */
+  --color-action-secondary-hover: var(--color-white);
+  --color-action-secondary-text: var(--color-slate-200);
+
   /* Input Controls */
   --color-control-border: var(--color-slate-700);
   --color-control-bg: var(--color-slate-700);
@@ -138,6 +146,21 @@
   --color-surface-sidebar: var(--color-surface-sidebar);
   --color-surface-overlay: var(--color-surface-overlay);
   --color-surface-summary: var(--color-surface-summary);
+
+  /* Action buttons */
+  /* Primary action */
+  --color-action-primary-bg: var(--color-purple-500);
+  --color-action-primary-hover: var(--color-purple-300);
+
+  /* Danger action */
+  --color-action-danger-bg: var(--color-red-500);
+  --color-action-danger-hover: var(--color-red-300);
+
+  /* Secondary Action */
+  --color-action-secondary-bg: var(--color-surface-secondary);
+  --color-action-secondary-hover: var(--color-action-secondary-hover);
+  --color-action-secondary-text: var(--color-action-secondary-text);
+  --color-action-secondary-text-hover: var(--color-slate-400);
 
   /* Logo */
   --color-brand-primary: var(--color-purple-500);
@@ -291,6 +314,10 @@
     outline: 2px solid var(--ring-color, var(--color-brand-primary));
     outline-offset: var(--ring-offset, 2px);
   }
+}
+
+@utility disabled-button {
+  @apply disabled:cursor-not-allowed disabled:opacity-80 disabled:pointer-events-auto;
 }
 
 body {

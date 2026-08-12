@@ -9,7 +9,10 @@ const spartan = League_Spartan({
 });
 
 export const metadata = {
-  title: "Invoice app",
+  title: {
+    template: "%s | Invoice app",
+    default: "Invoice App",
+  },
   description:
     "A full-stack invoice management application built with Next.js and Tailwind CSS to create, filter, track, and manage invoices with dark mode support.",
 };
