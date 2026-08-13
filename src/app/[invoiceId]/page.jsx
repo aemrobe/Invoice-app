@@ -36,14 +36,16 @@ async function Page({ params }) {
 
   return (
     <>
-      <div className="px-6 mt-8.25">
+      <div className="px-6 mt-8.25 max-w-112.5 mx-auto">
         <Link
           href="/"
           className="focusable-ring rounded-lg inline-flex items-center gap-x-[1.478rem] heading-S2"
           style={{ "--ring-offset": "8px" }}
         >
           <ArrowLeftIcon className={"w-[0.5287rem] text-brand-primary"} />
-          <span className="translate-y-0.5 text-content-primary"> Go back</span>
+          <span className="translate-y-0.5 text-content-primary hover:text-slate-400 transition-fast">
+            Go back
+          </span>
         </Link>
 
         <div className="mt-7.75 shadow-card px-6 pt-6 pb-6.75 rounded-md bg-surface-primary flex justify-between items-center">

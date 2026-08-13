@@ -5,7 +5,6 @@ import Link from "next/link";
 function InvoiceCard({ invoice }) {
   const { id, clientName, paymentDue, total, status } = invoice;
 
-  console.log("invoice", invoice);
   return (
     <li className="max-w-81.75 w-full">
       <Link
