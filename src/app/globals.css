@@ -71,6 +71,7 @@
   --color-surface-app: var(--color-slate-100);
   --color-surface-primary: var(--color-white);
   --color-surface-secondary: var(--color-slate-50);
+  --color-surface-modal: var(--color-white);
   --color-surface-sidebar: var(--color-slate-550);
   --color-surface-overlay: var(--color-white);
   --color-surface-summary: var(--color-slate-550);
@@ -105,6 +106,7 @@
   --color-surface-app: var(--color-slate-800);
   --color-surface-primary: var(--color-slate-700);
   --color-surface-secondary: var(--color-slate-600);
+  --color-surface-modal: var(--color-slate-800);
   --color-surface-sidebar: var(--color-slate-700);
   --color-surface-overlay: var(--color-slate-600);
   --color-surface-summary: var(--color-slate-900);
@@ -143,6 +145,7 @@
   --color-surface-app: var(--color-surface-app);
   --color-surface-primary: var(--color-surface-primary);
   --color-surface-secondary: var(--color-surface-secondary);
+  --color-surface-modal: var(--color-surface-modal);
   --color-surface-sidebar: var(--color-surface-sidebar);
   --color-surface-overlay: var(--color-surface-overlay);
   --color-surface-summary: var(--color-surface-summary);

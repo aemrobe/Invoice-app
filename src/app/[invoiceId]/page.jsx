@@ -1,9 +1,9 @@
-import { ArrowLeftIcon } from "@/components/icons";
 import StatusBadge from "@/components/invoice/StatusBadge";
 import { formatCurrency, formatDate } from "@/lib/formatters";
 import Button from "@/components/ui/Button";
-import Link from "next/link";
 import invoices from "@/lib/data.json";
+import GoBackBtn from "@/components/ui/GoBackBtn";
+import InvoiceActions from "@/components/invoice/InvoiceActions";
 
 const EMPTY_FALLBACK = "—";
 const EMPTYFALLBACKSTYLES = "text-content-primary heading-S leading-5";
@@ -37,16 +37,7 @@ async function Page({ params }) {
   return (
     <>
       <div className="px-6 mt-8.25 max-w-112.5 mx-auto">
-        <Link
-          href="/"
-          className="focusable-ring rounded-lg inline-flex items-center gap-x-[1.478rem] heading-S2"
-          style={{ "--ring-offset": "8px" }}
-        >
-          <ArrowLeftIcon className={"w-[0.5287rem] text-brand-primary"} />
-          <span className="translate-y-0.5 text-content-primary hover:text-slate-400 transition-fast">
-            Go back
-          </span>
-        </Link>
+        <GoBackBtn />
 
         <div className="mt-7.75 shadow-card px-6 pt-6 pb-6.75 rounded-md bg-surface-primary flex justify-between items-center">
           <p className="text-status-label capitalize">Status</p>
@@ -184,9 +175,7 @@ async function Page({ params }) {
       </div>
 
       <div className="bg-surface-primary shadow-card mt-14 pt-5.25 pb-5.5 px-6 flex justify-center  gap-2">
-        <Button variant={"edit"}>Edit</Button>
-
-        <Button variant={"delete"}>Delete</Button>
+        <InvoiceActions invoiceItem={invoiceItem} />
 
         <Button variant={"primary"}>Mark as Paid</Button>
       </div>

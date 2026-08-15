@@ -1,1 +1,2 @@
 export const ANIMATION_DURATION_FILTER_MENU = 150;
+export const MODAL_FOCUS_DURATION = 20;
