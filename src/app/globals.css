@@ -27,9 +27,11 @@
   heading-S          | 15px | Bold (700)| 24px        | -0.25px  | Invoice IDs (#RT3080), client names in card list
   heading-S2         | 15px | Bold (700)| 15px        | -0.25px  | Table item prices/totals ($156.00), compact headers
   body-variant       | 13px | Med (500) | 15px        | -0.25px  | Invoice due dates, item quantity details (1x $156)
-  body (default)     | 13px | Med (500) | 18px        |  0.1px   | Form input fields, status badges, global copy
+  body (default)     | 13px | Med (500) | 18px        |  -0.1px   | Form input fields, status badges, global copy
 ================================================================================
 */
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --color-white: #fff;
@@ -42,10 +44,11 @@
   --color-slate-600: #252945;
   --color-slate-550: #373b53;
   --color-slate-500: #494e6e;
-  --color-slate-400: #7e88c3;
+  --color-slate-400: #7e88c3; /* # light #*/
+  --color-slate-380: #777f98;
   --color-slate-350: #858bb2;
   --color-slate-300: #888eb0;
-  --color-slate-200: #dfe3fa;
+  --color-slate-200: #dfe3fa; /* # dark  # */
   --color-slate-100: #f8f8fb;
   --color-slate-50: #f9fafe;
 
@@ -92,6 +95,17 @@
   --color-control-border: var(--color-slate-200);
   --color-control-bg: var(--color-slate-200);
 
+  /* Form Inputs */
+  --color-input-border: var(--color-slate-200);
+  --color-input-placeholder: color-mix(
+    in srgb,
+    var(--color-slate-800) 40%,
+    transparent
+  );
+  --color-input-background: var(--color-white);
+  --color-input-border-active: var(--color-purple-300);
+  --color-form-label: var(--color-slate-400);
+
   /* Invoice Card */
   --color-invoice-owner: var(--color-slate-350);
   --color-date-label: var(--color-slate-300);
@@ -100,6 +114,21 @@
 
   /* Invoice Detail */
   --color-status-label: var(--color-slate-350);
+
+  /* Scrollbar */
+  --color-scrollbar-thumb: var(--color-slate-200);
+
+  /* Edit Modal */
+  --color-heading-prefix: var(--color-slate-300);
+
+  /* Calendar */
+  --color-calendar-text: var(--color-slate-900);
+  --color-calendar-day-outside: color-mix(
+    in srgb,
+    var(--color-slate-900) 8.14%,
+    transparent
+  );
+  --color-calendar-day-hover: var(--color-purple-300);
 }
 
 .dark {
@@ -114,6 +143,7 @@
   --shadow-dropdown: 0 10px 20px 0
     color-mix(in srgb, var(--color-shadow-dark) 25%, transparent);
 
+  /* Texts */
   --color-content-primary: var(--color-white);
   --color-content-muted: var(--color-slate-200);
   --color-content-tertiary: var(--color-slate-200);
@@ -127,6 +157,17 @@
   --color-control-border: var(--color-slate-700);
   --color-control-bg: var(--color-slate-700);
 
+  /* Form Inputs */
+  --color-input-border: var(--color-slate-600);
+  --color-input-placeholder: color-mix(
+    in srgb,
+    var(--color-white) 100%,
+    transparent
+  );
+  --color-input-background: var(--color-slate-700);
+  --color-input-border-active: var(--color-purple-500);
+  --color-form-label: var(--color-slate-300);
+
   /* Invoice Card */
   --color-invoice-owner: var(--color-white);
   --color-date-label: var(--color-slate-200);
@@ -135,6 +176,25 @@
 
   /* Invoice Detail */
   --color-status-label: var(--color-slate-200);
+
+  /* Scrollbar */
+  --color-scrollbar-thumb: var(--color-slate-600);
+
+  /* Edit Modal */
+  --color-heading-prefix: var(--color-slate-380);
+
+  /* Calendar */
+  --color-calendar-text: var(--color-slate-200);
+  --color-calendar-day-outside: color-mix(
+    in srgb,
+    var(--color-slate-200) 8.14%,
+    transparent
+  );
+  --color-calendar-day-hover: var(--color-purple-500);
+
+  @media (min-width: rem(768)) {
+    --color-form-label: var(--color-slate-200);
+  }
 }
 
 @theme {
@@ -193,6 +253,13 @@
   --color-control-bg: var(--color-control-bg);
   --color-control-border: var(--color-control-border);
 
+  /* Form Inputs */
+  --color-input-border: var(--color-input-border);
+  --color-input-placeholder: var(--color-input-placeholder);
+  --color-input-background: var(--color-input-background);
+  --color-input-border-active: var(--color-input-border-active);
+  --color-form-label: var(--color-form-label);
+
   /* Shadow  */
   --shadow-dropdown: var(--shadow-dropdown);
   --shadow-card: 0 10px 10px -10px
@@ -210,6 +277,17 @@
 
   /* Invoice Detail */
   --color-status-label: var(--color-status-label);
+
+  /* Scrollbar */
+  --color-scrollbar-thumb: var(--color-scrollbar-thumb);
+
+  /* Edit Modal */
+  --color-heading-prefix: var(--color-heading-prefix);
+
+  /* Calendar */
+  --color-calendar-text: var(--color-calendar-text);
+  --color-calendar-day-outside: var(--color-calendar-day-outside);
+  --color-calendar-day-hover: var(--color-calendar-day-hover);
 
   /* Breakpoints */
   --breakpoint-*: initial;
@@ -299,7 +377,7 @@
 
 @utility transition-slow {
   transition-property: all;
-  transition-medium: var(--duration-slow);
+  transition-duration: var(--duration-slow);
   transition-timing-function: var(--ease-default);
 }
 
@@ -323,12 +401,34 @@
   @apply disabled:cursor-not-allowed disabled:opacity-80 disabled:pointer-events-auto;
 }
 
+@utility custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-scrollbar-thumb);
+    border-radius: 4px;
+  }
+
+  /* Firefox  Only */
+  @supports (-moz-appearance: none) {
+    & {
+      scrollbar-width: none;
+    }
+  }
+}
+
 body {
   font-family: var(--font-sans);
   font-weight: 500;
   font-size: rem(13px);
   line-height: rem(18px);
-  letter-spacing: 0.1px;
+  letter-spacing: -0.1px;
 }
 
 .logo::after {

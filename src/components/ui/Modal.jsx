@@ -87,14 +87,31 @@ function Window({
   ariaLabel,
   overlay = "",
   className = "",
+  initialFocusSelector,
 }) {
   const { close, openName, restoreFocus } = useContext(ModalContext);
-  const modalRef = useOutsideClicks(() => {
-    close();
-    restoreFocus();
-  });
+
+  const modalRef = useOutsideClicks(
+    () => {
+      close();
+      restoreFocus();
+    },
+    {
+      ignoreSelectors: "header",
+    },
+  );
 
   const hasFocussedRef = useRef(false);
+
+  useEffect(() => {
+    if (openName) {
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [openName]);
 
   useEffect(() => {
     if (modalName !== openName) {
@@ -142,16 +159,20 @@ function Window({
 
     // 1. Give the browser a tiny moment to paint the modal
     const timer = setTimeout(() => {
-      const firstFocusable = modalElement.querySelector(focusableSelector);
+      let targetFocus = null;
 
-      const isInput =
-        firstFocusable?.tagName === "INPUT" ||
-        firstFocusable?.tagName === "SELECT" ||
-        firstFocusable?.tagName === "TEXTAREA";
+      // First it checks the first element that we want it to be focussed
+      if (initialFocusSelector) {
+        targetFocus = modalElement.querySelector(initialFocusSelector);
+      }
 
-      //it will check if first focusasble element is input and focus on it if it is otherwise allow automatic screen reader announcement of the modal.
-      if (firstFocusable && isInput) {
-        firstFocusable.focus();
+      // If there is no element that we passed that we want it to be focussed, it goes to the first focusable element that it gets in a DOM.
+      if (!targetFocus) {
+        targetFocus = modalElement.querySelector(focusableSelector);
+      }
+
+      if (targetFocus) {
+        targetFocus.focus();
       }
 
       hasFocussedRef.current = true;
@@ -163,7 +184,14 @@ function Window({
       window.removeEventListener("keydown", handleKeyDown);
       clearTimeout(timer);
     };
-  }, [modalName, openName, close, modalRef, restoreFocus]);
+  }, [
+    modalName,
+    openName,
+    close,
+    modalRef,
+    restoreFocus,
+    initialFocusSelector,
+  ]);
 
   if (modalName !== openName) return;
 
@@ -177,7 +205,7 @@ function Window({
         aria-labelledby={titleId || undefined}
         aria-describedby={contentId || undefined}
         tabIndex={"-1"}
-        className={`outline-none border-2 border-lime-500 z-50  fixed ${className}`}
+        className={`outline-none fixed z-20 ${className}`}
       >
         {cloneElement(children, {
           onCloseModal: () => {

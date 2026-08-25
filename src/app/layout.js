@@ -1,5 +1,6 @@
 import { League_Spartan } from "next/font/google";
 import "./globals.css";
+import "@daypicker/react/style.css";
 import AppProviders from "@/providers/AppProviders";
 import Header from "@/components/layout/Header";
 
@@ -24,12 +25,12 @@ export default function RootLayout({ children }) {
       className={`${spartan.variable} antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-screen  bg-surface-app">
+      <body className="min-h-dvh bg-surface-app">
         <AppProviders>
-          <div>
+          <div className="min-h-dvh flex flex-col pt-18">
             <Header />
 
-            <main>{children}</main>
+            <main className="flex-1 flex flex-col">{children}</main>
           </div>
         </AppProviders>
       </body>

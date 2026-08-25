@@ -4,3 +4,5 @@ export { default as ArrowDownIcon } from "./ArrowDownIcon";
 export { default as PlusIcon } from "./PlusIcon";
 export { default as CheckMarkIcon } from "./CheckMarkIcon";
 export { default as ArrowLeftIcon } from "./ArrowLeftIcon";
+export { default as ChevronIcon } from "./ChevronIcon";
+export { default as CalendarIcon } from "./CalendarIcon";

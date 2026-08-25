@@ -15,8 +15,9 @@ function InvoiceActions({ invoiceItem }) {
         modalName={"edit-invoice"}
         titleId={"edit-invoice-title"}
         contentId={"edit-invoice-content"}
-        overlay="top-18 bottom-0 inset-x-0"
-        className="top-18 bottom-0 inset-x-0 bg-surface-modal"
+        overlay="bg-red-500 inset-x-0 bottom-0 top-18"
+        className="bg-surface-modal inset-x-0 top-18 bottom-0 pt-2  pr-2"
+        initialFocusSelector={"#senderAddress-street"}
       >
         <InvoiceForm editInvoice={invoiceItem} />
       </Modal.Window>

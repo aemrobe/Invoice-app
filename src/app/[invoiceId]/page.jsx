@@ -35,8 +35,8 @@ async function Page({ params }) {
   const clientAddress = invoiceItem?.clientAddress || {};
 
   return (
-    <>
-      <div className="px-6 mt-8.25 max-w-112.5 mx-auto">
+    <div className="flex-1 flex flex-col justify-between">
+      <div className="px-6 mt-8.25  max-w-112.5 mx-auto">
         <GoBackBtn />
 
         <div className="mt-7.75 shadow-card px-6 pt-6 pb-6.75 rounded-md bg-surface-primary flex justify-between items-center">
@@ -174,12 +174,12 @@ async function Page({ params }) {
         </div>
       </div>
 
-      <div className="bg-surface-primary shadow-card mt-14 pt-5.25 pb-5.5 px-6 flex justify-center  gap-2">
+      <div className="bg-surface-primary shadow-card mt-14  pt-5.25 pb-5.5 px-6 flex justify-center  gap-2">
         <InvoiceActions invoiceItem={invoiceItem} />
 
         <Button variant={"primary"}>Mark as Paid</Button>
       </div>
-    </>
+    </div>
   );
 }
 

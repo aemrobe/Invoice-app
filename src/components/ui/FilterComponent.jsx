@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDownIcon, CheckMarkIcon } from "@/components/icons";
+import { CheckMarkIcon, ChevronIcon } from "@/components/icons";
 import { useRef, useState } from "react";
 import { ANIMATION_DURATION_FILTER_MENU } from "@/lib/constants/durations";
 import { useOutsideClicks } from "@/hooks/useOutsideClicks";
@@ -57,7 +57,8 @@ function FilterComponent({ options = DEFAULT_OPTIONS }) {
         onKeyDown={handleKeyDown}
       >
         Filter
-        <ArrowDownIcon
+        <ChevronIcon
+          orientation={"down"}
           className={`w-2.75 h-1.75 text-brand-primary transition-fast ${visible ? "rotate-180" : "rotate-0"}`}
         />
       </button>
