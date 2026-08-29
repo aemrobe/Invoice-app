@@ -1,12 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import ThemeToggler from "@/components/ui/ThemeToggler";
+import { useModal } from "@/components/ui/Modal";
+import { useTransition } from "react";
 
 function Header() {
+  const { close } = useModal();
+
   return (
     <header className="bg-surface-sidebar flex justify-between h-18 fixed inset-x-0 top-0 z-40">
       <Link
         href={"/"}
+        onClick={close}
         aria-label="Go to home page"
         className="focusable-ring logo relative w-18 h-18 bg-brand-primary flex justify-center items-center rounded-tr-[20px] rounded-br-[20px]"
         style={{

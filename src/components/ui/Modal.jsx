@@ -14,12 +14,14 @@ import ModalOverlay from "@/components/ui/ModalOverlay";
 import { useOutsideClicks } from "@/hooks/useOutsideClicks";
 import { createPortal } from "react-dom";
 import { MODAL_FOCUS_DURATION } from "../../lib/constants/durations";
+import { usePathname } from "next/navigation";
 
 const ModalContext = createContext();
 
 function Modal({ children }) {
   const [openName, setOpenName] = useState("");
   const [lastFocusableElement, setLastFocusableElement] = useState(null);
+  const pathname = usePathname();
 
   const close = useCallback(() => {
     setOpenName("");
@@ -219,6 +221,15 @@ function Window({
     </ModalOverlay>,
     document.body,
   );
+}
+
+export function useModal() {
+  const context = useContext(ModalContext);
+
+  if (context === undefined)
+    throw new Error("useModal should be used inside the modal provider");
+
+  return context;
 }
 
 Modal.Open = Open;

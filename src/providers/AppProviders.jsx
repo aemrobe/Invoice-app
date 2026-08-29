@@ -1,6 +1,7 @@
 "use client";
 
 import { ThemeProvider } from "next-themes";
+import Modal from "@/components/ui/Modal";
 
 function AppProviders({ children }) {
   return (
@@ -10,7 +11,7 @@ function AppProviders({ children }) {
       enableSystem
       disableTransitionOnChange
     >
-      {children}
+      <Modal>{children}</Modal>
     </ThemeProvider>
   );
 }
