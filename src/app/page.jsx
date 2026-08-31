@@ -2,13 +2,16 @@ import { PlusIcon } from "@/components/icons";
 import FilterComponent from "@/components/ui/FilterComponent";
 import invoices from "@/lib/data.json";
 import InvoiceList from "@/components/invoice/InvoiceList";
+import PageHeading from "@/components/ui/PageHeading";
 
 export default function Home() {
   return (
     <div className="px-6 py-8">
       <div className="flex justify-between">
         <div>
-          <h1 className="heading-M text-content-primary mb-0.75">Invoices</h1>
+          <PageHeading className={"heading-M text-content-primary mb-0.75"}>
+            Invoices hello world endet nachu
+          </PageHeading>
           <p className="text-content-tertiary text-center sm:text-left ">
             {invoices.length === 0
               ? "No invoices"

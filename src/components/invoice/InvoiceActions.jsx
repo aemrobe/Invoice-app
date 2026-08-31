@@ -1,12 +1,18 @@
 "use client";
 
 import Button from "@/components/ui/Button";
-import Link from "next/link";
 
 function InvoiceActions({ invoiceItem }) {
   return (
     <>
-      <Button href={`/${invoiceItem.id}/edit`} scroll={false} variant={"edit"}>
+      <Button
+        href={`/${invoiceItem.id}/edit`}
+        scroll={false}
+        variant={"edit"}
+        onClick={(e) => {
+          window.__lastModalTriggerElement = e.currentTarget;
+        }}
+      >
         Edit
       </Button>
 

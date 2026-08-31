@@ -4,6 +4,7 @@ import Button from "@/components/ui/Button";
 import invoices from "@/lib/data.json";
 import GoBackBtn from "@/components/ui/GoBackBtn";
 import InvoiceActions from "@/components/invoice/InvoiceActions";
+import PageHeading from "@/components/ui/PageHeading";
 
 const EMPTY_FALLBACK = "—";
 const EMPTYFALLBACKSTYLES = "text-content-primary heading-S leading-5";
@@ -20,6 +21,7 @@ async function Page({ params }) {
   const { invoiceId } = await params;
 
   const invoiceItem = invoices.find((invoice) => invoice.id === invoiceId);
+
   const {
     status = "draft",
     description = "",
@@ -47,10 +49,13 @@ async function Page({ params }) {
         <div className="bg-surface-primary shadow-card mt-4 pt-6.25 px-6 pb-6">
           <div className="mb-7.75">
             <div className="mb-7.5">
-              <h1 className="uppercase mb-1 heading-S2 text-content-primary">
-                <span className="text-slate-400">#</span>
+              <PageHeading className="uppercase mb-1 heading-S2 text-content-primary">
+                <span aria-hidden="true" className="text-slate-400">
+                  #
+                </span>
+                <span className="sr-only">Invoice</span>
                 {invoiceId}
-              </h1>
+              </PageHeading>
 
               <p
                 className={`${description ? "text-content-muted" : EMPTYFALLBACKSTYLES}`}

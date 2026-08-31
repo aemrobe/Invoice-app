@@ -16,26 +16,30 @@ function MyDatePicker({ initialDate, name = "paymentDue" }) {
   const [visible, setVisible] = useState(false);
   const buttonRef = useRef(null);
 
-  const handleSelect = (date) => {
-    if (!date) return;
-
-    setSelectedDate(date);
-    closeDropdown();
-  };
-
   const closeDropdown = () => {
     setVisible(false);
-    buttonRef.current?.focus();
 
     setTimeout(() => {
       setIsOpen(false);
     }, ANIMATION_DURATION_FILTER_MENU);
   };
 
+  const closeDropdownAndRefocus = () => {
+    closeDropdown();
+    buttonRef.current?.focus();
+  };
+
+  const handleSelect = (date) => {
+    if (!date) return;
+
+    setSelectedDate(date);
+    closeDropdownAndRefocus();
+  };
+
   const handleKeyDown = function (e) {
     if (e.key === "Escape" && isOpen) {
       e.stopPropagation();
-      closeDropdown();
+      closeDropdownAndRefocus();
     }
   };
 
@@ -48,6 +52,12 @@ function MyDatePicker({ initialDate, name = "paymentDue" }) {
     }
   };
 
+  const handleBlur = function (e) {
+    if (!e.currentTarget.contains(e.relatedTarget) && isOpen) {
+      closeDropdown();
+    }
+  };
+
   const dropdownRef = useOutsideClicks(() => {
     if (isOpen) closeDropdown();
   });
@@ -57,7 +67,11 @@ function MyDatePicker({ initialDate, name = "paymentDue" }) {
   const defaultClassNames = getDefaultClassNames();
 
   return (
-    <div className="flex flex-col relative" ref={dropdownRef}>
+    <div
+      className="flex flex-col relative"
+      onBlur={handleBlur}
+      ref={dropdownRef}
+    >
       <label
         htmlFor={inputId}
         className="leading-tight-s text-form-label capitalize mb-2.25"
@@ -73,7 +87,7 @@ function MyDatePicker({ initialDate, name = "paymentDue" }) {
         aria-haspopup="dialog"
         onClick={handleDropDown}
         onKeyDown={handleKeyDown}
-        className="border border-input-border  heading-S2 text-content-primary bg-input-background 
+        className="border border-input-border  heading-S2 text-content-primary/55 bg-input-background 
         cursor-pointer
         hover:border-input-border-active
         focus:outline-none focus-visible:border-input-border-active  transition-fast pt-4.5 pb-3.75 pl-5 pr-4  rounded-sm flex justify-between"
