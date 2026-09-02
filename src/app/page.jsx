@@ -10,7 +10,7 @@ export default function Home() {
       <div className="flex justify-between">
         <div>
           <PageHeading className={"heading-M text-content-primary mb-0.75"}>
-            Invoices hello world endet nachu
+            Invoices
           </PageHeading>
           <p className="text-content-tertiary text-center sm:text-left ">
             {invoices.length === 0

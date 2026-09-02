@@ -34,21 +34,21 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --color-white: #fff;
+  --color-white: #fff; /* # light #*/
   --color-purple-500: #7c5dfa;
   --color-purple-300: #9277ff;
 
   --color-slate-900: #0c0e16;
   --color-slate-800: #141625;
   --color-slate-700: #1e2139;
-  --color-slate-600: #252945;
+  --color-slate-600: #252945; /* # dark  # */
   --color-slate-550: #373b53;
   --color-slate-500: #494e6e;
-  --color-slate-400: #7e88c3; /* # light #*/
+  --color-slate-400: #7e88c3;
   --color-slate-380: #777f98;
   --color-slate-350: #858bb2;
   --color-slate-300: #888eb0;
-  --color-slate-200: #dfe3fa; /* # dark  # */
+  --color-slate-200: #dfe3fa;
   --color-slate-100: #f8f8fb;
   --color-slate-50: #f9fafe;
 
@@ -128,7 +128,10 @@
     var(--color-slate-900) 8.14%,
     transparent
   );
-  --color-calendar-day-hover: var(--color-purple-300);
+  --color-content-interactive-hover: var(--color-purple-300);
+
+  /* Custom selectbox */
+  --color-select-option-text: var(--color-slate-900);
 }
 
 .dark {
@@ -190,7 +193,10 @@
     var(--color-slate-200) 8.14%,
     transparent
   );
-  --color-calendar-day-hover: var(--color-purple-500);
+  --color-content-interactive-hover: var(--color-purple-500);
+
+  /* Custom selectbox */
+  --color-select-option-text: var(--color-slate-200);
 
   @media (min-width: rem(768)) {
     --color-form-label: var(--color-slate-200);
@@ -287,7 +293,10 @@
   /* Calendar */
   --color-calendar-text: var(--color-calendar-text);
   --color-calendar-day-outside: var(--color-calendar-day-outside);
-  --color-calendar-day-hover: var(--color-calendar-day-hover);
+  --color-content-interactive-hover: var(--color-content-interactive-hover);
+
+  /* Custom selectbox */
+  --color-select-option-text: var(--color-select-option-text);
 
   /* Breakpoints */
   --breakpoint-*: initial;

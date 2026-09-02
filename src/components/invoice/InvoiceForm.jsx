@@ -5,10 +5,12 @@ import FormRow from "@/components/ui/FormRow";
 import MyDatePicker from "../ui/MyDatePicker";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef } from "react";
+import { useOutsideClicks } from "@/hooks/useOutsideClicks";
+import CustomSelect from "@/components/ui/CustomSelect";
 
 function InvoiceForm({ editInvoice = "", overlay, className }) {
   const router = useRouter();
-  const modalRef = useRef();
+
   const titleId = "invoice-modal-title";
 
   const handleGoback = useCallback(() => {
@@ -18,6 +20,10 @@ function InvoiceForm({ editInvoice = "", overlay, className }) {
       router.push(`/invoices/${editInvoice.id}`);
     }
   }, [router, editInvoice.id]);
+
+  const modalRef = useOutsideClicks(handleGoback, {
+    ignoreSelectors: "header",
+  });
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -81,6 +87,7 @@ function InvoiceForm({ editInvoice = "", overlay, className }) {
       cancelAnimationFrame(outerFrameId);
       cancelAnimationFrame(innerFrameId);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleGoback]);
 
   return (
@@ -153,7 +160,27 @@ function InvoiceForm({ editInvoice = "", overlay, className }) {
 
           <AddressFields prefix={"clientAddress"} className={"mb-10.25"} />
 
-          <MyDatePicker />
+          <div className="flex flex-col gap-6.25 mb-6.25">
+            <MyDatePicker />
+
+            <CustomSelect
+              defaultValue={1}
+              name={"paymentTerms"}
+              options={[
+                { label: "Net 1 Day", value: 1 },
+                { label: "Net 7 Days", value: 7 },
+                { label: "Net 14 Days", value: 14 },
+                { label: "Net 30 Days", value: 30 },
+              ]}
+              label={"Payment Terms"}
+            />
+          </div>
+
+          <FormRow
+            name={"projectDescription"}
+            id={"project-description"}
+            label={"Project Description"}
+          />
         </div>
       </div>
     </div>

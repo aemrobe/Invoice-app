@@ -29,7 +29,7 @@ export function useOutsideClicks(handler, options = {}) {
         document.removeEventListener("click", handleClick);
       };
     },
-    [handler],
+    [handler, ignoreSelectors],
   );
 
   return ref;

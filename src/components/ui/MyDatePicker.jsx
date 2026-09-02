@@ -74,7 +74,7 @@ function MyDatePicker({ initialDate, name = "paymentDue" }) {
     >
       <label
         htmlFor={inputId}
-        className="leading-tight-s text-form-label capitalize mb-2.25"
+        className="leading-tight-s text-form-label/55 capitalize mb-2.25"
       >
         Invoice Date
       </label>
@@ -102,7 +102,7 @@ function MyDatePicker({ initialDate, name = "paymentDue" }) {
         <div
           role="dialog"
           aria-label="Choose invoice date"
-          className={`absolute top-full right-0 left-0 w-full max-w-75 mx-auto translate-y-2 ${visible ? "open" : "close"}`}
+          className={`absolute top-full right-0 left-0 w-full z-10 max-w-75 mx-auto translate-y-2 ${visible ? "open" : "close"}`}
         >
           <DayPicker
             animate
@@ -130,9 +130,9 @@ function MyDatePicker({ initialDate, name = "paymentDue" }) {
               button_previous: `${defaultClassNames.button_previous} rounded-md p-1 focusable-ring`,
               button_next: `${defaultClassNames.button_next} rounded-md p-1 focusable-ring`,
               day: `w-full h-auto aspect-square text-center heading-S2 `,
-              day_button: `${defaultClassNames.day_button} text-calendar-text cursor-pointer hover:!text-calendar-day-hover focus-visible:!text-calendar-day-hover focus-visible:!ring-2 focus-visible:!ring-calendar-day-hover focus-visible:outline-none w-full h-full rounded-full `,
+              day_button: `${defaultClassNames.day_button} text-calendar-text cursor-pointer hover:!text-content-interactive-hover focus-visible:!text-content-interactive-hover focus-visible:!ring-2 focus-visible:!ring-content-interactive-hover focus-visible:outline-none w-full h-full rounded-full `,
               selected:
-                "!bg-transparent [&>button]:!bg-transparent [&>button]:!text-calendar-day-hover",
+                "!bg-transparent [&>button]:!bg-transparent [&>button]:!text-content-interactive-hover",
               outside: `text-calendar-day-outside pointer-events-none`,
               day_hidden: "hidden",
               empty: "hidden",
