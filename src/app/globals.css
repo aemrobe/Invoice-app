@@ -40,8 +40,8 @@
 
   --color-slate-900: #0c0e16;
   --color-slate-800: #141625;
-  --color-slate-700: #1e2139;
-  --color-slate-600: #252945; /* # dark  # */
+  --color-slate-700: #1e2139; /* # dark  # */
+  --color-slate-600: #252945;
   --color-slate-550: #373b53;
   --color-slate-500: #494e6e;
   --color-slate-400: #7e88c3;
@@ -254,6 +254,8 @@
   --color-content-variant: var(--color-content-variant);
   --color-content-inverse: var(--color-white);
   --color-slate-400: var(--color-slate-400);
+  --color-slate-380: var(--color-slate-380);
+  --color-slate-300: var(--color-slate-300);
 
   /* Input Controls */
   --color-control-bg: var(--color-control-bg);

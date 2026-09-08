@@ -2,10 +2,13 @@ import Link from "next/link";
 
 const buttonVariants = {
   edit: "bg-action-secondary-bg hover:bg-action-secondary-hover text-action-secondary-text hover:text-action-secondary-text-hover pl-6 pr-5.75",
+  cancel:
+    "bg-action-secondary-bg hover:bg-action-secondary-hover text-action-secondary-text hover:text-action-secondary-text-hover px-[1.656rem]",
   delete:
     "bg-action-danger-bg hover:bg-action-danger-hover text-white pl-6 pr-6.25",
   primary:
     "bg-action-primary-bg hover:bg-action-primary-hover text-white pl-6.75 pr-7",
+  save: "bg-action-primary-bg hover:bg-action-primary-hover text-white pl-6 pr-[1.4375rem]",
 };
 
 function Button({

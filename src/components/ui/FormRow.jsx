@@ -1,17 +1,29 @@
 function FormRow({
-  id,
   placeholder = "",
   label,
+  id,
   type = "text",
   className,
+  labelClassName = "mb-2.25",
   name,
+  defaultValue,
+  onFocus,
   ...props
 }) {
+  const handleFocus = (e) => {
+    const length = e.target.value.length;
+
+    e.target.setSelectionRange(length, length);
+
+    // Call external onFocus prop if provided
+    if (onFocus) onFocus(e);
+  };
+
   return (
-    <div className={`flex flex-col  ${className}`}>
+    <div className={`flex flex-col ${className}`}>
       <label
         htmlFor={id}
-        className="leading-tight-s text-form-label capitalize mb-2.25"
+        className={`leading-tight-s text-form-label capitalize ${labelClassName}`}
       >
         {label}
       </label>
@@ -25,6 +37,8 @@ function FormRow({
         focus:outline-none focus-visible:border-input-border-active caret-brand-primary transition-fast pt-4.5 pb-3.75 pl-5 pr-4 rounded-sm"
         placeholder={placeholder}
         name={name}
+        onFocus={handleFocus}
+        defaultValue={defaultValue}
         {...props}
       />
     </div>

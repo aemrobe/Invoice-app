@@ -3,6 +3,7 @@ import "./globals.css";
 import "@daypicker/react/style.css";
 import AppProviders from "@/providers/AppProviders";
 import Header from "@/components/layout/Header";
+import InertWrappers from "@/components/invoice/InertWrappers";
 
 const spartan = League_Spartan({
   variable: "--font-league-spartan",

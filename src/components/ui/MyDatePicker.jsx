@@ -72,17 +72,17 @@ function MyDatePicker({ initialDate, name = "paymentDue" }) {
       onBlur={handleBlur}
       ref={dropdownRef}
     >
-      <label
-        htmlFor={inputId}
+      <span
+        id={inputId}
         className="leading-tight-s text-form-label/55 capitalize mb-2.25"
       >
         Invoice Date
-      </label>
+      </span>
 
       <button
         type="button"
         ref={buttonRef}
-        aria-expanded={isOpen}
+        aria-expanded={visible}
         aria-labelledby={inputId}
         aria-haspopup="dialog"
         onClick={handleDropDown}
@@ -102,7 +102,7 @@ function MyDatePicker({ initialDate, name = "paymentDue" }) {
         <div
           role="dialog"
           aria-label="Choose invoice date"
-          className={`absolute top-full right-0 left-0 w-full z-10 max-w-75 mx-auto translate-y-2 ${visible ? "open" : "close"}`}
+          className={`absolute top-full right-0 left-0 w-full z-10 max-w-86 mx-auto translate-y-2 ${visible ? "open" : "close"}`}
         >
           <DayPicker
             animate
@@ -123,7 +123,7 @@ function MyDatePicker({ initialDate, name = "paymentDue" }) {
               Chevron: ChevronIcon,
             }}
             classNames={{
-              root: `${defaultClassNames.root} w-full max-w-[300px]  mx-auto  py-[25px]  px-[15px] bg-surface-overlay shadow-dropdown rounded-lg`,
+              root: `${defaultClassNames.root} w-full max-w-86   mx-auto  py-6.25 px-3.75  bg-surface-overlay shadow-dropdown rounded-lg`,
               month_grid: `w-full table-fixed `,
               month_caption: `${defaultClassNames.month_caption}`,
               caption_label: `${defaultClassNames.caption_label} text-calendar-text heading-S2 leading-none`,

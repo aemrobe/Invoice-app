@@ -1,5 +1,5 @@
 import StatusBadge from "@/components/invoice/StatusBadge";
-import { formatCurrency, formatDate } from "../../lib/formatters";
+import { formatCurrency, formatDate } from "@/lib/formatters";
 import Link from "next/link";
 
 function InvoiceCard({ invoice }) {
@@ -8,7 +8,7 @@ function InvoiceCard({ invoice }) {
   return (
     <li className="max-w-81.75 w-full">
       <Link
-        href={`/${id}`}
+        href={`/invoices/${id}`}
         className="shadow-card focusable-ring px-6 pt-6.25 pb-5.5 bg-surface-primary rounded-lg  grid grid-cols-[auto_auto]   justify-between"
       >
         <h2 className="heading-S2 text-content-primary ">

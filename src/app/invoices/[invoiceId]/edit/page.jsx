@@ -16,7 +16,7 @@ async function FullEditPage({ params }) {
     (invoice) => invoice.id === invoiceId,
   );
 
-  return <InvoiceForm editInvoice={invoiceDetails} />;
+  return <InvoiceForm editInvoice={invoiceDetails} className={"max-w-100"} />;
 }
 
 export default FullEditPage;

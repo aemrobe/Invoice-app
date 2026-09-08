@@ -6,7 +6,7 @@ function InvoiceActions({ invoiceItem }) {
   return (
     <>
       <Button
-        href={`/${invoiceItem.id}/edit`}
+        href={`/invoices/${invoiceItem.id}/edit`}
         scroll={false}
         variant={"edit"}
         onClick={(e) => {

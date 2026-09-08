@@ -29,12 +29,7 @@ function InertWrappers({ children }) {
   }, [isInterceptedModalOpen]);
 
   return (
-    <div
-      className="border-4 border-lime-500"
-      inert={isInterceptedModalOpen ? true : undefined}
-    >
-      {children}
-    </div>
+    <div inert={isInterceptedModalOpen ? true : undefined}>{children}</div>
   );
 }
 
