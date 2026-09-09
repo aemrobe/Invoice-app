@@ -6,7 +6,12 @@ function PageHeading({ className, children }) {
   const pageHeading = useRef(null);
 
   useEffect(() => {
-    pageHeading.current.focus();
+    const hasModalTrigger = Boolean(window.__lastModalTriggerElement);
+    const hasUrlHash = Boolean(window.location.hash);
+
+    if (!hasModalTrigger && !hasUrlHash && pageHeading.current) {
+      pageHeading.current.focus();
+    }
   }, []);
 
   return (

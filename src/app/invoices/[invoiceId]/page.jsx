@@ -39,7 +39,7 @@ async function Page({ params }) {
   return (
     <div className="flex-1 flex flex-col justify-between">
       <div className="px-6 mt-8.25  max-w-112.5 mx-auto">
-        <GoBackBtn />
+        <GoBackBtn to={`/invoices#invoice-card-${invoiceId}`} />
 
         <div className="mt-7.75 shadow-card px-6 pt-6 pb-6.75 rounded-md bg-surface-primary flex justify-between items-center">
           <p className="text-status-label capitalize">Status</p>

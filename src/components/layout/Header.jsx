@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import ThemeToggler from "@/components/ui/ThemeToggler";
 import { useModal } from "@/components/ui/Modal";
-import { useTransition } from "react";
 
 function Header() {
   const { close } = useModal();

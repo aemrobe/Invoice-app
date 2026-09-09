@@ -8,6 +8,7 @@ function InvoiceCard({ invoice }) {
   return (
     <li className="max-w-81.75 w-full">
       <Link
+        id={`invoice-card-${id}`}
         href={`/invoices/${id}`}
         className="shadow-card focusable-ring px-6 pt-6.25 pb-5.5 bg-surface-primary rounded-lg  grid grid-cols-[auto_auto]   justify-between"
       >

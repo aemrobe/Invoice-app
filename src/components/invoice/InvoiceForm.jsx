@@ -14,14 +14,25 @@ import FormSection from "../ui/FormSection";
 
 const SECTION_TITLE_STYLES = "heading-S2 text-brand-primary capitalize mb-6";
 
-function InvoiceForm({ editInvoice = "", overlay, className }) {
+function InvoiceForm({ editInvoice = null, overlay, className }) {
   const isEditMode = !!editInvoice;
 
+  const {
+    clientAddress = {},
+    clientEmail = "",
+    clientName = "",
+    createdAt = "",
+    description = "",
+    id = "",
+    items: itemsValue = [],
+    paymentTerms,
+    senderAddress = {},
+  } = editInvoice || {};
   const router = useRouter();
   const scrollRef = useRef();
   const hasMoreToScroll = useScrollOverflow(scrollRef);
 
-  const [items, setItems] = useState(editInvoice?.items || []);
+  const [items, setItems] = useState(itemsValue || []);
 
   const titleId = "invoice-modal-title";
 
@@ -29,9 +40,9 @@ function InvoiceForm({ editInvoice = "", overlay, className }) {
     if (window.history.length > 1) {
       router.back();
     } else {
-      router.push(isEditMode ? `/invoices/${editInvoice.id}` : "/invoices");
+      router.push(isEditMode ? `/invoices/${id}` : "/invoices");
     }
-  }, [router, editInvoice.id, isEditMode]);
+  }, [router, isEditMode, id]);
 
   const handleSave = function () {
     console.log("changes saved");
@@ -136,7 +147,7 @@ function InvoiceForm({ editInvoice = "", overlay, className }) {
                   #
                 </span>
                 <span className="sr-only">Invoice</span>
-                {editInvoice.id}
+                {id}
               </span>
             ) : (
               "New invoice"
@@ -153,9 +164,10 @@ function InvoiceForm({ editInvoice = "", overlay, className }) {
               id={"senderAddress-street"}
               label={"Street Address"}
               className={"mb-6.25"}
+              defaultValue={senderAddress?.street}
             />
 
-            <AddressFields prefix={"senderAddress"} />
+            <AddressFields prefix={"senderAddress"} address={senderAddress} />
           </FormSection>
 
           <FormSection
@@ -167,6 +179,7 @@ function InvoiceForm({ editInvoice = "", overlay, className }) {
                 name={"clientName"}
                 id={"client-name"}
                 label={"Client's Name"}
+                defaultValue={clientName}
               />
 
               <FormRow
@@ -174,23 +187,25 @@ function InvoiceForm({ editInvoice = "", overlay, className }) {
                 id={"client-email"}
                 label={"Client’s Email"}
                 placeholder="e.g. email@example.com"
+                defaultValue={clientEmail}
               />
 
               <FormRow
                 name="clientAddress.street"
                 id={"clientAddress-street"}
                 label={"Street Address"}
+                defaultValue={clientAddress?.street}
               />
             </div>
 
-            <AddressFields prefix={"clientAddress"} />
+            <AddressFields prefix={"clientAddress"} address={clientAddress} />
           </FormSection>
 
           <div className="flex flex-col gap-6.25 mb-6.25">
-            <MyDatePicker />
+            <MyDatePicker initialDate={createdAt} name={"createdAt"} />
 
             <CustomSelect
-              defaultValue={1}
+              defaultValue={paymentTerms}
               name={"paymentTerms"}
               options={[
                 { label: "Net 1 Day", value: 1 },
@@ -207,6 +222,7 @@ function InvoiceForm({ editInvoice = "", overlay, className }) {
             id={"project-description"}
             label={"Project Description"}
             className={"mb-17.25"}
+            defaultValue={description}
           />
 
           <FormSection
@@ -314,23 +330,23 @@ function InvoiceForm({ editInvoice = "", overlay, className }) {
   );
 }
 
-function FormSectionTitle({ children, className = "" }) {
-  return (
-    <p className={`heading-S2 text-brand-primary capitalize  ${className}`}>
-      {children}
-    </p>
-  );
-}
+function AddressFields({ prefix, className, address = {} }) {
+  const safeAddress = address || {};
 
-function AddressFields({ prefix, className }) {
   return (
     <div className={`grid grid-cols-2 gap-x-5.75 gap-y-6.25 ${className}`}>
-      <FormRow name={`${prefix}.city`} id={`${prefix}-city`} label={"City"} />
+      <FormRow
+        name={`${prefix}.city`}
+        id={`${prefix}-city`}
+        label={"City"}
+        defaultValue={safeAddress.city}
+      />
 
       <FormRow
         name={`${prefix}.postcode`}
         id={`${prefix}-postCode`}
         label={"Post Code"}
+        defaultValue={safeAddress.postCode}
       />
 
       <FormRow
@@ -338,6 +354,7 @@ function AddressFields({ prefix, className }) {
         id={`${prefix}-country`}
         label={"country"}
         className={"row-start-2 col-span-2"}
+        defaultValue={safeAddress.country}
       />
     </div>
   );

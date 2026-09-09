@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import { useOutsideClicks } from "@/hooks/useOutsideClicks";
 import { ANIMATION_DURATION_FILTER_MENU } from "../../lib/constants/durations";
 
-function MyDatePicker({ initialDate, name = "paymentDue" }) {
+function MyDatePicker({ initialDate, name }) {
   const inputId = useId();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(() =>
