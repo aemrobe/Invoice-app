@@ -90,6 +90,7 @@
   /* Action Buttons */
   --color-action-secondary-hover: var(--color-slate-200);
   --color-action-secondary-text: var(--color-slate-400);
+  --color-action-secondary-text-hover: var(--color-slate-400);
 
   /* Input Controls */
   --color-control-border: var(--color-slate-200);
@@ -155,6 +156,7 @@
   /* Action Buttons */
   --color-action-secondary-hover: var(--color-white);
   --color-action-secondary-text: var(--color-slate-200);
+  --color-action-secondary-text-hover: var(--color-slate-200);
 
   /* Input Controls */
   --color-control-border: var(--color-slate-700);

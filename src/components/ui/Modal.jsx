@@ -13,18 +13,17 @@ import {
 import ModalOverlay from "@/components/ui/ModalOverlay";
 import { useOutsideClicks } from "@/hooks/useOutsideClicks";
 import { createPortal } from "react-dom";
-import { MODAL_FOCUS_DURATION } from "../../lib/constants/durations";
-import { usePathname } from "next/navigation";
+import { MODAL_FOCUS_DURATION } from "@/lib/constants/durations";
 
 const ModalContext = createContext();
 
 function Modal({ children }) {
   const [openName, setOpenName] = useState("");
   const [lastFocusableElement, setLastFocusableElement] = useState(null);
-  const pathname = usePathname();
 
   const close = useCallback(() => {
     setOpenName("");
+    setLastFocusableElement(null);
   }, []);
 
   const restoreFocus = useCallback(() => {
@@ -95,8 +94,8 @@ function Window({
 
   const modalRef = useOutsideClicks(
     () => {
-      close();
       restoreFocus();
+      close();
     },
     {
       ignoreSelectors: "header",
@@ -132,8 +131,8 @@ function Window({
 
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
-        close();
         restoreFocus();
+        close();
       }
 
       if (e.key === "Tab") {
@@ -178,7 +177,7 @@ function Window({
       }
 
       hasFocussedRef.current = true;
-    }, 10); //10sec
+    }, MODAL_FOCUS_DURATION);
 
     window.addEventListener("keydown", handleKeyDown);
 
@@ -207,7 +206,7 @@ function Window({
         aria-labelledby={titleId || undefined}
         aria-describedby={contentId || undefined}
         tabIndex={"-1"}
-        className={`outline-none fixed z-20 ${className}`}
+        className={`outline-none fixed z-60 ${className}`}
       >
         {cloneElement(children, {
           onCloseModal: () => {
@@ -216,6 +215,7 @@ function Window({
           restoreFocus,
           titleId,
           contentId,
+          initialFocusSelector,
         })}
       </div>
     </ModalOverlay>,
