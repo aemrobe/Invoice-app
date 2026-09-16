@@ -1,10 +1,12 @@
 import FilterComponent from "@/components/ui/FilterComponent";
-import invoices from "@/lib/data.json";
 import InvoiceList from "@/components/invoice/InvoiceList";
 import PageHeading from "@/components/ui/PageHeading";
 import CreateInvoiceBtn from "@/components/invoice/CreateInvoiceBtn";
+import { getInvoices } from "../../lib/services/data-services";
 
-export default function Home() {
+export default async function Home() {
+  const invoices = await getInvoices();
+
   return (
     <div className="px-6 py-8">
       <div className="flex justify-between">
@@ -25,7 +27,7 @@ export default function Home() {
         </div>
       </div>
 
-      <InvoiceList />
+      <InvoiceList invoices={invoices} />
     </div>
   );
 }

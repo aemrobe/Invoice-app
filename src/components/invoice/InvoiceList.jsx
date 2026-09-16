@@ -2,22 +2,24 @@
 
 import InvoiceCard from "@/components/invoice/InvoiceCard";
 import EmptyMessage from "@/components/ui/EmptyMessage";
-import invoices from "@/lib/data.json";
 import { useEffect } from "react";
 
-function InvoiceList() {
+function InvoiceList({ invoices }) {
   useEffect(() => {
-    const hash = window.location.hash;
+    const focusedInvoiceId = sessionStorage.getItem("focusedInvoiceId");
 
-    if (hash) {
-      const targetId = hash.replace("#", "");
-      const element = document.getElementById(targetId);
+    if (focusedInvoiceId) {
+      const element = document.getElementById(focusedInvoiceId);
 
       if (element) {
         element.scrollIntoView({ behavior: "smooth", block: "center" });
         element.focus();
       }
     }
+
+    requestAnimationFrame(() => {
+      sessionStorage.removeItem("focusedInvoiceId");
+    });
   }, []);
 
   return invoices?.length === 0 ? (

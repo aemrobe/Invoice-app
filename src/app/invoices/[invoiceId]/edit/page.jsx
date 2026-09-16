@@ -1,5 +1,5 @@
 import InvoiceForm from "@/components/invoice/InvoiceForm";
-import InvoiceData from "@/lib/data.json";
+import { getInvoice } from "../../../../lib/services/data-services";
 
 export async function generateMetadata({ params }) {
   const { invoiceId } = await params;
@@ -12,9 +12,7 @@ export async function generateMetadata({ params }) {
 async function FullEditPage({ params }) {
   const { invoiceId } = await params;
 
-  const invoiceDetails = InvoiceData.find(
-    (invoice) => invoice.id === invoiceId,
-  );
+  const invoiceDetails = await getInvoice(invoiceId);
 
   return <InvoiceForm editInvoice={invoiceDetails} className={"max-w-100"} />;
 }

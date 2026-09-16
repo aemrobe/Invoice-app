@@ -1,17 +1,12 @@
-import invoiceData from "@/lib/data.json";
-import { notFound } from "next/navigation";
 import InvoiceForm from "@/components/invoice/InvoiceForm";
+import { getInvoice } from "../../../../../lib/services/data-services";
 
 async function InterceptedEditModal({ params }) {
   const { invoiceId } = await params;
 
-  const invoice = invoiceData.find((item) => item.id === invoiceId);
+  const invoiceDetails = await getInvoice(invoiceId);
 
-  if (!invoice) {
-    notFound();
-  }
-
-  return <InvoiceForm editInvoice={invoice} className={"max-w-100"} />;
+  return <InvoiceForm editInvoice={invoiceDetails} className={"max-w-100"} />;
 }
 
 export default InterceptedEditModal;

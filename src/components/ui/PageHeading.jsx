@@ -1,18 +1,24 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 function PageHeading({ className, children }) {
   const pageHeading = useRef(null);
+  const pathname = usePathname();
 
   useEffect(() => {
-    const hasModalTrigger = Boolean(window.__lastModalTriggerElement);
-    const hasUrlHash = Boolean(window.location.hash);
+    const isHomePageRoute = pathname === "/" || pathname === "/invoices";
 
-    if (!hasModalTrigger && !hasUrlHash && pageHeading.current) {
+    const focusedInvoiceId = sessionStorage.getItem("focusedInvoiceId");
+
+    const hasModalTrigger = Boolean(window.__lastModalTriggerElement);
+    const hasFocusedInvoiceIem = isHomePageRoute && Boolean(focusedInvoiceId);
+
+    if (!hasModalTrigger && !hasFocusedInvoiceIem && pageHeading.current) {
       pageHeading.current.focus();
     }
-  }, []);
+  }, [pathname]);
 
   return (
     <h1

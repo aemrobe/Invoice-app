@@ -34,13 +34,13 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --color-white: #fff; /* # light #*/
+  --color-white: #fff;
   --color-purple-500: #7c5dfa;
   --color-purple-300: #9277ff;
 
-  --color-slate-900: #0c0e16;
+  --color-slate-900: #0c0e16; /* # light #*/
   --color-slate-800: #141625;
-  --color-slate-700: #1e2139; /* # dark  # */
+  --color-slate-700: #1e2139; /* # dark #*/
   --color-slate-600: #252945;
   --color-slate-550: #373b53;
   --color-slate-500: #494e6e;
@@ -88,9 +88,14 @@
   --color-content-variant: var(--color-slate-400);
 
   /* Action Buttons */
+  /* Secondary Action */
   --color-action-secondary-hover: var(--color-slate-200);
   --color-action-secondary-text: var(--color-slate-400);
   --color-action-secondary-text-hover: var(--color-slate-400);
+
+  /* Tertiary Action */
+  --color-action-tertiary-text: var(--color-slate-300);
+  --color-action-tertiary-bg-hover: var(--color-slate-900);
 
   /* Input Controls */
   --color-control-border: var(--color-slate-200);
@@ -154,9 +159,14 @@
   --color-content-variant: var(--color-slate-300);
 
   /* Action Buttons */
+  /* Secondary Action */
   --color-action-secondary-hover: var(--color-white);
   --color-action-secondary-text: var(--color-slate-200);
   --color-action-secondary-text-hover: var(--color-slate-200);
+
+  /* Tertiary Action */
+  --color-action-tertiary-text: var(--color-slate-200);
+  --color-action-tertiary-bg-hover: var(--color-slate-700);
 
   /* Input Controls */
   --color-control-border: var(--color-slate-700);
@@ -233,6 +243,11 @@
   --color-action-secondary-text: var(--color-action-secondary-text);
   --color-action-secondary-text-hover: var(--color-slate-400);
 
+  /* Tertiary Action */
+  --color-action-tertiary-text: var(--color-action-tertiary-text);
+  --color-action-tertiary-bg: var(--color-slate-550);
+  --color-action-tertiary-bg-hover: var(--color-action-tertiary-bg-hover);
+
   /* Logo */
   --color-brand-primary: var(--color-purple-500);
   --color-brand-accent: var(--color-purple-300);
@@ -258,6 +273,7 @@
   --color-slate-400: var(--color-slate-400);
   --color-slate-380: var(--color-slate-380);
   --color-slate-300: var(--color-slate-300);
+  --color-slate-550: var(--color-slate-550);
 
   /* Input Controls */
   --color-control-bg: var(--color-control-bg);
@@ -302,6 +318,9 @@
   /* Custom selectbox */
   --color-select-option-text: var(--color-select-option-text);
 
+  /* Loading indicator */
+  --color-loader-indicator: var(--color-purple-500);
+
   /* Breakpoints */
   --breakpoint-*: initial;
   --breakpoint-xs: 14.4375rem; /*231px */
@@ -327,6 +346,12 @@
     }
     100% {
       opacity: 0;
+    }
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
     }
   }
 
@@ -434,6 +459,22 @@
       scrollbar-width: none;
     }
   }
+}
+
+@utility spinner {
+  margin: auto;
+  width: 3.4rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(farthest-side, var(--color-loader-indicator) 94%, #0000)
+      top/10px 10px no-repeat,
+    conic-gradient(#0000 30%, var(--color-loader-indicator));
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 10px), #000 0);
+  mask: radial-gradient(farthest-side, #0000 calc(100% - 10px), #000 0);
+  animation: spin 1.5s infinite linear;
+  position: fixed;
+  inset: 0;
 }
 
 body {

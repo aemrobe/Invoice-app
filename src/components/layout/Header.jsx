@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ThemeToggler from "@/components/ui/ThemeToggler";
 import { useModal } from "@/components/ui/Modal";
+import DevSeedButton from "@/components/ui/DevSeedButton";
 
 function Header() {
   const { close } = useModal();
@@ -30,13 +31,12 @@ function Header() {
       </Link>
 
       <div className="flex  items-center">
+        {/* <DevSeedButton /> */}
         <ThemeToggler />
-
         <div
           className="border border-border-divider self-stretch ml-6"
           aria-hidden="true"
         ></div>
-
         <div className="px-6 shrink-0">
           <Image
             src={"/image-avatar.jpg"}

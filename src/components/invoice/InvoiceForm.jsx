@@ -316,13 +316,31 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
             className={`h-16 pointer-events-none absolute right-0 left-0 z-10 -top-16 bg-linear-to-b from-transparent via-black/5  to-black/10   ${hasMoreToScroll ? "opacity-100" : "opacity-0"} `}
           ></div>
 
-          <div className=" bg-surface-primary pt-5.25 pb-5.5 px-6 flex gap-x-2 justify-end">
-            <Button variant="cancel" onClick={handleGoback}>
-              Cancel
-            </Button>
-            <Button variant="save" onClick={handleSave}>
-              Save Changes
-            </Button>
+          <div
+            className={`bg-surface-primary pt-5.25 pb-5.5 px-6 flex ${isEditMode ? "gap-x-2" : "gap-x-1.75"} justify-end`}
+          >
+            {isEditMode ? (
+              <>
+                <Button variant="cancel" onClick={handleGoback}>
+                  Cancel
+                </Button>
+                <Button variant="save" onClick={handleSave}>
+                  Save Changes
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="discard" onClick={handleGoback}>
+                  Discard
+                </Button>
+                <Button variant="draft" onClick={handleGoback}>
+                  Save as Draft
+                </Button>
+                <Button variant="saveAndSend" onClick={handleGoback}>
+                  Save & Send
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </div>

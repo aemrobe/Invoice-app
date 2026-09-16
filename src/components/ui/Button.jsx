@@ -6,16 +6,21 @@ const SECONDARY_STYLES =
   "bg-action-secondary-bg hover:bg-action-secondary-hover text-action-secondary-text hover:text-action-secondary-text-hover";
 const MUTED_SECONDARY_STYLES =
   "bg-action-secondary-bg hover:bg-action-secondary-hover text-content-tertiary hover:text-action-secondary-text-hover";
+const TERTIARY_STYLES =
+  "text-action-tertiary-text bg-action-tertiary-bg hover:bg-action-tertiary-bg-hover";
 const DANGER_STYLES =
   "bg-action-danger-bg hover:bg-action-danger-hover text-white";
 
 const buttonVariants = {
   edit: `${SECONDARY_STYLES} pl-6 pr-5.75`,
   cancel: `${SECONDARY_STYLES} px-[1.656rem]`,
+  discard: `${SECONDARY_STYLES}  pl-4.5 pr-4.75`,
   cancelModal: `${MUTED_SECONDARY_STYLES} px-6`,
   delete: `${DANGER_STYLES} pl-6 pr-6.25`,
   primary: `${PRIMARY_STYLES} pl-6.75 pr-7`,
   save: `${PRIMARY_STYLES} pl-6 pr-[1.4375rem]`,
+  saveAndSend: `${PRIMARY_STYLES} pl-4 pr-3.75`,
+  draft: `${TERTIARY_STYLES}  pl-[1.006rem] pr-[0.868rem]`,
 };
 
 function Button({

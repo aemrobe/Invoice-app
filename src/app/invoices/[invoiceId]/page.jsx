@@ -1,10 +1,10 @@
 import StatusBadge from "@/components/invoice/StatusBadge";
-import { formatCurrency, formatDate } from "@/lib/formatters";
+import { formatCurrency, formatDate } from "@/lib/utils/formatters";
 import Button from "@/components/ui/Button";
-import invoices from "@/lib/data.json";
 import GoBackBtn from "@/components/ui/GoBackBtn";
 import InvoiceActions from "@/components/invoice/InvoiceActions";
 import PageHeading from "@/components/ui/PageHeading";
+import { getInvoice } from "../../../lib/services/data-services";
 
 const EMPTY_FALLBACK = "—";
 const EMPTYFALLBACKSTYLES = "text-content-primary heading-S leading-5";
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }) {
 async function Page({ params }) {
   const { invoiceId } = await params;
 
-  const invoiceItem = invoices.find((invoice) => invoice.id === invoiceId);
+  const invoiceItem = await getInvoice(invoiceId);
 
   const {
     status = "draft",
@@ -39,7 +39,7 @@ async function Page({ params }) {
   return (
     <div className="flex-1 flex flex-col justify-between">
       <div className="px-6 mt-8.25  max-w-112.5 mx-auto">
-        <GoBackBtn to={`/invoices#invoice-card-${invoiceId}`} />
+        <GoBackBtn />
 
         <div className="mt-7.75 shadow-card px-6 pt-6 pb-6.75 rounded-md bg-surface-primary flex justify-between items-center">
           <p className="text-status-label capitalize">Status</p>
