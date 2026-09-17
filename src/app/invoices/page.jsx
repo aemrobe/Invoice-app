@@ -4,9 +4,22 @@ import PageHeading from "@/components/ui/PageHeading";
 import CreateInvoiceBtn from "@/components/invoice/CreateInvoiceBtn";
 import { getInvoices } from "../../lib/services/data-services";
 
-export default async function Home() {
+export default async function Home({ searchParams }) {
   const invoices = await getInvoices();
 
+  const resolvedSearchParams = await searchParams;
+
+  const statusFilter = resolvedSearchParams?.status;
+
+  const resolvedStatusFilter = statusFilter ? statusFilter.split(",") : "";
+
+  let displayedInvoices = invoices;
+
+  if (resolvedStatusFilter.length > 0) {
+    displayedInvoices = invoices.filter((invoice) =>
+      resolvedStatusFilter.includes(invoice.status),
+    );
+  }
   return (
     <div className="px-6 py-8">
       <div className="flex justify-between">
@@ -15,9 +28,9 @@ export default async function Home() {
             Invoices
           </PageHeading>
           <p className="text-content-tertiary text-center sm:text-left ">
-            {invoices.length === 0
+            {displayedInvoices.length === 0
               ? "No invoices"
-              : `${invoices.length} invoices`}
+              : `${displayedInvoices.length} invoices`}
           </p>
         </div>
 
@@ -27,7 +40,7 @@ export default async function Home() {
         </div>
       </div>
 
-      <InvoiceList invoices={invoices} />
+      <InvoiceList invoices={displayedInvoices} />
     </div>
   );
 }

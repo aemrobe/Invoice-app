@@ -463,6 +463,7 @@
 
 @utility spinner {
   margin: auto;
+  z-index: 50;
   width: 3.4rem;
   aspect-ratio: 1;
   border-radius: 50%;

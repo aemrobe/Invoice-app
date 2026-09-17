@@ -7,9 +7,9 @@ export async function getInvoices() {
       "id,createdAt:created_at,paymentDue:payment_due,description,paymentTerms:payment_terms,status,total,clientName:client_name,clientEmail:client_email,clientStreet:client_street,clientCity:client_city,clientPostCode:client_post_code,clientCountry:client_country,senderStreet:sender_street,senderCity:sender_city,senderPostcode:sender_post_code,senderCountry:sender_country,items:invoice_items(*)",
     );
 
-  // await new Promise((res) => setTimeout(res, 2000));
+  // await new Promise((res) => setTimeout(res, 3000));
   if (error) {
-    throw new Error(error);
+    throw new Error(error.message);
   }
 
   const invoices = data.map((invoice) => ({
@@ -49,9 +49,9 @@ export async function getInvoice(id) {
     .eq("id", id)
     .single();
 
-  // await new Promise((res) => setTimeout(res, 2000));
+  // await new Promise((res) => setTimeout(res, 3000));
   if (error) {
-    throw new Error(error);
+    throw new Error(error.message);
   }
 
   if (!invoice) {
