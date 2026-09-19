@@ -1,15 +1,29 @@
+import { cache } from "react";
 import { supabase } from "./supabase";
 
-export async function getInvoices() {
-  const { data, error } = await supabase
+export const getInvoices = cache(async ({ filter }) => {
+  let query = supabase
     .from("invoices")
     .select(
       "id,createdAt:created_at,paymentDue:payment_due,description,paymentTerms:payment_terms,status,total,clientName:client_name,clientEmail:client_email,clientStreet:client_street,clientCity:client_city,clientPostCode:client_post_code,clientCountry:client_country,senderStreet:sender_street,senderCity:sender_city,senderPostcode:sender_post_code,senderCountry:sender_country,items:invoice_items(*)",
+      {
+        count: "exact",
+      },
     );
 
-  // await new Promise((res) => setTimeout(res, 3000));
+  // ## Filter ##
+  if (filter && filter.value) {
+    const method = filter.method || (Array.isArray(filter.value) ? "in" : "eq");
+
+    query = query[method](filter.field, filter.value);
+  }
+
+  const { data, error, count } = await query;
+
+  await new Promise((res) => setTimeout(res, 3000));
   if (error) {
-    throw new Error(error.message);
+    console.error(`${error.message}`);
+    throw new Error("Invoices couldn't be loaded");
   }
 
   const invoices = data.map((invoice) => ({
@@ -37,8 +51,8 @@ export async function getInvoices() {
     items: invoice.items || [],
   }));
 
-  return invoices;
-}
+  return { invoices, count };
+});
 
 export async function getInvoice(id) {
   let { data: invoice, error } = await supabase
@@ -49,7 +63,7 @@ export async function getInvoice(id) {
     .eq("id", id)
     .single();
 
-  // await new Promise((res) => setTimeout(res, 3000));
+  await new Promise((res) => setTimeout(res, 3000));
   if (error) {
     throw new Error(error.message);
   }

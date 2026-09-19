@@ -1,7 +1,7 @@
-import Spinner from "@/components/ui/Spinner";
+import FullScreenSpinner from "@/components/ui/FullScreenSpinner";
 
 function loading() {
-  return <Spinner />;
+  return <FullScreenSpinner />;
 }
 
 export default loading;

@@ -462,9 +462,6 @@
 }
 
 @utility spinner {
-  margin: auto;
-  z-index: 50;
-  width: 3.4rem;
   aspect-ratio: 1;
   border-radius: 50%;
   background:
@@ -474,8 +471,6 @@
   -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 10px), #000 0);
   mask: radial-gradient(farthest-side, #0000 calc(100% - 10px), #000 0);
   animation: spin 1.5s infinite linear;
-  position: fixed;
-  inset: 0;
 }
 
 body {

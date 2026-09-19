@@ -1,3 +1,5 @@
+"use client";
+
 import StatusBadge from "@/components/invoice/StatusBadge";
 import { formatCurrency, formatDate } from "@/lib/utils/formatters";
 import Link from "next/link";
