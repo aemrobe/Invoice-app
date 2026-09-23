@@ -7,32 +7,77 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useOutsideClicks } from "@/hooks/useOutsideClicks";
 import CustomSelect from "@/components/ui/CustomSelect";
-import { DeleteIcon } from "@/components/icons";
 import Button from "@/components/ui/Button";
 import { useScrollOverflow } from "@/hooks/useScrollOverflow";
-import FormSection from "../ui/FormSection";
+import FormSection from "@/components/ui/FormSection";
+import { useFieldArray, useForm } from "react-hook-form";
+import { FIELD_REQUIRED_MESSAGE } from "@/lib/constants/invoice";
+import InvoiceItemRow from "./InvoiceItemRow";
 
 const SECTION_TITLE_STYLES = "heading-S2 text-brand-primary capitalize mb-6";
 
+const DEFAULT_FORM_VALUES = {
+  senderAddress: { street: "", city: "", postcode: "", country: "" },
+  clientName: "",
+  clientEmail: "",
+  clientAddress: { street: "", city: "", postcode: "", country: "" },
+  createdAt: new Date().toISOString().split("T")[0],
+  paymentTerms: 30,
+  description: "",
+  items: [],
+};
+
+const validateRequired = (value) =>
+  value.trim() !== "" || FIELD_REQUIRED_MESSAGE;
+
 function InvoiceForm({ editInvoice = null, overlay, className }) {
   const isEditMode = !!editInvoice;
+  const { id = "" } = isEditMode ? editInvoice : {};
 
   const {
-    clientAddress = {},
-    clientEmail = "",
-    clientName = "",
-    createdAt = "",
-    description = "",
-    id = "",
-    items: itemsValue = [],
-    paymentTerms,
-    senderAddress = {},
-  } = editInvoice || {};
+    register,
+    handleSubmit,
+    control,
+    clearErrors,
+    formState: { errors },
+  } = useForm({
+    mode: "onTouched",
+    defaultValues: DEFAULT_FORM_VALUES,
+    values: isEditMode
+      ? {
+          senderAddress:
+            editInvoice.senderAddress || DEFAULT_FORM_VALUES.senderAddress,
+          clientName: editInvoice.clientName || "",
+          clientEmail: editInvoice.clientEmail || "",
+          clientAddress:
+            editInvoice.clientAddress || DEFAULT_FORM_VALUES.clientAddress,
+          createdAt: editInvoice.createdAt || DEFAULT_FORM_VALUES.createdAt,
+          paymentTerms: editInvoice.paymentTerms || 30,
+          description: editInvoice.description || "",
+          items: editInvoice.items?.length > 0 ? editInvoice.items : [],
+        }
+      : undefined,
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "items",
+    rules: {
+      validate: (value) => {
+        return (
+          (Array.isArray(value) && value.length > 0) ||
+          "- An item must be added"
+        );
+      },
+    },
+  });
+
+  const emptyItemsLength = fields.length === 0;
+  const noItemError = errors.items?.root;
+
   const router = useRouter();
   const scrollRef = useRef();
   const hasMoreToScroll = useScrollOverflow(scrollRef);
-
-  const [items, setItems] = useState(itemsValue || []);
 
   const titleId = "invoice-modal-title";
 
@@ -43,6 +88,34 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
       router.push(isEditMode ? `/invoices/${id}` : "/invoices");
     }
   }, [router, isEditMode, id]);
+
+  const handleRemoveItem = (index) => {
+    const nextFocusIndex = index < fields.length - 1 ? index : index - 1;
+
+    remove(index);
+
+    requestAnimationFrame(() => {
+      if (nextFocusIndex >= 0) {
+        const targetInput = document.getElementById(
+          `name-${nextFocusIndex}-id`,
+        );
+
+        targetInput?.focus();
+      } else {
+        document.getElementById("add-item-btn")?.focus();
+      }
+    });
+  };
+
+  const handleAddItem = () => {
+    append({
+      name: "",
+      quantity: 1,
+      price: 0,
+    });
+
+    clearErrors("items.root");
+  };
 
   const handleSave = function () {
     console.log("changes saved");
@@ -119,6 +192,10 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleGoback]);
 
+  const onSubmit = async (data) => {
+    console.log("submit", data);
+  };
+
   return (
     <div
       role="dialog"
@@ -126,253 +203,236 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
       aria-labelledby={titleId}
       className={`fixed  z-30 transparent inset-x-0 bottom-0 top-18 ${overlay} bg-black/50`}
     >
-      <div
-        ref={modalRef}
-        className={`outline-none fixed flex flex-col  z-20  bg-surface-modal inset-x-0 top-18 bottom-0 pt-2  pr-2 ${className}`}
-      >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div
-          ref={scrollRef}
-          className="pt-6.25 pl-6 pr-4 pb-22 w-full flex-1 min-h-0 overflow-y-auto custom-scrollbar "
+          ref={modalRef}
+          className={`outline-none fixed flex flex-col  z-20  bg-surface-modal inset-x-0 top-18 bottom-0 pt-2  pr-2 ${className}`}
         >
-          <GoBackBtn onClick={handleGoback} />
-
-          <h1
-            id={titleId}
-            className="text-content-primary   heading-M leading-8 tracking-[-0.5px] mt-6.5"
+          <div
+            ref={scrollRef}
+            className={`pt-6.25 pl-6 pr-4 ${noItemError ? "pb-0" : "pb-22"} w-full flex-1 min-h-0 overflow-y-auto custom-scrollbar`}
           >
-            {isEditMode ? (
-              <span>
-                Edit{" "}
-                <span aria-hidden="true" className="text-heading-prefix">
-                  #
-                </span>
-                <span className="sr-only">Invoice</span>
-                {id}
-              </span>
-            ) : (
-              "New invoice"
-            )}
-          </h1>
+            <GoBackBtn onClick={handleGoback} />
 
-          <FormSection
-            className="mt-5.5 mb-10.25"
-            title={"Bill From"}
-            legendClassName={`${SECTION_TITLE_STYLES}`}
-          >
-            <FormRow
-              name={"senderAddress.street"}
-              id={"senderAddress-street"}
-              label={"Street Address"}
-              className={"mb-6.25"}
-              defaultValue={senderAddress?.street}
-            />
-
-            <AddressFields prefix={"senderAddress"} address={senderAddress} />
-          </FormSection>
-
-          <FormSection
-            title={"Bill To"}
-            legendClassName={`${SECTION_TITLE_STYLES}`}
-          >
-            <div className="flex flex-col gap-6.25 mb-6.25">
-              <FormRow
-                name={"clientName"}
-                id={"client-name"}
-                label={"Client's Name"}
-                defaultValue={clientName}
-              />
-
-              <FormRow
-                name={"clientEmail"}
-                id={"client-email"}
-                label={"Client’s Email"}
-                placeholder="e.g. email@example.com"
-                defaultValue={clientEmail}
-              />
-
-              <FormRow
-                name="clientAddress.street"
-                id={"clientAddress-street"}
-                label={"Street Address"}
-                defaultValue={clientAddress?.street}
-              />
-            </div>
-
-            <AddressFields prefix={"clientAddress"} address={clientAddress} />
-          </FormSection>
-
-          <div className="flex flex-col gap-6.25 mb-6.25">
-            <MyDatePicker initialDate={createdAt} name={"createdAt"} />
-
-            <CustomSelect
-              defaultValue={paymentTerms}
-              name={"paymentTerms"}
-              options={[
-                { label: "Net 1 Day", value: 1 },
-                { label: "Net 7 Days", value: 7 },
-                { label: "Net 14 Days", value: 14 },
-                { label: "Net 30 Days", value: 30 },
-              ]}
-              label={"Payment Terms"}
-            />
-          </div>
-
-          <FormRow
-            name={"projectDescription"}
-            id={"project-description"}
-            label={"Project Description"}
-            className={"mb-17.25"}
-            defaultValue={description}
-          />
-
-          <FormSection
-            className="mb-0"
-            title={"Item List"}
-            legendClassName={`text-[1.125rem] ${isEditMode ? "mb-5.5" : "mb-3.75"} font-bold leading-8 tracking-[-0.38px] text-slate-380`}
-          >
-            <div className="flex flex-col gap-y-12.25">
-              {items.map((item, index) => (
-                <FormSection
-                  key={index}
-                  className="mb-0"
-                  legendClassName="sr-only"
-                  title={`Item ${index + 1}`}
-                >
-                  <div className="flex flex-wrap gap-y-6.25 gap-x-4">
-                    <FormRow
-                      name={`items[${index}].name`}
-                      id={`name-${index}-id`}
-                      label={"Item Name"}
-                      defaultValue={item.name}
-                      className={"w-full"}
-                      labelClassName={"md:sr-only  mb-3.75"}
-                    />
-
-                    <FormRow
-                      name={`items[${index}].quantity`}
-                      id={`quantity-${index}-id`}
-                      label={"Qty."}
-                      defaultValue={item.quantity}
-                      className={"w-16"}
-                      labelClassName={"md:sr-only mb-2.25"}
-                    />
-
-                    <FormRow
-                      name={`price-${index + 1}`}
-                      id={`price-${index}-id`}
-                      label={"price"}
-                      defaultValue={item.price}
-                      className={"w-25"}
-                      labelClassName={"md:sr-only mb-2.25"}
-                    />
-
-                    <div className="flex flex-col">
-                      <span className="leading-tight-s text-form-label capitalize mb-2.25 md:sr-only">
-                        Total
-                      </span>
-
-                      <span className="heading-S2 text-slate-300 pt-4.5 pb-3.75 ">
-                        {Number(item.quantity) * Number(item.price)}
-                      </span>
-                    </div>
-
-                    <div className=" ml-auto  flex flex-col items-center">
-                      <span
-                        aria-hidden="true"
-                        className="leading-tight-s text-form-label capitalize  mb-2.25 md:hidden invisible  select-none"
-                      >
-                        D
-                      </span>
-
-                      <div className="pt-4.5 pb-1.75">
-                        <button
-                          type="button"
-                          className="focusable-ring rounded-xs"
-                          style={{
-                            "--ring-offset": "6px",
-                          }}
-                        >
-                          <span className="sr-only">Delete {item.name}</span>
-                          <DeleteIcon className={"text-slate-300 w-3.25"} />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </FormSection>
-              ))}
-            </div>
-
-            <Button
-              variant="edit"
-              className={`w-full ${isEditMode ? "mt-12" : ""}`}
+            <h1
+              id={titleId}
+              className="text-content-primary heading-M leading-8 tracking-[-0.5px] mt-6.5"
             >
-              + Add New item
-            </Button>
-          </FormSection>
-        </div>
+              {isEditMode ? (
+                <span>
+                  Edit{" "}
+                  <span aria-hidden="true" className="text-heading-prefix">
+                    #
+                  </span>
+                  <span className="sr-only">Invoice</span>
+                  {id}
+                </span>
+              ) : (
+                "New invoice"
+              )}
+            </h1>
 
-        <div className="shrink-0 relative">
-          <div
-            className={`h-16 pointer-events-none absolute right-0 left-0 z-10 -top-16 bg-linear-to-b from-transparent via-black/5  to-black/10   ${hasMoreToScroll ? "opacity-100" : "opacity-0"} `}
-          ></div>
+            <FormSection
+              className="mt-5.5 mb-10.25"
+              title={"Bill From"}
+              legendClassName={`${SECTION_TITLE_STYLES}`}
+            >
+              <FormRow
+                id={"senderAddress-street"}
+                label={"Street Address"}
+                className={"mb-6.25"}
+                error={errors.senderAddress?.street?.message}
+                {...register("senderAddress.street", {
+                  validate: validateRequired,
+                })}
+              />
 
-          <div
-            className={`bg-surface-primary pt-5.25 pb-5.5 px-6 flex ${isEditMode ? "gap-x-2" : "gap-x-1.75"} justify-end`}
-          >
-            {isEditMode ? (
-              <>
-                <Button variant="cancel" onClick={handleGoback}>
-                  Cancel
-                </Button>
-                <Button variant="save" onClick={handleSave}>
-                  Save Changes
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button variant="discard" onClick={handleGoback}>
-                  Discard
-                </Button>
-                <Button variant="draft" onClick={handleGoback}>
-                  Save as Draft
-                </Button>
-                <Button variant="saveAndSend" onClick={handleGoback}>
-                  Save & Send
-                </Button>
-              </>
+              <AddressFields
+                register={register}
+                prefix={"senderAddress"}
+                errors={errors}
+              />
+            </FormSection>
+
+            <FormSection
+              title={"Bill To"}
+              legendClassName={`${SECTION_TITLE_STYLES}`}
+            >
+              <div className="flex flex-col gap-6.25 mb-6.25">
+                <FormRow
+                  id={"client-name"}
+                  label={"Client's Name"}
+                  error={errors.clientName?.message}
+                  {...register("clientName", {
+                    validate: validateRequired,
+                  })}
+                />
+
+                <FormRow
+                  id={"client-email"}
+                  label={"Client’s Email"}
+                  placeholder="e.g. email@example.com"
+                  error={errors.clientEmail?.message}
+                  {...register("clientEmail", {
+                    validate: validateRequired,
+                    pattern: {
+                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                      message: "Invalid email address",
+                    },
+                  })}
+                />
+
+                <FormRow
+                  id={"clientAddress-street"}
+                  label={"Street Address"}
+                  error={errors.clientAddress?.street?.message}
+                  {...register("clientAddress.street", {
+                    validate: validateRequired,
+                  })}
+                />
+              </div>
+
+              <AddressFields
+                register={register}
+                errors={errors}
+                prefix={"clientAddress"}
+              />
+            </FormSection>
+
+            <div className="flex flex-col gap-6.25 mb-6.25">
+              <MyDatePicker
+                initialDate={editInvoice?.createdAt || new Date()}
+                register={register}
+                name={"createdAt"}
+              />
+
+              <CustomSelect
+                defaultValue={editInvoice?.paymentTerms || 30}
+                options={[
+                  { label: "Net 1 Day", value: 1 },
+                  { label: "Net 7 Days", value: 7 },
+                  { label: "Net 14 Days", value: 14 },
+                  { label: "Net 30 Days", value: 30 },
+                ]}
+                label={"Payment Terms"}
+                name={"paymentTerms"}
+                register={register}
+              />
+            </div>
+
+            <FormRow
+              id={"project-description"}
+              label={"Project Description"}
+              className={"mb-17.25"}
+              error={errors?.description?.message}
+              {...register("description", {
+                validate: validateRequired,
+              })}
+            />
+
+            <FormSection
+              className="mb-0"
+              title={"Item List"}
+              legendClassName={`text-[1.125rem] ${!emptyItemsLength ? "mb-5.5" : "mb-3.75"} font-bold leading-8 tracking-[-0.38px] text-slate-380`}
+            >
+              <div className="flex flex-col gap-y-12.25">
+                {fields.map((field, index) => (
+                  <InvoiceItemRow
+                    key={field.id}
+                    field={field}
+                    index={index}
+                    register={register}
+                    control={control}
+                    errors={errors}
+                    remove={() => handleRemoveItem(index)}
+                  />
+                ))}
+              </div>
+
+              <Button
+                id="add-item-btn"
+                onClick={handleAddItem}
+                variant="edit"
+                className={`w-full  ${!emptyItemsLength ? "mt-12" : ""}`}
+              >
+                + Add New item
+              </Button>
+            </FormSection>
+
+            {noItemError && (
+              <p className="pt-8.25 pb-10.75 text-[10px] tracking-[-0.21px] leading-tight-s text-error">
+                {errors.items.root.message}
+              </p>
             )}
           </div>
+
+          <div className="shrink-0 relative">
+            <div
+              className={`h-16 pointer-events-none absolute right-0 left-0 z-10 -top-16 bg-linear-to-b from-transparent via-black/5  to-black/10   ${hasMoreToScroll ? "opacity-100" : "opacity-0"} `}
+            ></div>
+
+            <div
+              className={`bg-surface-primary pt-5.25 pb-5.5 px-6 flex ${isEditMode ? "gap-x-2" : "gap-x-1.75"} justify-end`}
+            >
+              {isEditMode ? (
+                <>
+                  <Button variant="cancel" onClick={handleGoback}>
+                    Cancel
+                  </Button>
+                  <Button variant="save" onClick={handleSave}>
+                    Save Changes
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="discard" onClick={handleGoback}>
+                    Discard
+                  </Button>
+                  <Button variant="draft" onClick={handleGoback}>
+                    Save as Draft
+                  </Button>
+                  <Button type="submit" variant="saveAndSend">
+                    Save & Send
+                  </Button>
+                </>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
 
-function AddressFields({ prefix, className, address = {} }) {
-  const safeAddress = address || {};
-
+function AddressFields({ prefix, register, errors, className }) {
   return (
     <div className={`grid grid-cols-2 gap-x-5.75 gap-y-6.25 ${className}`}>
       <FormRow
-        name={`${prefix}.city`}
         id={`${prefix}-city`}
         label={"City"}
-        defaultValue={safeAddress.city}
+        error={errors?.[prefix]?.city?.message}
+        {...register(`${prefix}.city`, {
+          validate: validateRequired,
+        })}
       />
 
       <FormRow
-        name={`${prefix}.postcode`}
         id={`${prefix}-postCode`}
         label={"Post Code"}
-        defaultValue={safeAddress.postCode}
+        error={errors?.[prefix]?.postcode?.message}
+        {...register(`${prefix}.postcode`, {
+          validate: validateRequired,
+        })}
       />
 
       <FormRow
-        name={`${prefix}.country`}
         id={`${prefix}-country`}
         label={"country"}
         className={"row-start-2 col-span-2"}
-        defaultValue={safeAddress.country}
+        error={errors?.[prefix]?.country?.message}
+        {...register(`${prefix}.country`, {
+          validate: validateRequired,
+        })}
       />
     </div>
   );

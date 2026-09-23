@@ -12,3 +12,5 @@ export const INVOICE_STATUS_CONFIG = {
     colorVar: "var(--color-status-draft)",
   },
 };
+
+export const FIELD_REQUIRED_MESSAGE = "can't be empty";

@@ -4,8 +4,9 @@ import { useRef, useState } from "react";
 import { ANIMATION_DURATION_FILTER_MENU } from "@/lib/constants/durations";
 import { ChevronIcon } from "@/components/icons";
 import { useOutsideClicks } from "@/hooks/useOutsideClicks";
+import { FIELD_REQUIRED_MESSAGE } from "@/lib/constants/invoice";
 
-function CustomSelect({ label, name, options, defaultValue }) {
+function CustomSelect({ label, name, options, defaultValue, register }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(() =>
@@ -151,7 +152,13 @@ function CustomSelect({ label, name, options, defaultValue }) {
       </button>
 
       {name && (
-        <input type="hidden" name={name} value={selectedOption?.value ?? ""} />
+        <input
+          type="hidden"
+          value={selectedOption?.value ?? ""}
+          {...register(name, {
+            required: FIELD_REQUIRED_MESSAGE,
+          })}
+        />
       )}
 
       {isOpen && (

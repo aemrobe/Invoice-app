@@ -26,12 +26,12 @@ export default function RootLayout({ children }) {
       className={`${spartan.variable} antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-dvh bg-surface-app">
+      <body className="bg-surface-app">
         <AppProviders>
-          <div className="min-h-dvh flex flex-col pt-18">
+          <div className="flex flex-col pt-18">
             <Header />
 
-            <main className="flex-1 flex flex-col">{children}</main>
+            <main className="min-h-dvh flex-1 flex flex-col">{children}</main>
           </div>
         </AppProviders>
       </body>

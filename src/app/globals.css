@@ -286,6 +286,9 @@
   --color-input-border-active: var(--color-input-border-active);
   --color-form-label: var(--color-form-label);
 
+  /* Error Text */
+  --color-error: var(--color-red-500);
+
   /* Shadow  */
   --shadow-dropdown: var(--shadow-dropdown);
   --shadow-card: 0 10px 10px -10px
@@ -340,6 +343,16 @@
     }
   }
 
+  @keyframes loading {
+    0% {
+      width: 10%;
+    }
+
+    100% {
+      width: 100%;
+    }
+  }
+
   @keyframes fade-out {
     0% {
       opacity: 1;
@@ -355,8 +368,32 @@
     }
   }
 
+  @keyframes dots {
+    0%,
+    20% {
+      content: ".";
+    }
+
+    40% {
+      content: "..";
+    }
+
+    60%,
+    100% {
+      content: "...";
+    }
+  }
+
   --animate-fade-in: fade-in var(--duration-fast) forwards;
   --animate-fade-out: fade-out var(--duration-fast) forwards;
+  --animate-dots: dots 1.4s steps(1) infinite;
+}
+
+@utility loading-dots {
+  &::after {
+    content: ".";
+    animation: var(--animate-dots);
+  }
 }
 
 @utility heading-L {

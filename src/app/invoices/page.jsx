@@ -26,7 +26,11 @@ export default async function Home({ searchParams }) {
           </PageHeading>
 
           <Suspense
-            fallback={<p className="  text-content-tertiary">...</p>}
+            fallback={
+              <p className="text-content-tertiary">
+                Loading <span className="loading-dots" />
+              </p>
+            }
             key={statusParam || "all"}
           >
             <InvoiceCounter filter={filter} />

@@ -22,6 +22,7 @@ function GoBackBtn({ to, onClick }) {
 
   return (
     <button
+      type="button"
       onClick={handleClick}
       className="focusable-ring rounded-lg inline-flex items-center gap-x-[1.478rem] heading-S2"
       style={{ "--ring-offset": "8px" }}

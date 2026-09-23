@@ -4,16 +4,27 @@ import Image from "next/image";
 import Link from "next/link";
 import ThemeToggler from "@/components/ui/ThemeToggler";
 import { useModal } from "@/components/ui/Modal";
-import DevSeedButton from "@/components/ui/DevSeedButton";
+import { usePathname } from "next/navigation";
 
 function Header() {
   const { close } = useModal();
 
+  const pathname = usePathname();
+
+  const handleLogoClick = (e) => {
+    close();
+
+    if (pathname !== "/invoices") {
+      e.preventDefault();
+      window.location.href = "/invoices";
+    }
+  };
+
   return (
     <header className="bg-surface-sidebar flex justify-between h-18 fixed inset-x-0 top-0 z-40">
       <Link
-        href={"/"}
-        onClick={close}
+        href={"/invoices"}
+        onClick={handleLogoClick}
         aria-label="Go to home page"
         className="focusable-ring logo relative w-18 h-18 bg-brand-primary flex justify-center items-center rounded-tr-[20px] rounded-br-[20px]"
         style={{

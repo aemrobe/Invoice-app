@@ -5,9 +5,10 @@ import { useId, useRef, useState } from "react";
 import { CalendarIcon, ChevronIcon } from "@/components/icons";
 import { format } from "date-fns";
 import { useOutsideClicks } from "@/hooks/useOutsideClicks";
-import { ANIMATION_DURATION_FILTER_MENU } from "../../lib/constants/durations";
+import { ANIMATION_DURATION_FILTER_MENU } from "@/lib/constants/durations";
+import { FIELD_REQUIRED_MESSAGE } from "@/lib/constants/invoice";
 
-function MyDatePicker({ initialDate, name }) {
+function MyDatePicker({ initialDate, register, name }) {
   const inputId = useId();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(() =>
@@ -96,7 +97,13 @@ function MyDatePicker({ initialDate, name }) {
         <CalendarIcon className={"w-4 text-slate-400"} />
       </button>
 
-      <input type="hidden" name={name} value={serverPayloadValue} />
+      <input
+        type="hidden"
+        value={serverPayloadValue}
+        {...register(name, {
+          required: FIELD_REQUIRED_MESSAGE,
+        })}
+      />
 
       {isOpen && (
         <div
