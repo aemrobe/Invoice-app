@@ -4,8 +4,8 @@ import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal";
 import ConfirmDeleteModal from "@/components/ui/ConfirmDeleteModal";
 
-function InvoiceActions({ invoiceItem }) {
-  const { id } = invoiceItem;
+function InvoiceActions({ invoice }) {
+  const { id } = invoice;
 
   return (
     <>

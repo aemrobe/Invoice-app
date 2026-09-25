@@ -65,7 +65,12 @@ export async function getInvoice(id) {
 
   // await new Promise((res) => setTimeout(res, 3000));
   if (error) {
-    throw new Error(error.message);
+    if (error.code === "PGRST116") {
+      return null;
+    }
+
+    console.error("Database Error", error.message);
+    throw new Error("Failed to load invoice details.");
   }
 
   if (!invoice) {

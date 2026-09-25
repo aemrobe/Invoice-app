@@ -5,6 +5,7 @@ import GoBackBtn from "@/components/ui/GoBackBtn";
 import InvoiceActions from "@/components/invoice/InvoiceActions";
 import PageHeading from "@/components/ui/PageHeading";
 import { getInvoice } from "../../../lib/services/data-services";
+import { notFound } from "next/navigation";
 
 const EMPTY_FALLBACK = "—";
 const EMPTYFALLBACKSTYLES = "text-content-primary heading-S leading-5";
@@ -20,7 +21,11 @@ export async function generateMetadata({ params }) {
 async function Page({ params }) {
   const { invoiceId } = await params;
 
-  const invoiceItem = await getInvoice(invoiceId);
+  const invoice = await getInvoice(invoiceId);
+
+  if (!invoice) {
+    notFound();
+  }
 
   const {
     status = "draft",
@@ -31,10 +36,10 @@ async function Page({ params }) {
     clientEmail = "",
     items = [],
     total = 0,
-  } = invoiceItem;
+  } = invoice;
 
-  const senderAddress = invoiceItem?.senderAddress || {};
-  const clientAddress = invoiceItem?.clientAddress || {};
+  const senderAddress = invoice?.senderAddress || {};
+  const clientAddress = invoice?.clientAddress || {};
 
   return (
     <div className="flex-1 flex flex-col justify-between">
@@ -180,7 +185,7 @@ async function Page({ params }) {
       </div>
 
       <div className="bg-surface-primary shadow-card mt-14  pt-5.25 pb-5.5 px-6 flex justify-center  gap-2">
-        <InvoiceActions invoiceItem={invoiceItem} />
+        <InvoiceActions invoice={invoice} />
 
         <Button variant={"primary"}>Mark as Paid</Button>
       </div>

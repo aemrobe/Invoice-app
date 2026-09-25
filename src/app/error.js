@@ -1,15 +1,29 @@
 "use client";
 
-function Error({ error, reset }) {
-  return (
-    <main className="flex justify-center items-center flex-col gap-6">
-      <h1>Something went wrong!</h1>
-      <p>{error.message}</p>
+import Button from "@/components/ui/Button";
+import StatusCard from "@/components/ui/StatusCard";
 
-      <button className="inline-blcok py-3 px-y text-lg" onClick={reset}>
-        Try again
-      </button>
-    </main>
+function Error({ error, reset }) {
+  const descriptionId = "error-text-id";
+
+  return (
+    <StatusCard
+      title={"Something went wrong!"}
+      description={
+        error?.message || "An unexpected error occured while loading this page"
+      }
+      descriptionId={descriptionId}
+      action={
+        <Button
+          aria-describedby={descriptionId}
+          variant={"primary"}
+          onClick={reset}
+        >
+          Try again
+        </Button>
+      }
+      isError={true}
+    />
   );
 }
 

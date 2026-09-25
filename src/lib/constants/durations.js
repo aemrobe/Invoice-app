@@ -1,5 +1,6 @@
 export const ANIMATION_DURATION_FILTER_MENU = 150;
 export const MODAL_FOCUS_DURATION = 20;
+export const ACCESSIBILITY_ANNOUNCEMENT_DELAY_MS = 150;
 
 // We use a 10px "buffer distance" instead of checking for exact 0 (< 1).
 // This accounts for floating-point sub-pixel rendering variations across

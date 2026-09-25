@@ -13,6 +13,7 @@ import FormSection from "@/components/ui/FormSection";
 import { useFieldArray, useForm } from "react-hook-form";
 import { FIELD_REQUIRED_MESSAGE } from "@/lib/constants/invoice";
 import InvoiceItemRow from "./InvoiceItemRow";
+import { ACCESSIBILITY_ANNOUNCEMENT_DELAY_MS } from "@/lib/constants/durations";
 
 const SECTION_TITLE_STYLES = "heading-S2 text-brand-primary capitalize mb-6";
 
@@ -31,13 +32,21 @@ const validateRequired = (value) =>
   value.trim() !== "" || FIELD_REQUIRED_MESSAGE;
 
 function InvoiceForm({ editInvoice = null, overlay, className }) {
+  const [annoucement, setAnnoucement] = useState("");
   const isEditMode = !!editInvoice;
   const { id = "" } = isEditMode ? editInvoice : {};
+
+  const announceStatus = (message) => {
+    setTimeout(() => {
+      setAnnoucement(message);
+    }, ACCESSIBILITY_ANNOUNCEMENT_DELAY_MS);
+  };
 
   const {
     register,
     handleSubmit,
     control,
+    getValues,
     clearErrors,
     formState: { errors },
   } = useForm({
@@ -90,7 +99,9 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
   }, [router, isEditMode, id]);
 
   const handleRemoveItem = (index) => {
-    const nextFocusIndex = index < fields.length - 1 ? index : index - 1;
+    const noOfItems = fields.length;
+    const nextFocusIndex = index < noOfItems - 1 ? index : index - 1;
+    const newCount = noOfItems - 1;
 
     remove(index);
 
@@ -104,10 +115,19 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
       } else {
         document.getElementById("add-item-btn")?.focus();
       }
+
+      const message =
+        newCount === 0
+          ? `Item deleted. No item remaining.`
+          : `Item deleted. ${newCount} item${newCount === 1 ? "" : "s"} remaining.`;
+
+      announceStatus(message);
     });
   };
 
   const handleAddItem = () => {
+    const noOfItems = fields.length;
+    const newCount = noOfItems + 1;
     append({
       name: "",
       quantity: 1,
@@ -115,12 +135,46 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
     });
 
     clearErrors("items.root");
+
+    requestAnimationFrame(() => {
+      const newIndex = noOfItems;
+
+      document.getElementById(`name-${newIndex}-id`)?.focus();
+
+      const message = `New item added. ${newCount} item${newCount === 1 ? "" : "s"} in an invoice.`;
+
+      announceStatus(message);
+    });
+  };
+
+  const handleSaveDraft = () => {
+    const draftData = getValues();
+    console.log("draftData", draftData);
   };
 
   const handleSave = function () {
     console.log("changes saved");
 
     handleGoback();
+  };
+
+  const onError = (errors) => {
+    const rootError = errors.items.root;
+
+    const hasOtherErrors = Object.keys(errors).some((key) => {
+      if (key !== "items") return true;
+
+      return Array.isArray(errors.items) && errors.items.some(Boolean);
+    });
+
+    if (rootError && !hasOtherErrors) {
+      const addButton = document.getElementById("add-item-btn");
+
+      if (addButton) {
+        addButton.scrollIntoView({ behavior: "smooth", block: "center" });
+        addButton.focus({ preventScroll: true });
+      }
+    }
   };
 
   const modalRef = useOutsideClicks(handleGoback, {
@@ -203,7 +257,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
       aria-labelledby={titleId}
       className={`fixed  z-30 transparent inset-x-0 bottom-0 top-18 ${overlay} bg-black/50`}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit, onError)}>
         <div
           ref={modalRef}
           className={`outline-none fixed flex flex-col  z-20  bg-surface-modal inset-x-0 top-18 bottom-0 pt-2  pr-2 ${className}`}
@@ -330,6 +384,15 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
               })}
             />
 
+            <div
+              className="sr-only"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {annoucement}
+            </div>
+
             <FormSection
               className="mb-0"
               title={"Item List"}
@@ -338,7 +401,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
               <div className="flex flex-col gap-y-12.25">
                 {fields.map((field, index) => (
                   <InvoiceItemRow
-                    key={field.id}
+                    key={`${field.id}-${index}`}
                     field={field}
                     index={index}
                     register={register}
@@ -351,6 +414,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
 
               <Button
                 id="add-item-btn"
+                aria-describedby={noItemError ? "items-root-error" : undefined}
                 onClick={handleAddItem}
                 variant="edit"
                 className={`w-full  ${!emptyItemsLength ? "mt-12" : ""}`}
@@ -360,7 +424,10 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
             </FormSection>
 
             {noItemError && (
-              <p className="pt-8.25 pb-10.75 text-[10px] tracking-[-0.21px] leading-tight-s text-error">
+              <p
+                id="items-root-error"
+                className="pt-8.25 pb-10.75 text-[10px] tracking-[-0.21px] leading-tight-s text-error"
+              >
                 {errors.items.root.message}
               </p>
             )}
@@ -379,7 +446,10 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
                   <Button variant="cancel" onClick={handleGoback}>
                     Cancel
                   </Button>
-                  <Button variant="save" onClick={handleSave}>
+                  <Button
+                    variant="save"
+                    onClick={handleSubmit(handleSave, onError)}
+                  >
                     Save Changes
                   </Button>
                 </>
@@ -388,7 +458,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
                   <Button variant="discard" onClick={handleGoback}>
                     Discard
                   </Button>
-                  <Button variant="draft" onClick={handleGoback}>
+                  <Button variant="draft" onClick={handleSaveDraft}>
                     Save as Draft
                   </Button>
                   <Button type="submit" variant="saveAndSend">

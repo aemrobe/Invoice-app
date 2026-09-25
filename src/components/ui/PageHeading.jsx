@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
-function PageHeading({ className, children }) {
+function PageHeading({ className, children, isError = false }) {
   const pageHeading = useRef(null);
   const pathname = usePathname();
 
@@ -15,16 +15,26 @@ function PageHeading({ className, children }) {
     const hasModalTrigger = Boolean(window.__lastModalTriggerElement);
     const hasFocusedInvoiceIem = isHomePageRoute && Boolean(focusedInvoiceId);
 
-    if (!hasModalTrigger && !hasFocusedInvoiceIem && pageHeading.current) {
-      pageHeading.current.focus();
+    const shouldSkipFocus =
+      !isError && (hasModalTrigger || hasFocusedInvoiceIem);
+
+    if (!shouldSkipFocus && pageHeading.current) {
+      pageHeading.current.focus({ preventScroll: true });
+
+      requestAnimationFrame(() => {
+        pageHeading.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      });
     }
-  }, [pathname]);
+  }, [pathname, isError]);
 
   return (
     <h1
       ref={pageHeading}
       tabIndex={"-1"}
-      className={`outline-none ${className}`}
+      className={`outline-none scroll-mt-27 ${className}`}
     >
       {children}
     </h1>

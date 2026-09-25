@@ -6,7 +6,12 @@ import { DeleteIcon } from "../icons";
 import FormRow from "../ui/FormRow";
 import FormSection from "../ui/FormSection";
 
-function InvoiceItemRow({ field, index, register, control, errors, remove }) {
+function InvoiceItemRow({ index, register, control, errors, remove }) {
+  const name = useWatch({
+    control,
+    name: `items.${index}.name`,
+  });
+
   const quantity = useWatch({
     control,
     name: `items.${index}.quantity`,
@@ -93,7 +98,7 @@ function InvoiceItemRow({ field, index, register, control, errors, remove }) {
               }}
               onClick={remove}
             >
-              <span className="sr-only">Delete {field.name}</span>
+              <span className="sr-only">Delete {name}</span>
               <DeleteIcon className={"text-slate-300 w-3.25"} />
             </button>
           </div>

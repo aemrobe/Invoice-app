@@ -21,7 +21,7 @@ export default async function Home({ searchParams }) {
     <div className="px-6 py-8">
       <div className="flex justify-between">
         <div>
-          <PageHeading className={"heading-M text-content-primary mb-0.75"}>
+          <PageHeading className={"heading-M text-content-primary mb-0.75 "}>
             Invoices
           </PageHeading>
 
