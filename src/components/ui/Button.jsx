@@ -1,15 +1,17 @@
 import Link from "next/link";
+import SpinnerMini from "./SpinnerMini";
+import SpinnerMiniContainer from "./SpinnerMiniContainer";
 
 const PRIMARY_STYLES =
-  "bg-action-primary-bg hover:bg-action-primary-hover text-white";
+  "bg-action-primary-bg enabled:hover:bg-action-primary-hover text-white";
 const SECONDARY_STYLES =
-  "bg-action-secondary-bg hover:bg-action-secondary-hover text-action-secondary-text hover:text-action-secondary-text-hover";
+  "bg-action-secondary-bg enabled:hover:bg-action-secondary-hover text-action-secondary-text enabled:hover:text-action-secondary-text-hover";
 const MUTED_SECONDARY_STYLES =
-  "bg-action-secondary-bg hover:bg-action-secondary-hover text-content-tertiary hover:text-action-secondary-text-hover";
+  "bg-action-secondary-bg enabled:hover:bg-action-secondary-hover text-content-tertiary enabled:hover:text-action-secondary-text-hover";
 const TERTIARY_STYLES =
-  "text-action-tertiary-text bg-action-tertiary-bg hover:bg-action-tertiary-bg-hover";
+  "text-action-tertiary-text bg-action-tertiary-bg enabled:hover:bg-action-tertiary-bg-hover";
 const DANGER_STYLES =
-  "bg-action-danger-bg hover:bg-action-danger-hover text-white";
+  "bg-action-danger-bg enabled:hover:bg-action-danger-hover text-white";
 
 const buttonVariants = {
   edit: `${SECONDARY_STYLES} pl-6 pr-5.75`,
@@ -30,10 +32,12 @@ function Button({
   onClick,
   href,
   scroll,
+  disabled,
+  pending = false,
   type = "button",
   ...props
 }) {
-  const baseStyles = `focusable-ring heading-S2 pt-4.5 pb-3.75 text-center rounded-3xl transition-fast cursor-pointer  disabled-button`;
+  const baseStyles = `relative focusable-ring heading-S2 pt-4.5 pb-3.75 text-center rounded-3xl transition-fast cursor-pointer  disabled-button`;
 
   const selectedVariant = buttonVariants[variant] || buttonVariants.primary;
   const combinedClasses = `${baseStyles} ${selectedVariant} ${className}`;
@@ -57,9 +61,14 @@ function Button({
       type={type}
       className={combinedClasses}
       onClick={onClick}
+      disabled={disabled || pending}
       {...props}
     >
-      {children}
+      {pending && <SpinnerMiniContainer />}
+
+      <span className={`${pending ? "opacity-0" : "opacity-100"}`}>
+        {children}
+      </span>
     </button>
   );
 }

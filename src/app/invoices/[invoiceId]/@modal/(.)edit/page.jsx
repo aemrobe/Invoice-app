@@ -1,5 +1,5 @@
 import InvoiceForm from "@/components/invoice/InvoiceForm";
-import { getInvoice } from "../../../../../lib/services/data-services";
+import { getInvoice } from "@/lib/services/data-services";
 
 async function InterceptedEditModal({ params }) {
   const { invoiceId } = await params;

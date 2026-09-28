@@ -343,16 +343,6 @@
     }
   }
 
-  @keyframes loading {
-    0% {
-      width: 10%;
-    }
-
-    100% {
-      width: 100%;
-    }
-  }
-
   @keyframes fade-out {
     0% {
       opacity: 1;
@@ -473,7 +463,7 @@
 }
 
 @utility disabled-button {
-  @apply disabled:cursor-not-allowed disabled:opacity-80 disabled:pointer-events-none;
+  @apply disabled:cursor-not-allowed disabled:opacity-80 disabled:pointer-events-auto;
 }
 
 @utility custom-scrollbar {

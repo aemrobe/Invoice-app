@@ -4,7 +4,7 @@ import GoBackBtn from "@/components/ui/GoBackBtn";
 import FormRow from "@/components/ui/FormRow";
 import MyDatePicker from "../ui/MyDatePicker";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useOutsideClicks } from "@/hooks/useOutsideClicks";
 import CustomSelect from "@/components/ui/CustomSelect";
 import Button from "@/components/ui/Button";
@@ -14,6 +14,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { FIELD_REQUIRED_MESSAGE } from "@/lib/constants/invoice";
 import InvoiceItemRow from "./InvoiceItemRow";
 import { ACCESSIBILITY_ANNOUNCEMENT_DELAY_MS } from "@/lib/constants/durations";
+import { createNewInvoice } from "@/lib/actions/invoiceActions";
 
 const SECTION_TITLE_STYLES = "heading-S2 text-brand-primary capitalize mb-6";
 
@@ -32,6 +33,7 @@ const validateRequired = (value) =>
   value.trim() !== "" || FIELD_REQUIRED_MESSAGE;
 
 function InvoiceForm({ editInvoice = null, overlay, className }) {
+  const [isPending, startTransition] = useTransition();
   const [annoucement, setAnnoucement] = useState("");
   const isEditMode = !!editInvoice;
   const { id = "" } = isEditMode ? editInvoice : {};
@@ -152,7 +154,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
     console.log("draftData", draftData);
   };
 
-  const handleSave = function () {
+  const handleSaveChanges = function () {
     console.log("changes saved");
 
     handleGoback();
@@ -246,8 +248,11 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleGoback]);
 
-  const onSubmit = async (data) => {
-    console.log("submit", data);
+  const handleSaveAndSend = async (data) => {
+    startTransition(async () => {
+      await createNewInvoice(data);
+      handleGoback();
+    });
   };
 
   return (
@@ -257,7 +262,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
       aria-labelledby={titleId}
       className={`fixed  z-30 transparent inset-x-0 bottom-0 top-18 ${overlay} bg-black/50`}
     >
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
+      <form onSubmit={handleSubmit(handleSaveAndSend, onError)}>
         <div
           ref={modalRef}
           className={`outline-none fixed flex flex-col  z-20  bg-surface-modal inset-x-0 top-18 bottom-0 pt-2  pr-2 ${className}`}
@@ -443,25 +448,42 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
             >
               {isEditMode ? (
                 <>
-                  <Button variant="cancel" onClick={handleGoback}>
+                  <Button
+                    disabled={isPending}
+                    variant="cancel"
+                    onClick={handleGoback}
+                  >
                     Cancel
                   </Button>
                   <Button
+                    disabled={isPending}
                     variant="save"
-                    onClick={handleSubmit(handleSave, onError)}
+                    onClick={handleSubmit(handleSaveChanges, onError)}
                   >
                     Save Changes
                   </Button>
                 </>
               ) : (
                 <>
-                  <Button variant="discard" onClick={handleGoback}>
+                  <Button
+                    disabled={isPending}
+                    variant="discard"
+                    onClick={handleGoback}
+                  >
                     Discard
                   </Button>
-                  <Button variant="draft" onClick={handleSaveDraft}>
+                  <Button
+                    disabled={isPending}
+                    variant="draft"
+                    onClick={handleSaveDraft}
+                  >
                     Save as Draft
                   </Button>
-                  <Button type="submit" variant="saveAndSend">
+                  <Button
+                    disabled={isPending}
+                    type="submit"
+                    variant="saveAndSend"
+                  >
                     Save & Send
                   </Button>
                 </>

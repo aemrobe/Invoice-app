@@ -9,7 +9,8 @@ export const getInvoices = cache(async ({ filter }) => {
       {
         count: "exact",
       },
-    );
+    )
+    .order("created_at", { ascending: false });
 
   // ## Filter ##
   if (filter && filter.value) {
@@ -101,4 +102,33 @@ export async function getInvoice(id) {
     },
     items: invoice.items || [],
   };
+}
+
+export async function createInvoiceApi(newInvoice) {
+  const { data, error } = await supabase
+    .from("invoices")
+    .insert([newInvoice])
+    .select()
+    .single();
+
+  if (error) {
+    console.error(error.message);
+    throw new Error("Invoice couldn't be created");
+  }
+
+  return data;
+}
+
+export async function createInvoiceItemsApi(newInvoiceItems) {
+  const { data, error } = await supabase
+    .from("invoice_items")
+    .insert(newInvoiceItems)
+    .select();
+
+  if (error) {
+    console.error(error.message);
+    throw new Error("Invoice Items couldn't be created");
+  }
+
+  return data;
 }
