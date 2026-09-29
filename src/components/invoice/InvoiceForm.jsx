@@ -14,7 +14,10 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { FIELD_REQUIRED_MESSAGE } from "@/lib/constants/invoice";
 import InvoiceItemRow from "./InvoiceItemRow";
 import { ACCESSIBILITY_ANNOUNCEMENT_DELAY_MS } from "@/lib/constants/durations";
-import { createNewInvoice } from "@/lib/actions/invoiceActions";
+import {
+  createDraftInvoice,
+  createNewInvoice,
+} from "@/lib/actions/invoiceActions";
 
 const SECTION_TITLE_STYLES = "heading-S2 text-brand-primary capitalize mb-6";
 
@@ -23,7 +26,7 @@ const DEFAULT_FORM_VALUES = {
   clientName: "",
   clientEmail: "",
   clientAddress: { street: "", city: "", postcode: "", country: "" },
-  createdAt: new Date().toISOString().split("T")[0],
+  createdAt: new Date().toISOString(),
   paymentTerms: 30,
   description: "",
   items: [],
@@ -34,6 +37,8 @@ const validateRequired = (value) =>
 
 function InvoiceForm({ editInvoice = null, overlay, className }) {
   const [isPending, startTransition] = useTransition();
+  const [pendingAction, setPendingAction] = useState("");
+
   const [annoucement, setAnnoucement] = useState("");
   const isEditMode = !!editInvoice;
   const { id = "" } = isEditMode ? editInvoice : {};
@@ -91,6 +96,11 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
   const hasMoreToScroll = useScrollOverflow(scrollRef);
 
   const titleId = "invoice-modal-title";
+
+  const closeModalAndRefresh = function () {
+    router.back();
+    router.refresh();
+  };
 
   const handleGoback = useCallback(() => {
     if (window.history.length > 1) {
@@ -151,17 +161,30 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
 
   const handleSaveDraft = () => {
     const draftData = getValues();
-    console.log("draftData", draftData);
+    setPendingAction("draft");
+
+    startTransition(async () => {
+      await createDraftInvoice(draftData);
+
+      closeModalAndRefresh();
+    });
   };
 
   const handleSaveChanges = function () {
-    console.log("changes saved");
-
     handleGoback();
   };
 
+  const handleSaveAndSend = async (data) => {
+    setPendingAction("saveAndSend");
+    startTransition(async () => {
+      await createNewInvoice(data);
+
+      closeModalAndRefresh();
+    });
+  };
+
   const onError = (errors) => {
-    const rootError = errors.items.root;
+    const rootError = errors.items?.root;
 
     const hasOtherErrors = Object.keys(errors).some((key) => {
       if (key !== "items") return true;
@@ -247,13 +270,6 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleGoback]);
-
-  const handleSaveAndSend = async (data) => {
-    startTransition(async () => {
-      await createNewInvoice(data);
-      handleGoback();
-    });
-  };
 
   return (
     <div
@@ -360,7 +376,11 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
 
             <div className="flex flex-col gap-6.25 mb-6.25">
               <MyDatePicker
-                initialDate={editInvoice?.createdAt || new Date()}
+                initialDate={
+                  isEditMode
+                    ? editInvoice?.createdAt
+                    : DEFAULT_FORM_VALUES.createdAt
+                }
                 register={register}
                 name={"createdAt"}
               />
@@ -449,6 +469,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
               {isEditMode ? (
                 <>
                   <Button
+                    pending={isPending}
                     disabled={isPending}
                     variant="cancel"
                     onClick={handleGoback}
@@ -456,6 +477,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
                     Cancel
                   </Button>
                   <Button
+                    pending={isPending}
                     disabled={isPending}
                     variant="save"
                     onClick={handleSubmit(handleSaveChanges, onError)}
@@ -473,6 +495,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
                     Discard
                   </Button>
                   <Button
+                    pending={isPending && pendingAction === "draft"}
                     disabled={isPending}
                     variant="draft"
                     onClick={handleSaveDraft}
@@ -480,6 +503,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
                     Save as Draft
                   </Button>
                   <Button
+                    pending={isPending && pendingAction === "saveAndSend"}
                     disabled={isPending}
                     type="submit"
                     variant="saveAndSend"

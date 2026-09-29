@@ -38,7 +38,6 @@ function ConfirmDeleteModal({
           id={initialFocusSelector}
           onClick={() => {
             onCloseModal();
-            console.log("delete invoice");
           }}
         >
           Delete

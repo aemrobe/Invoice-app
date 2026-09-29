@@ -8,7 +8,6 @@ import { usePathname } from "next/navigation";
 
 function Header() {
   const { close } = useModal();
-
   const pathname = usePathname();
 
   const handleLogoClick = (e) => {

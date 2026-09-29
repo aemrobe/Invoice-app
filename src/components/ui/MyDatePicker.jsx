@@ -99,7 +99,7 @@ function MyDatePicker({ initialDate, register, name }) {
 
       <input
         type="hidden"
-        value={serverPayloadValue}
+        value={selectedDate}
         {...register(name, {
           required: FIELD_REQUIRED_MESSAGE,
         })}

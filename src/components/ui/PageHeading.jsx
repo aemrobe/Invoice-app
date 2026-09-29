@@ -20,13 +20,6 @@ function PageHeading({ className, children, isError = false }) {
 
     if (!shouldSkipFocus && pageHeading.current) {
       pageHeading.current.focus({ preventScroll: true });
-
-      requestAnimationFrame(() => {
-        pageHeading.current.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      });
     }
   }, [pathname, isError]);
 
