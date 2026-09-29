@@ -4,8 +4,10 @@ import { transformInvoiceFormData } from "@/lib/utils/invoiceHelpers";
 import {
   createInvoiceApi,
   createInvoiceItemsApi,
-} from "../services/data-services";
+  deleteInvoiceApi,
+} from "@/lib/services/data-services";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function createNewInvoice(data) {
   const { newInvoice, items } = transformInvoiceFormData(data);
@@ -37,4 +39,13 @@ export async function createDraftInvoice(data) {
   }
 
   revalidatePath("/invoices");
+}
+
+export async function deleteInvoice(invoiceId) {
+  await deleteInvoiceApi(invoiceId);
+  revalidatePath("/invoices");
+
+  return {
+    success: true,
+  };
 }

@@ -1,4 +1,7 @@
 import Button from "@/components/ui/Button";
+import { useTransition } from "react";
+import { deleteInvoice } from "@/lib/actions/invoiceActions";
+import { useRouter } from "next/navigation";
 
 function ConfirmDeleteModal({
   titleId,
@@ -8,6 +11,20 @@ function ConfirmDeleteModal({
   initialFocusSelector,
   invoiceId,
 }) {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
+  function handleDeleteInvoice() {
+    startTransition(async () => {
+      const res = await deleteInvoice(invoiceId);
+
+      if (res?.success) {
+        onCloseModal();
+        router.replace("/invoices");
+      }
+    });
+  }
+
   return (
     <>
       <h2
@@ -24,6 +41,7 @@ function ConfirmDeleteModal({
 
       <div className="flex gap-2 justify-end">
         <Button
+          disabled={isPending}
           variant={"cancelModal"}
           onClick={() => {
             restoreFocus();
@@ -34,11 +52,11 @@ function ConfirmDeleteModal({
         </Button>
 
         <Button
+          pending={isPending}
+          disabled={isPending}
           variant={"delete"}
           id={initialFocusSelector}
-          onClick={() => {
-            onCloseModal();
-          }}
+          onClick={handleDeleteInvoice}
         >
           Delete
         </Button>

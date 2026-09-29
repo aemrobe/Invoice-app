@@ -119,6 +119,18 @@ export async function createInvoiceApi(newInvoice) {
   return data;
 }
 
+export async function deleteInvoiceApi(invoiceId) {
+  const { error } = await supabase
+    .from("invoices")
+    .delete()
+    .eq("id", invoiceId);
+
+  if (error) {
+    console.error(error.message);
+    throw new Error("Invoice couldn't be deleted");
+  }
+}
+
 export async function createInvoiceItemsApi(newInvoiceItems) {
   const { data, error } = await supabase
     .from("invoice_items")
