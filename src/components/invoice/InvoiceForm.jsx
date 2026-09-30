@@ -18,6 +18,7 @@ import { ACCESSIBILITY_ANNOUNCEMENT_DELAY_MS } from "@/lib/constants/durations";
 import {
   createDraftInvoice,
   createNewInvoice,
+  updatedInvoice,
 } from "@/lib/actions/invoiceActions";
 
 const SECTION_TITLE_STYLES = "heading-S2 text-brand-primary capitalize mb-6";
@@ -178,8 +179,20 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
     });
   };
 
-  const handleSaveChanges = function () {
-    handleGoback();
+  const handleSaveChanges = async (data) => {
+    setPendingAction("saveChanges");
+
+    startTransition(async () => {
+      const res = await updatedInvoice(editInvoice.id, data);
+
+      if (res?.success) {
+        onShowToastMessage({
+          text: `Invoice successfully updated`,
+        });
+
+        closeModalAndRefresh();
+      }
+    });
   };
 
   const handleSaveAndSend = async (data) => {
@@ -482,7 +495,6 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
               {isEditMode ? (
                 <>
                   <Button
-                    pending={isPending}
                     disabled={isPending}
                     variant="cancel"
                     onClick={handleGoback}
@@ -490,7 +502,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
                     Cancel
                   </Button>
                   <Button
-                    pending={isPending}
+                    pending={isPending && pendingAction === "saveChanges"}
                     disabled={isPending}
                     variant="save"
                     onClick={handleSubmit(handleSaveChanges, onError)}

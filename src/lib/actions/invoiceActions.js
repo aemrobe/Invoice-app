@@ -5,6 +5,8 @@ import {
   createInvoiceApi,
   createInvoiceItemsApi,
   deleteInvoiceApi,
+  deleteInvoiceItemsApi,
+  updateInvoiceApi,
 } from "@/lib/services/data-services";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -52,6 +54,31 @@ export async function createDraftInvoice(data) {
 export async function deleteInvoice(invoiceId) {
   await deleteInvoiceApi(invoiceId);
   revalidatePath("/invoices");
+
+  return {
+    success: true,
+  };
+}
+
+export async function updatedInvoice(invoiceId, updatedData) {
+  const { newInvoice, items } = transformInvoiceFormData(
+    updatedData,
+    "pending",
+    invoiceId,
+  );
+
+  await updateInvoiceApi(newInvoice);
+
+  await deleteInvoiceItemsApi(invoiceId);
+
+  const itemsWithInvoiceId = items.map((item) => ({
+    ...item,
+    invoice_id: invoiceId,
+  }));
+
+  await createInvoiceItemsApi(itemsWithInvoiceId);
+
+  revalidatePath(`/invoices/${invoiceId}`);
 
   return {
     success: true,
