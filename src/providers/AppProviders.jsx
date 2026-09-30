@@ -2,6 +2,7 @@
 
 import { ThemeProvider } from "next-themes";
 import Modal from "@/components/ui/Modal";
+import { ToastProvider } from "@/context/ToastContext";
 
 function AppProviders({ children }) {
   return (
@@ -11,7 +12,9 @@ function AppProviders({ children }) {
       enableSystem
       disableTransitionOnChange
     >
-      <Modal>{children}</Modal>
+      <ToastProvider>
+        <Modal>{children}</Modal>
+      </ToastProvider>
     </ThemeProvider>
   );
 }

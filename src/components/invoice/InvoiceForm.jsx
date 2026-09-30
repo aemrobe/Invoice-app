@@ -3,6 +3,7 @@
 import GoBackBtn from "@/components/ui/GoBackBtn";
 import FormRow from "@/components/ui/FormRow";
 import MyDatePicker from "../ui/MyDatePicker";
+import { useToast } from "@/context/ToastContext";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { useOutsideClicks } from "@/hooks/useOutsideClicks";
@@ -21,21 +22,22 @@ import {
 
 const SECTION_TITLE_STYLES = "heading-S2 text-brand-primary capitalize mb-6";
 
-const DEFAULT_FORM_VALUES = {
-  senderAddress: { street: "", city: "", postcode: "", country: "" },
-  clientName: "",
-  clientEmail: "",
-  clientAddress: { street: "", city: "", postcode: "", country: "" },
-  createdAt: new Date().toISOString(),
-  paymentTerms: 30,
-  description: "",
-  items: [],
-};
-
 const validateRequired = (value) =>
   value.trim() !== "" || FIELD_REQUIRED_MESSAGE;
 
 function InvoiceForm({ editInvoice = null, overlay, className }) {
+  const defaultFormValues = {
+    senderAddress: { street: "", city: "", postcode: "", country: "" },
+    clientName: "",
+    clientEmail: "",
+    clientAddress: { street: "", city: "", postcode: "", country: "" },
+    createdAt: new Date().toISOString(),
+    paymentTerms: 30,
+    description: "",
+    items: [],
+  };
+
+  const { onShowToastMessage } = useToast();
   const [isPending, startTransition] = useTransition();
   const [pendingAction, setPendingAction] = useState("");
 
@@ -58,16 +60,16 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
     formState: { errors },
   } = useForm({
     mode: "onTouched",
-    defaultValues: DEFAULT_FORM_VALUES,
+    defaultValues: defaultFormValues,
     values: isEditMode
       ? {
           senderAddress:
-            editInvoice.senderAddress || DEFAULT_FORM_VALUES.senderAddress,
+            editInvoice.senderAddress || defaultFormValues.senderAddress,
           clientName: editInvoice.clientName || "",
           clientEmail: editInvoice.clientEmail || "",
           clientAddress:
-            editInvoice.clientAddress || DEFAULT_FORM_VALUES.clientAddress,
-          createdAt: editInvoice.createdAt || DEFAULT_FORM_VALUES.createdAt,
+            editInvoice.clientAddress || defaultFormValues.clientAddress,
+          createdAt: editInvoice.createdAt || defaultFormValues.createdAt,
           paymentTerms: editInvoice.paymentTerms || 30,
           description: editInvoice.description || "",
           items: editInvoice.items?.length > 0 ? editInvoice.items : [],
@@ -164,9 +166,15 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
     setPendingAction("draft");
 
     startTransition(async () => {
-      await createDraftInvoice(draftData);
+      const res = await createDraftInvoice(draftData);
 
-      closeModalAndRefresh();
+      if (res?.success) {
+        onShowToastMessage({
+          text: `Draft successfully created`,
+        });
+
+        closeModalAndRefresh();
+      }
     });
   };
 
@@ -177,9 +185,14 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
   const handleSaveAndSend = async (data) => {
     setPendingAction("saveAndSend");
     startTransition(async () => {
-      await createNewInvoice(data);
+      const res = await createNewInvoice(data);
 
-      closeModalAndRefresh();
+      if (res?.success) {
+        closeModalAndRefresh();
+        onShowToastMessage({
+          text: `Invoice successfully created`,
+        });
+      }
     });
   };
 
@@ -379,7 +392,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
                 initialDate={
                   isEditMode
                     ? editInvoice?.createdAt
-                    : DEFAULT_FORM_VALUES.createdAt
+                    : defaultFormValues.createdAt
                 }
                 register={register}
                 name={"createdAt"}

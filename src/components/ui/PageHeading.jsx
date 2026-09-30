@@ -19,7 +19,11 @@ function PageHeading({ className, children, isError = false }) {
       !isError && (hasModalTrigger || hasFocusedInvoiceIem);
 
     if (!shouldSkipFocus && pageHeading.current) {
-      pageHeading.current.focus({ preventScroll: true });
+      const animationFrameId = requestAnimationFrame(() => {
+        pageHeading.current.focus({ preventScroll: true });
+      });
+
+      return () => cancelAnimationFrame(animationFrameId);
     }
   }, [pathname, isError]);
 

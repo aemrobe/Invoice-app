@@ -1,5 +1,6 @@
+"use client";
+
 import Link from "next/link";
-import SpinnerMini from "./SpinnerMini";
 import SpinnerMiniContainer from "./SpinnerMiniContainer";
 
 const PRIMARY_STYLES =
@@ -38,6 +39,18 @@ function Button({
   ...props
 }) {
   const baseStyles = `relative focusable-ring heading-S2 pt-4.5 pb-3.75 text-center rounded-3xl transition-fast cursor-pointer  disabled-button`;
+  const isButtonDisabled = disabled || pending;
+
+  const handleClick = (e) => {
+    if (
+      typeof window !== "undefined" &&
+      document.activeElement instanceof HTMLElement
+    ) {
+      document.activeElement.blur();
+    }
+
+    if (onClick) onClick(e);
+  };
 
   const selectedVariant = buttonVariants[variant] || buttonVariants.primary;
   const combinedClasses = `${baseStyles} ${selectedVariant} ${className}`;
@@ -48,10 +61,15 @@ function Button({
         href={href}
         scroll={scroll}
         className={combinedClasses}
-        onClick={onClick}
+        onClick={handleClick}
+        aria-disabled={isButtonDisabled}
         {...props}
       >
-        {children}
+        {pending && <SpinnerMiniContainer />}
+
+        <span className={`${pending ? "opacity-0" : "opacity-100"}`}>
+          {children}
+        </span>
       </Link>
     );
   }
@@ -60,8 +78,8 @@ function Button({
     <button
       type={type}
       className={combinedClasses}
-      onClick={onClick}
-      disabled={disabled || pending}
+      onClick={handleClick}
+      aria-disabled={isButtonDisabled}
       {...props}
     >
       {pending && <SpinnerMiniContainer />}

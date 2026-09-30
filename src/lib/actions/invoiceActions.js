@@ -22,6 +22,10 @@ export async function createNewInvoice(data) {
   await createInvoiceItemsApi(itemsWithInvoiceId);
 
   revalidatePath("/invoices");
+
+  return {
+    success: true,
+  };
 }
 
 export async function createDraftInvoice(data) {
@@ -39,6 +43,10 @@ export async function createDraftInvoice(data) {
   }
 
   revalidatePath("/invoices");
+
+  return {
+    success: true,
+  };
 }
 
 export async function deleteInvoice(invoiceId) {

@@ -7,3 +7,5 @@ export { default as ArrowLeftIcon } from "./ArrowLeftIcon";
 export { default as ChevronIcon } from "./ChevronIcon";
 export { default as CalendarIcon } from "./CalendarIcon";
 export { default as DeleteIcon } from "./DeleteIcon";
+export { default as SelectedIcon } from "./SelectedIcon";
+export { default as CloseIcon } from "./CloseIcon";

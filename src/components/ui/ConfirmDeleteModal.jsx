@@ -2,6 +2,7 @@ import Button from "@/components/ui/Button";
 import { useTransition } from "react";
 import { deleteInvoice } from "@/lib/actions/invoiceActions";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/context/ToastContext";
 
 function ConfirmDeleteModal({
   titleId,
@@ -12,6 +13,7 @@ function ConfirmDeleteModal({
   invoiceId,
 }) {
   const router = useRouter();
+  const { onShowToastMessage } = useToast();
   const [isPending, startTransition] = useTransition();
 
   function handleDeleteInvoice() {
@@ -21,6 +23,10 @@ function ConfirmDeleteModal({
       if (res?.success) {
         onCloseModal();
         router.replace("/invoices");
+        onShowToastMessage({
+          text: `Invoice successfully deleted`,
+          focusHeaderOnClose: true,
+        });
       }
     });
   }
