@@ -4,9 +4,8 @@ import { useRef, useState } from "react";
 import { ANIMATION_DURATION_FILTER_MENU } from "@/lib/constants/durations";
 import { ChevronIcon } from "@/components/icons";
 import { useOutsideClicks } from "@/hooks/useOutsideClicks";
-import { FIELD_REQUIRED_MESSAGE } from "@/lib/constants/invoice";
 
-function CustomSelect({ label, name, options, defaultValue, register }) {
+function CustomSelect({ label, name, options, defaultValue, setValue }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(() =>
@@ -52,6 +51,11 @@ function CustomSelect({ label, name, options, defaultValue, register }) {
 
   const handleSelect = function (option) {
     setSelectedOption(option);
+    setValue(name, option.value, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
     closeDropDown();
   };
 
@@ -150,16 +154,6 @@ function CustomSelect({ label, name, options, defaultValue, register }) {
           className={`w-2.75 h-1.75 text-brand-primary transition-fast ${isVisible ? "rotate-180" : "rotate-0"}`}
         />
       </button>
-
-      {name && (
-        <input
-          type="hidden"
-          value={selectedOption?.value ?? ""}
-          {...register(name, {
-            required: FIELD_REQUIRED_MESSAGE,
-          })}
-        />
-      )}
 
       {isOpen && (
         <div

@@ -6,9 +6,8 @@ import { CalendarIcon, ChevronIcon } from "@/components/icons";
 import { format } from "date-fns";
 import { useOutsideClicks } from "@/hooks/useOutsideClicks";
 import { ANIMATION_DURATION_FILTER_MENU } from "@/lib/constants/durations";
-import { FIELD_REQUIRED_MESSAGE } from "@/lib/constants/invoice";
 
-function MyDatePicker({ initialDate, register, name }) {
+function MyDatePicker({ initialDate, setValue, name }) {
   const inputId = useId();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(() =>
@@ -32,6 +31,14 @@ function MyDatePicker({ initialDate, register, name }) {
 
   const handleSelect = (date) => {
     if (!date) return;
+
+    const formattedDate = format(date, "yyyy-MM-dd");
+
+    setValue(name, formattedDate, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
 
     setSelectedDate(date);
     closeDropdownAndRefocus();
@@ -64,7 +71,7 @@ function MyDatePicker({ initialDate, register, name }) {
   });
 
   const displayedDateValue = format(selectedDate, "dd MMM yyyy");
-  const serverPayloadValue = format(selectedDate, "yyyy-MM-dd");
+
   const defaultClassNames = getDefaultClassNames();
 
   return (
@@ -96,14 +103,6 @@ function MyDatePicker({ initialDate, register, name }) {
         {displayedDateValue}
         <CalendarIcon className={"w-4 text-slate-400"} />
       </button>
-
-      <input
-        type="hidden"
-        value={selectedDate}
-        {...register(name, {
-          required: FIELD_REQUIRED_MESSAGE,
-        })}
-      />
 
       {isOpen && (
         <div

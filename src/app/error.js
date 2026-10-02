@@ -2,9 +2,20 @@
 
 import Button from "@/components/ui/Button";
 import StatusCard from "@/components/ui/StatusCard";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 
 function Error({ error, reset }) {
   const descriptionId = "error-text-id";
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
+  const handleTryAgain = () => {
+    startTransition(() => {
+      router.refresh();
+      reset();
+    });
+  };
 
   return (
     <StatusCard
@@ -15,9 +26,11 @@ function Error({ error, reset }) {
       descriptionId={descriptionId}
       action={
         <Button
+          pending={isPending}
+          disabled={isPending}
           aria-describedby={descriptionId}
           variant={"primary"}
-          onClick={reset}
+          onClick={handleTryAgain}
         >
           Try again
         </Button>

@@ -42,12 +42,12 @@ function Button({
   const isButtonDisabled = disabled || pending;
 
   const handleClick = (e) => {
-    if (
-      typeof window !== "undefined" &&
-      document.activeElement instanceof HTMLElement
-    ) {
-      document.activeElement.blur();
-    }
+    // if (
+    //   typeof window !== "undefined" &&
+    //   document.activeElement instanceof HTMLElement
+    // ) {
+    //   document.activeElement.blur();
+    // }
 
     if (onClick) onClick(e);
   };
@@ -62,7 +62,6 @@ function Button({
         scroll={scroll}
         className={combinedClasses}
         onClick={handleClick}
-        aria-disabled={isButtonDisabled}
         {...props}
       >
         {pending && <SpinnerMiniContainer />}
@@ -79,7 +78,7 @@ function Button({
       type={type}
       className={combinedClasses}
       onClick={handleClick}
-      aria-disabled={isButtonDisabled}
+      disabled={isButtonDisabled}
       {...props}
     >
       {pending && <SpinnerMiniContainer />}

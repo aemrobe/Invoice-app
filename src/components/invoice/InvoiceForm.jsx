@@ -11,7 +11,7 @@ import CustomSelect from "@/components/ui/CustomSelect";
 import Button from "@/components/ui/Button";
 import { useScrollOverflow } from "@/hooks/useScrollOverflow";
 import FormSection from "@/components/ui/FormSection";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { FIELD_REQUIRED_MESSAGE } from "@/lib/constants/invoice";
 import InvoiceItemRow from "./InvoiceItemRow";
 import { ACCESSIBILITY_ANNOUNCEMENT_DELAY_MS } from "@/lib/constants/durations";
@@ -20,6 +20,7 @@ import {
   createNewInvoice,
   updatedInvoice,
 } from "@/lib/actions/invoiceActions";
+import SaveChangesAction from "./SaveChangesAction";
 
 const SECTION_TITLE_STYLES = "heading-S2 text-brand-primary capitalize mb-6";
 
@@ -56,26 +57,30 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
     register,
     handleSubmit,
     control,
+    setValue,
     getValues,
     clearErrors,
     formState: { errors },
   } = useForm({
     mode: "onTouched",
-    defaultValues: defaultFormValues,
-    values: isEditMode
+    ...(isEditMode
       ? {
-          senderAddress:
-            editInvoice.senderAddress || defaultFormValues.senderAddress,
-          clientName: editInvoice.clientName || "",
-          clientEmail: editInvoice.clientEmail || "",
-          clientAddress:
-            editInvoice.clientAddress || defaultFormValues.clientAddress,
-          createdAt: editInvoice.createdAt || defaultFormValues.createdAt,
-          paymentTerms: editInvoice.paymentTerms || 30,
-          description: editInvoice.description || "",
-          items: editInvoice.items?.length > 0 ? editInvoice.items : [],
+          values: {
+            senderAddress:
+              editInvoice.senderAddress || defaultFormValues.senderAddress,
+            clientName: editInvoice.clientName || "",
+            clientEmail: editInvoice.clientEmail || "",
+            clientAddress:
+              editInvoice.clientAddress || defaultFormValues.clientAddress,
+            createdAt: editInvoice.createdAt || defaultFormValues.createdAt,
+            paymentTerms: editInvoice.paymentTerms || 30,
+            description: editInvoice.description || "",
+            items: editInvoice.items?.length > 0 ? editInvoice.items : [],
+          },
         }
-      : undefined,
+      : {
+          defaultValues: defaultFormValues,
+        }),
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -101,8 +106,12 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
   const titleId = "invoice-modal-title";
 
   const closeModalAndRefresh = function () {
-    router.back();
-    router.refresh();
+    if (window.history.length > 1) {
+      router.back();
+      router.refresh();
+    } else {
+      router.replace(isEditMode ? `/invoices/${id}` : "/invoices");
+    }
   };
 
   const handleGoback = useCallback(() => {
@@ -172,22 +181,6 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
       if (res?.success) {
         onShowToastMessage({
           text: `Draft successfully created`,
-        });
-
-        closeModalAndRefresh();
-      }
-    });
-  };
-
-  const handleSaveChanges = async (data) => {
-    setPendingAction("saveChanges");
-
-    startTransition(async () => {
-      const res = await updatedInvoice(editInvoice.id, data);
-
-      if (res?.success) {
-        onShowToastMessage({
-          text: `Invoice successfully updated`,
         });
 
         closeModalAndRefresh();
@@ -407,7 +400,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
                     ? editInvoice?.createdAt
                     : defaultFormValues.createdAt
                 }
-                register={register}
+                setValue={setValue}
                 name={"createdAt"}
               />
 
@@ -421,7 +414,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
                 ]}
                 label={"Payment Terms"}
                 name={"paymentTerms"}
-                register={register}
+                setValue={setValue}
               />
             </div>
 
@@ -501,14 +494,18 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
                   >
                     Cancel
                   </Button>
-                  <Button
-                    pending={isPending && pendingAction === "saveChanges"}
-                    disabled={isPending}
-                    variant="save"
-                    onClick={handleSubmit(handleSaveChanges, onError)}
-                  >
-                    Save Changes
-                  </Button>
+
+                  <SaveChangesAction
+                    startTransition={startTransition}
+                    pendingAction={pendingAction}
+                    setPendingAction={setPendingAction}
+                    closeModalAndRefresh={closeModalAndRefresh}
+                    editInvoice={editInvoice}
+                    control={control}
+                    isPending={isPending}
+                    handleSubmit={handleSubmit}
+                    onError={onError}
+                  />
                 </>
               ) : (
                 <>

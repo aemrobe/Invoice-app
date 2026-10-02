@@ -38,8 +38,6 @@ async function Page({ params }) {
     total = 0,
   } = invoice;
 
-  console.log("invoice", invoice);
-
   const senderAddress = invoice?.senderAddress || {};
   const clientAddress = invoice?.clientAddress || {};
 
