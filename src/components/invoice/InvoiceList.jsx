@@ -2,15 +2,22 @@ import InvoiceCard from "@/components/invoice/InvoiceCard";
 import EmptyMessage from "@/components/ui/EmptyMessage";
 import FocusManager from "@/components/ui/FocusManager";
 import { getInvoices } from "@/lib/services/data-services";
+import InvoiceListAnnouncment from "@/components/invoice/InvoiceListAnnouncment";
 
 async function InvoiceList({ filter }) {
-  const { invoices } = await getInvoices({ filter });
+  const { invoices, count } = await getInvoices({ filter });
+
+  const rawValues = filter?.value;
+  const activeFilters = Array.isArray(rawValues)
+    ? rawValues.join(", ")
+    : rawValues || "";
 
   return (
     <>
       <FocusManager />
 
-      {invoices?.length === 0 ? (
+      <InvoiceListAnnouncment count={count} activeFilters={activeFilters} />
+      {count === 0 ? (
         <EmptyMessage buttonText={"New"} />
       ) : (
         <ul

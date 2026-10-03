@@ -51,16 +51,20 @@ function ToastMessage({ toastMessageContent, onClose, toastId }) {
 
   return (
     <div
-      className={`${showToastMessage ? "animate-fade-in" : "animate-fade-out"} bg-surface-inverse shadow-3xl p-4 text-content-inverse    rounded-lg border-l-4 border-icon-success flex gap-4 items-center justify-between w-full max-w-100 text-base pointer-events-auto`}
+      className={`${showToastMessage ? "animate-fade-in" : "animate-fade-out"} bg-surface-primary shadow-dropdown p-4 text-content-primary rounded-lg border-l-4 border-status-paid flex gap-4 items-center justify-between w-full max-w-100 text-base pointer-events-auto`}
     >
       <div className={"flex items-center gap-3"}>
-        <SelectedIcon className={`text-icon-success w-5 h-5 shrink-0`} />
+        <SelectedIcon className={`text-status-paid w-5 h-5 shrink-0`} />
         <p className={"text-preset-4-bold leading-tight"} role="alert">
           {text}
         </p>
       </div>
 
-      <button aria-label="close notification" onClick={handleDismiss}>
+      <button
+        aria-label="close notification"
+        onClick={handleDismiss}
+        className="text-content-tertiary hover:text-content-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring rounded-sm"
+      >
         <CloseIcon className={"w-5 h-5"} />
       </button>
     </div>

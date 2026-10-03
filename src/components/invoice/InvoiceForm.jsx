@@ -11,14 +11,13 @@ import CustomSelect from "@/components/ui/CustomSelect";
 import Button from "@/components/ui/Button";
 import { useScrollOverflow } from "@/hooks/useScrollOverflow";
 import FormSection from "@/components/ui/FormSection";
-import { useFieldArray, useForm, useWatch } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { FIELD_REQUIRED_MESSAGE } from "@/lib/constants/invoice";
 import InvoiceItemRow from "./InvoiceItemRow";
 import { ACCESSIBILITY_ANNOUNCEMENT_DELAY_MS } from "@/lib/constants/durations";
 import {
   createDraftInvoice,
   createNewInvoice,
-  updatedInvoice,
 } from "@/lib/actions/invoiceActions";
 import SaveChangesAction from "./SaveChangesAction";
 
@@ -106,7 +105,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
   const titleId = "invoice-modal-title";
 
   const closeModalAndRefresh = function () {
-    if (window.history.length > 1) {
+    if (window.history.length > 2) {
       router.back();
       router.refresh();
     } else {
@@ -115,7 +114,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
   };
 
   const handleGoback = useCallback(() => {
-    if (window.history.length > 1) {
+    if (window.history.length > 2) {
       router.back();
     } else {
       router.push(isEditMode ? `/invoices/${id}` : "/invoices");
@@ -402,6 +401,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
                 }
                 setValue={setValue}
                 name={"createdAt"}
+                disabled={isEditMode}
               />
 
               <CustomSelect

@@ -157,11 +157,11 @@ export async function createInvoiceItemsApi(newInvoiceItems) {
   return data;
 }
 
-export async function updateInvoiceApi(updatedData) {
+export async function updateInvoiceApi({ id, updatedData }) {
   const { data, error } = await supabase
     .from("invoices")
     .update(updatedData)
-    .eq("id", updatedData.id)
+    .eq("id", id)
     .select();
 
   if (error) {

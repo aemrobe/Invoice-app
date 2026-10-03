@@ -6,10 +6,11 @@ import {
   createInvoiceItemsApi,
   deleteInvoiceApi,
   deleteInvoiceItemsApi,
+  getInvoice,
   updateInvoiceApi,
 } from "@/lib/services/data-services";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 export async function createNewInvoice(data) {
   const { newInvoice, items } = transformInvoiceFormData(data);
@@ -61,13 +62,22 @@ export async function deleteInvoice(invoiceId) {
 }
 
 export async function updatedInvoice(invoiceId, updatedData) {
+  const invoice = await getInvoice(invoiceId);
+  if (!invoice) {
+    throw new Error("Invoice not found.");
+  }
+
+  if (invoice.status === "paid") {
+    throw new Error("Paid invoice couldn't be edited.");
+  }
+
   const { newInvoice, items } = transformInvoiceFormData(
     updatedData,
     "pending",
     invoiceId,
   );
 
-  await updateInvoiceApi(newInvoice);
+  await updateInvoiceApi({ id: newInvoice.id, updatedData: newInvoice });
 
   await deleteInvoiceItemsApi(invoiceId);
 
@@ -79,6 +89,32 @@ export async function updatedInvoice(invoiceId, updatedData) {
   await createInvoiceItemsApi(itemsWithInvoiceId);
 
   revalidatePath(`/invoices/${invoiceId}`);
+
+  return {
+    success: true,
+  };
+}
+
+export async function markAsPaidButton(invoiceId) {
+  const invoice = await getInvoice(invoiceId);
+
+  if (!invoice) {
+    throw new Error("Invoice not found.");
+  }
+
+  if (invoice.status !== "pending") {
+    throw new Error("Only pending invoices can be marked as paid.");
+  }
+
+  await updateInvoiceApi({
+    id: invoiceId,
+    updatedData: {
+      status: "paid",
+    },
+  });
+
+  revalidatePath(`invoices/${invoiceId}`);
+  revalidatePath("/invoices");
 
   return {
     success: true,

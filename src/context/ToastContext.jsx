@@ -70,7 +70,7 @@ function ToastProvider({ children }) {
     <ToastContext.Provider value={value}>
       {children}
       {toasts.length > 0 && (
-        <div className="fixed top-4 inset-x-0 p-2 flex flex-col space-y-2 items-center z-100 pointer-events-none ">
+        <div className="fixed top-20 inset-x-0 p-2 flex flex-col space-y-2 items-center z-100 pointer-events-none ">
           {toasts.map((toast) => (
             <ToastMessage
               key={toast.id}

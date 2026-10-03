@@ -3,25 +3,49 @@
 import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal";
 import ConfirmDeleteModal from "@/components/ui/ConfirmDeleteModal";
+import { markAsPaidButton } from "@/lib/actions/invoiceActions";
+import { useTransition } from "react";
+import { useToast } from "@/context/ToastContext";
 
 function InvoiceActions({ invoice }) {
   const { id } = invoice;
 
+  const [isPending, startTransition] = useTransition();
+  const { onShowToastMessage } = useToast();
+
+  const handleMarkAsPaid = () => {
+    startTransition(async () => {
+      const res = await markAsPaidButton(id);
+
+      if (res?.success) {
+        onShowToastMessage({
+          text: "Invoice marked as paid successfully",
+          focusHeaderOnClose: true,
+        });
+      }
+    });
+  };
+
   return (
     <>
-      <Button
-        href={`/invoices/${id}/edit`}
-        scroll={false}
-        variant={"edit"}
-        onClick={(e) => {
-          window.__lastModalTriggerElement = e.currentTarget;
-        }}
-      >
-        Edit
-      </Button>
+      {invoice.status !== "paid" && (
+        <Button
+          disabled={isPending}
+          href={`/invoices/${id}/edit`}
+          scroll={false}
+          variant={"edit"}
+          onClick={(e) => {
+            window.__lastModalTriggerElement = e.currentTarget;
+          }}
+        >
+          Edit
+        </Button>
+      )}
 
       <Modal.Open modalName={"delete-invoice"}>
-        <Button variant={"delete"}>Delete</Button>
+        <Button disabled={isPending} variant={"delete"}>
+          Delete
+        </Button>
       </Modal.Open>
 
       <Modal.Window
@@ -34,6 +58,17 @@ function InvoiceActions({ invoice }) {
       >
         <ConfirmDeleteModal invoiceId={id} />
       </Modal.Window>
+
+      {invoice.status === "pending" && (
+        <Button
+          pending={isPending}
+          disabled={isPending}
+          onClick={handleMarkAsPaid}
+          variant={"primary"}
+        >
+          Mark as Paid
+        </Button>
+      )}
     </>
   );
 }

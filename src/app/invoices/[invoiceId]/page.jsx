@@ -186,8 +186,6 @@ async function Page({ params }) {
 
       <div className="bg-surface-primary shadow-card mt-14  pt-5.25 pb-5.5 px-6 flex justify-center  gap-2">
         <InvoiceActions invoice={invoice} />
-
-        <Button variant={"primary"}>Mark as Paid</Button>
       </div>
     </div>
   );

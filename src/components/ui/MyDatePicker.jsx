@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import { useOutsideClicks } from "@/hooks/useOutsideClicks";
 import { ANIMATION_DURATION_FILTER_MENU } from "@/lib/constants/durations";
 
-function MyDatePicker({ initialDate, setValue, name }) {
+function MyDatePicker({ initialDate, setValue, name, disabled }) {
   const inputId = useId();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(() =>
@@ -98,7 +98,8 @@ function MyDatePicker({ initialDate, setValue, name }) {
         className="border border-input-border  heading-S2 text-content-primary/55 bg-input-background 
         cursor-pointer
         hover:border-input-border-active
-        focus:outline-none focus-visible:border-input-border-active  transition-fast pt-4.5 pb-3.75 pl-5 pr-4  rounded-sm flex justify-between"
+        focus:outline-none focus-visible:border-input-border-active  transition-fast pt-4.5 pb-3.75 pl-5 pr-4  rounded-sm flex justify-between disabled-button"
+        disabled={disabled}
       >
         {displayedDateValue}
         <CalendarIcon className={"w-4 text-slate-400"} />
