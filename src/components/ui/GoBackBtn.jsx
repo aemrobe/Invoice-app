@@ -16,8 +16,6 @@ function GoBackBtn({ to, onClick }) {
       router.push(to);
       return;
     }
-
-    router.back();
   }
 
   return (

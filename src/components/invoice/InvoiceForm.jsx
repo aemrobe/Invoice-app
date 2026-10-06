@@ -26,7 +26,12 @@ const SECTION_TITLE_STYLES = "heading-S2 text-brand-primary capitalize mb-6";
 const validateRequired = (value) =>
   value.trim() !== "" || FIELD_REQUIRED_MESSAGE;
 
-function InvoiceForm({ editInvoice = null, overlay, className }) {
+function InvoiceForm({
+  editInvoice = null,
+  overlay,
+  className,
+  navigationMode = "standalone",
+}) {
   const defaultFormValues = {
     senderAddress: { street: "", city: "", postcode: "", country: "" },
     clientName: "",
@@ -45,6 +50,8 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
   const [annoucement, setAnnoucement] = useState("");
   const isEditMode = !!editInvoice;
   const { id = "" } = isEditMode ? editInvoice : {};
+
+  const fallbackUrl = isEditMode ? `/invoices/${id}` : "/invoices";
 
   const announceStatus = (message) => {
     setTimeout(() => {
@@ -104,22 +111,21 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
 
   const titleId = "invoice-modal-title";
 
-  const closeModalAndRefresh = function () {
-    if (window.history.length > 2) {
+  const closeAfterSave = function () {
+    if (navigationMode === "intercepted") {
       router.back();
-      router.refresh();
     } else {
-      router.replace(isEditMode ? `/invoices/${id}` : "/invoices");
+      router.replace(fallbackUrl);
     }
   };
 
   const handleGoback = useCallback(() => {
-    if (window.history.length > 2) {
+    if (navigationMode === "intercepted") {
       router.back();
     } else {
-      router.push(isEditMode ? `/invoices/${id}` : "/invoices");
+      router.replace(fallbackUrl);
     }
-  }, [router, isEditMode, id]);
+  }, [router, fallbackUrl, navigationMode]);
 
   const handleRemoveItem = (index) => {
     const noOfItems = fields.length;
@@ -182,7 +188,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
           text: `Draft successfully created`,
         });
 
-        closeModalAndRefresh();
+        closeAfterSave();
       }
     });
   };
@@ -193,7 +199,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
       const res = await createNewInvoice(data);
 
       if (res?.success) {
-        closeModalAndRefresh();
+        closeAfterSave();
         onShowToastMessage({
           text: `Invoice successfully created`,
         });
@@ -499,7 +505,7 @@ function InvoiceForm({ editInvoice = null, overlay, className }) {
                     startTransition={startTransition}
                     pendingAction={pendingAction}
                     setPendingAction={setPendingAction}
-                    closeModalAndRefresh={closeModalAndRefresh}
+                    closeAfterSave={closeAfterSave}
                     editInvoice={editInvoice}
                     control={control}
                     isPending={isPending}

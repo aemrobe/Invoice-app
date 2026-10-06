@@ -6,7 +6,13 @@ async function InterceptedEditModal({ params }) {
 
   const invoiceDetails = await getInvoice(invoiceId);
 
-  return <InvoiceForm editInvoice={invoiceDetails} className={"max-w-100"} />;
+  return (
+    <InvoiceForm
+      editInvoice={invoiceDetails}
+      className={"max-w-100"}
+      navigationMode="intercepted"
+    />
+  );
 }
 
 export default InterceptedEditModal;

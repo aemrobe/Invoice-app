@@ -7,7 +7,7 @@ import ToolTip from "../ui/ToolTip";
 function SaveChangesAction({
   pendingAction,
   setPendingAction,
-  closeModalAndRefresh,
+  closeAfterSave,
   editInvoice,
   control,
   isPending,
@@ -34,7 +34,7 @@ function SaveChangesAction({
           text: `Invoice successfully updated`,
         });
 
-        closeModalAndRefresh();
+        closeAfterSave();
       }
     });
   };
