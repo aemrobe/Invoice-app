@@ -21,12 +21,12 @@ function Header() {
   };
 
   return (
-    <header className="bg-surface-sidebar flex justify-between h-18 fixed inset-x-0 top-0 z-40">
+    <header className="bg-surface-sidebar flex justify-between h-18 md:h-20 fixed inset-x-0 top-0 z-40">
       <Link
         href={"/invoices"}
         onClick={handleLogoClick}
         aria-label="Go to home page"
-        className="focusable-ring logo relative w-18 h-18 bg-brand-primary flex justify-center items-center rounded-tr-[20px] rounded-br-[20px]"
+        className="focusable-ring logo relative w-18 h-18 md:w-20 md:h-20 bg-brand-primary flex justify-center items-center rounded-tr-[20px] rounded-br-[20px]"
         style={{
           "--ring-color": "var(--color-purple-300)",
           "--ring-offset": "-2px",

@@ -18,10 +18,10 @@ async function InvoiceList({ filter }) {
 
       <InvoiceListAnnouncment count={count} activeFilters={activeFilters} />
       {count === 0 ? (
-        <EmptyMessage buttonText={"New"} />
+        <EmptyMessage />
       ) : (
         <ul
-          className="mt-8 grid justify-center grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(280px,auto))] gap-4"
+          className="mt-8 md:mt-13.75 grid justify-center grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(280px,auto))] md:grid-cols-1 gap-4"
           role="list"
         >
           {invoices.map((invoice) => (

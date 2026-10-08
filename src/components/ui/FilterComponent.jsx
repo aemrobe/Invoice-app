@@ -89,14 +89,15 @@ function FilterComponent({ options = DEFAULT_OPTIONS }) {
       <button
         type="button"
         ref={buttonRef}
-        className="flex gap-3 items-center heading-S2 text-content-primary focusable-ring rounded-md py-1 px-2"
+        className="flex gap-3 md:gap-3.5 items-center heading-S2 text-content-primary focusable-ring rounded-md py-1 px-2"
         aria-expanded={isOpen}
         aria-haspopup="true"
         aria-controls="filter-menu"
         onClick={handleDropDown}
         onKeyDown={handleKeyDown}
       >
-        Filter
+        <span className="md:hidden">Filter</span>
+        <span className="hidden md:inline-block">Filter by status</span>
         <ChevronIcon
           orientation={"down"}
           className={`w-2.75 h-1.75 text-brand-primary transition-fast ${visible ? "rotate-180" : "rotate-0"}`}

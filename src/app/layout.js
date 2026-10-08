@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
     >
       <body className="bg-surface-app">
         <AppProviders>
-          <div className="flex flex-col pt-18">
+          <div className="flex flex-col pt-18 md:pt-20">
             <Header />
 
             <main className="min-h-dvh flex-1 flex flex-col">{children}</main>
