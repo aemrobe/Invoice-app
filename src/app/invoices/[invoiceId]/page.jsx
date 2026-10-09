@@ -45,7 +45,7 @@ async function Page({ params }) {
   return (
     <div className="flex-1 flex flex-col justify-between md:max-w-3xl md:mx-auto md:w-full">
       <div className="px-6 md:px-10 mt-8.25 md:mt-12.25  max-w-112.5 md:max-w-none mx-auto md:mx-0">
-        <GoBackBtn to={"/invoices"} />
+        <GoBackBtn to={"/invoices"} autoFocus={true} />
 
         <div className="mt-7.75 shadow-card px-6 pt-6 pb-6.75 md:px-8 rounded-md bg-surface-primary flex justify-between md:justify-start items-center">
           <p className="text-status-label capitalize md:mr-5">Status</p>
@@ -59,7 +59,10 @@ async function Page({ params }) {
         <div className="bg-surface-primary rounded-md shadow-card mt-4 md:mt-6 pt-6.25 px-6 pb-6 md:pt-8.25 md:px-8 md:pb-8">
           <div className="mb-7.75 md:mb-5.25 md:flex md:justify-between">
             <div className="mb-7.5 md:mt-px">
-              <PageHeading className="uppercase mb-1 heading-S2 md:leading-6 text-content-primary">
+              <PageHeading
+                shouldFocus={false}
+                className="uppercase mb-1 heading-S2 md:leading-6 text-content-primary"
+              >
                 <span aria-hidden="true" className="text-slate-400">
                   #
                 </span>

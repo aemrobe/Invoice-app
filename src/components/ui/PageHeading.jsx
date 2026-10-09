@@ -3,11 +3,18 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
-function PageHeading({ className, children, isError = false }) {
+function PageHeading({
+  className,
+  children,
+  isError = false,
+  shouldFocus = true,
+}) {
   const pageHeading = useRef(null);
   const pathname = usePathname();
 
   useEffect(() => {
+    if (!shouldFocus) return;
+
     const isHomePageRoute = pathname === "/" || pathname === "/invoices";
 
     const focusedInvoiceId = sessionStorage.getItem("focusedInvoiceId");
@@ -25,7 +32,7 @@ function PageHeading({ className, children, isError = false }) {
 
       return () => cancelAnimationFrame(animationFrameId);
     }
-  }, [pathname, isError]);
+  }, [pathname, isError, shouldFocus]);
 
   return (
     <h1

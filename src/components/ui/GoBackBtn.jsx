@@ -2,8 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { ChevronIcon } from "../icons";
+import { useEffect, useRef } from "react";
 
-function GoBackBtn({ to, onClick }) {
+function GoBackBtn({ to, onClick, autoFocus = false }) {
+  const btnRef = useRef(null);
   const router = useRouter();
 
   function handleClick() {
@@ -18,8 +20,24 @@ function GoBackBtn({ to, onClick }) {
     }
   }
 
+  useEffect(() => {
+    if (autoFocus && btnRef.current) {
+      const animationId = requestAnimationFrame(() => {
+        btnRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+
+        btnRef.current.focus({ preventScroll: true });
+      });
+
+      return () => cancelAnimationFrame(animationId);
+    }
+  }, [autoFocus]);
+
   return (
     <button
+      ref={btnRef}
       type="button"
       onClick={handleClick}
       className="focusable-ring rounded-lg inline-flex items-center gap-x-[1.478rem] heading-S2 scroll-mt-27"
