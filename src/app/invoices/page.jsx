@@ -18,7 +18,9 @@ export default async function Home({ searchParams }) {
       : null;
 
   return (
-    <div className={`px-6 py-8 md:py-15.25 md:px-12`}>
+    <div
+      className={`px-6 py-8 md:py-15.25 md:px-12 md:max-w-3xl md:w-full md:mx-auto`}
+    >
       <div className="flex justify-between">
         <div>
           <PageHeading
@@ -41,7 +43,7 @@ export default async function Home({ searchParams }) {
           </Suspense>
         </div>
 
-        <div className="flex  gap-[1.159rem] md:gap-[2.533rem] items-center ">
+        <div className="flex gap-[1.159rem] md:gap-[2.533rem] items-center">
           <FilterComponent />
           <CreateInvoiceBtn />
         </div>

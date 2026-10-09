@@ -1,7 +1,7 @@
 import { INVOICE_STATUS_CONFIG } from "@/lib/constants/invoice";
 import { ChevronIcon } from "../icons";
 
-function StatusBadge({ status = "draft" }) {
+function StatusBadge({ status = "draft", chevronIcon = false }) {
   const config = INVOICE_STATUS_CONFIG[status] || INVOICE_STATUS_CONFIG.draft;
 
   return (
@@ -28,10 +28,12 @@ function StatusBadge({ status = "draft" }) {
         </span>
       </div>
 
-      <ChevronIcon
-        orientation={"right"}
-        className={" text-brand-primary w-1.5 hidden md:inline-block"}
-      />
+      {chevronIcon && (
+        <ChevronIcon
+          orientation={"right"}
+          className={" text-brand-primary w-1.5 hidden md:inline-block"}
+        />
+      )}
     </div>
   );
 }

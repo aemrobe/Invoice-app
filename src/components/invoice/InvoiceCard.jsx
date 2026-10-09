@@ -3,7 +3,7 @@
 import StatusBadge from "@/components/invoice/StatusBadge";
 import { formatCurrency, formatDate } from "@/lib/utils/formatters";
 import Link from "next/link";
-
+import EmptyFallback from "../ui/EmptyFallback";
 function InvoiceCard({ invoice }) {
   const { id, clientName, paymentDue, total, status } = invoice;
 
@@ -29,16 +29,13 @@ function InvoiceCard({ invoice }) {
         </h2>
 
         <p
-          className={`text-invoice-owner  text-right truncate md:col-start-3  md:text-left`}
+          className={`text-invoice-owner text-right truncate md:col-start-3 md:text-left`}
         >
           <span className="sr-only">Client:</span>
           {clientName ? (
             clientName
           ) : (
-            <>
-              <span aria-hidden="true"> —</span>
-              <span className="sr-only">No client specified</span>
-            </>
+            <EmptyFallback text={"No client specified"} />
           )}
         </p>
 
@@ -54,7 +51,7 @@ function InvoiceCard({ invoice }) {
           <span> {formatCurrency(total)}</span>
         </p>
 
-        <StatusBadge status={status} />
+        <StatusBadge status={status} chevronIcon={true} />
       </Link>
     </li>
   );

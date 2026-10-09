@@ -14,3 +14,5 @@ export const INVOICE_STATUS_CONFIG = {
 };
 
 export const FIELD_REQUIRED_MESSAGE = "can't be empty";
+
+export const EMPTY_FALLBACK = "—";
