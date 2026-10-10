@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { ChevronIcon } from "../icons";
 import { useEffect, useRef } from "react";
 
-function GoBackBtn({ to, onClick, autoFocus = false }) {
+function GoBackBtn({ to, onClick, autoFocus = false, className }) {
   const btnRef = useRef(null);
   const router = useRouter();
 
@@ -40,7 +40,7 @@ function GoBackBtn({ to, onClick, autoFocus = false }) {
       ref={btnRef}
       type="button"
       onClick={handleClick}
-      className="focusable-ring rounded-lg inline-flex items-center gap-x-[1.478rem] heading-S2 scroll-mt-27"
+      className={`focusable-ring rounded-lg inline-flex items-center gap-x-[1.478rem] heading-S2 scroll-mt-27 ${className}`}
       style={{ "--ring-offset": "8px" }}
     >
       <ChevronIcon

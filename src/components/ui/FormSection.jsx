@@ -1,7 +1,7 @@
 function FormSection({
   title,
   children,
-  className = "mb-10.25",
+  className = "mb-10.25 md:mb-12.25",
   legendClassName = "",
 }) {
   return (

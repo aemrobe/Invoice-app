@@ -15,11 +15,7 @@ async function FullEditPage({ params }) {
   const invoiceDetails = await getInvoice(invoiceId);
 
   return (
-    <InvoiceForm
-      editInvoice={invoiceDetails}
-      className={"max-w-100"}
-      navigationMode="standalone"
-    />
+    <InvoiceForm editInvoice={invoiceDetails} navigationMode="standalone" />
   );
 }
 

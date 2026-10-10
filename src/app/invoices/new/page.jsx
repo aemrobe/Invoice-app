@@ -5,7 +5,7 @@ export const metadata = {
 };
 
 function FullNewInvoicePage() {
-  return <InvoiceForm className={"max-w-100"} />;
+  return <InvoiceForm />;
 }
 
 export default FullNewInvoicePage;

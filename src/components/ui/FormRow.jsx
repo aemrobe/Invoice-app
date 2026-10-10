@@ -3,7 +3,7 @@ function FormRow({
   label,
   id,
   type = "text",
-  className,
+  className = "",
   labelClassName = "mb-2.25",
 
   onFocus,
