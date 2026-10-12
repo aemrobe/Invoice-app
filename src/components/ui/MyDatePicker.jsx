@@ -130,14 +130,14 @@ function MyDatePicker({ initialDate, setValue, name, disabled }) {
               Chevron: ChevronIcon,
             }}
             classNames={{
-              root: `${defaultClassNames.root} w-full max-w-86   mx-auto  py-6.25 px-3.75  bg-surface-overlay shadow-dropdown rounded-lg`,
-              month_grid: `w-full table-fixed `,
+              root: `${defaultClassNames.root}  w-full max-w-86  mx-auto py-6.25 px-3.75 md:px-2 md:py-4 bg-surface-overlay shadow-dropdown rounded-lg`,
+              month_grid: `w-full table-fixed`,
               month_caption: `${defaultClassNames.month_caption}`,
               caption_label: `${defaultClassNames.caption_label} text-calendar-text heading-S2 leading-none`,
               button_previous: `${defaultClassNames.button_previous} rounded-md p-1 focusable-ring`,
               button_next: `${defaultClassNames.button_next} rounded-md p-1 focusable-ring`,
-              day: `w-full h-auto aspect-square text-center heading-S2 `,
-              day_button: `${defaultClassNames.day_button} text-calendar-text cursor-pointer hover:!text-content-interactive-hover focus-visible:!text-content-interactive-hover focus-visible:!ring-2 focus-visible:!ring-content-interactive-hover focus-visible:outline-none w-full h-full rounded-full `,
+              day: `w-full h-auto aspect-square text-center heading-S2`,
+              day_button: `${defaultClassNames.day_button} text-calendar-text cursor-pointer hover:!text-content-interactive-hover focus-visible:!text-content-interactive-hover focus-visible:!ring-2 focus-visible:!ring-content-interactive-hover focus-visible:outline-none w-full h-full rounded-full`,
               selected:
                 "!bg-transparent [&>button]:!bg-transparent [&>button]:!text-content-interactive-hover",
               outside: `text-calendar-day-outside pointer-events-none`,

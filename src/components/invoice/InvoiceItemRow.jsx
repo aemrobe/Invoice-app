@@ -27,7 +27,7 @@ function InvoiceItemRow({ index, register, control, errors, remove }) {
 
   const [isVisible, setIsVisible] = useState(false);
   const showTotalPriceStyle =
-    "absolute z-50 bg-surface-modal px-2 py-1 shadow-md hover:border-slate-400 dark:hover:border-slate-600 whitespace-nowrap -top-1 -left-2";
+    "absolute z-50 bg-surface-modal px-2 py-1 shadow-md hover:border-slate-400 dark:hover:border-slate-600 whitespace-nowrap    top-6 left-0 md:-top-1 md:-left-2";
 
   return (
     <FormSection
@@ -83,7 +83,7 @@ function InvoiceItemRow({ index, register, control, errors, remove }) {
 
           <output
             tabIndex={"0"}
-            className={`heading-S2 border rounded  border-transparent outline-none text-slate-300 pt-4.5 pb-3.75 transition-fast ${isVisible ? `${showTotalPriceStyle}` : "truncate"}`}
+            className={`heading-S2 border border-transparent rounded outline-none text-slate-300 pt-4.5 pb-3.75 transition-fast ${isVisible ? `${showTotalPriceStyle}` : "truncate"}`}
             onMouseOver={() => setIsVisible(true)}
             onMouseOut={() => setIsVisible(false)}
           >
