@@ -511,7 +511,7 @@ function InvoiceForm({
             ></div>
 
             <div
-              className={`bg-surface-primary md:rounded-tr-[1.25rem]  md:rounded-br-[1.25rem] pt-5.25 pb-5.5 px-6 md:py-7.75 md:px-14 flex ${isEditMode ? "gap-x-2" : "gap-x-1.75 md:gap-x-2"} justify-end`}
+              className={`bg-surface-primary md:bg-surface-modal md:rounded-tr-[1.25rem]  md:rounded-br-[1.25rem] pt-5.25 pb-5.5 px-6 md:py-7.75 md:px-14 flex ${isEditMode ? "gap-x-2" : "gap-x-1.75 md:gap-x-2"} justify-end`}
             >
               {isEditMode ? (
                 <>

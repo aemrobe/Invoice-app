@@ -6,7 +6,7 @@ import SpinnerMiniContainer from "./SpinnerMiniContainer";
 const PRIMARY_STYLES =
   "bg-action-primary-bg enabled:hover:bg-action-primary-hover text-white";
 const SECONDARY_STYLES =
-  "bg-action-secondary-bg enabled:hover:bg-action-secondary-hover text-action-secondary-text enabled:hover:text-action-secondary-text-hover";
+  "bg-action-secondary-bg hover:bg-action-secondary-hover aria-disabled:hover:bg-action-secondary-bg  text-action-secondary-text hover:text-action-secondary-text-hover aria-disabled:hover:text-action-secondary-text";
 const MUTED_SECONDARY_STYLES =
   "bg-action-secondary-bg enabled:hover:bg-action-secondary-hover text-content-tertiary enabled:hover:text-action-secondary-text-hover";
 const TERTIARY_STYLES =
@@ -38,15 +38,24 @@ function Button({
   type = "button",
   ...props
 }) {
-  const baseStyles = `relative focusable-ring heading-S2 pt-4.5 pb-3.75 text-center rounded-3xl transition-fast cursor-pointer  disabled-button`;
+  const baseStyles = `relative focusable-ring heading-S2 pt-4.5 pb-3.75 text-center rounded-3xl transition-fast disabled-button`;
   const isButtonDisabled = disabled || pending;
 
   const handleClick = (e) => {
+    if (isButtonDisabled) {
+      e.preventDefault();
+      return;
+    }
+
     if (onClick) onClick(e);
   };
 
+  const stateStyles = isButtonDisabled
+    ? "cursor-not-allowed opacity-80"
+    : "cursor-pointer";
+
   const selectedVariant = buttonVariants[variant] || buttonVariants.primary;
-  const combinedClasses = `${baseStyles} ${selectedVariant} ${className}`;
+  const combinedClasses = `${baseStyles} ${selectedVariant} ${stateStyles} ${className}`;
 
   if (href) {
     return (

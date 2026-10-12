@@ -21,7 +21,7 @@ function Header() {
   };
 
   return (
-    <header className="bg-surface-sidebar lg:rounded-tr-[20px] flex justify-between lg:flex-col h-18 md:h-20 lg:h-auto fixed inset-x-0 lg:w-[inherit] lg:inset-x-auto top-0 lg:bottom-0 z-40 ">
+    <header className="bg-surface-sidebar lg:rounded-tr-[20px] lg:rounded-br-[20px] flex justify-between lg:flex-col h-18 md:h-20 lg:h-auto fixed inset-x-0 lg:w-[inherit] lg:inset-x-auto top-0 lg:bottom-0 z-40 ">
       <Link
         href={"/invoices"}
         onClick={handleLogoClick}

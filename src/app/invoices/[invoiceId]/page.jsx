@@ -44,8 +44,8 @@ async function Page({ params }) {
   const clientAddress = invoice?.clientAddress || {};
 
   return (
-    <div className="flex-1 flex flex-col justify-between md:max-w-3xl md:mx-auto md:w-full">
-      <div className="px-6 md:px-10 mt-8.25 md:mt-12.25  max-w-112.5 md:max-w-none mx-auto md:mx-0">
+    <div className="flex-1 flex flex-col justify-between md:max-w-3xl lg:max-w-182.5 md:mx-auto md:w-full md:pb-12.25 lg:pb-16.25">
+      <div className="px-6 md:px-10  lg:px-0 mt-8.25 md:mt-12.25 lg:mt-16.25  max-w-112.5 md:max-w-none mx-auto md:mx-0">
         <GoBackBtn to={"/invoices"} autoFocus={true} />
 
         <div className="mt-7.75 shadow-card px-6 pt-6 pb-6.75 md:px-8 rounded-md bg-surface-primary flex justify-between md:justify-start items-center">
@@ -57,7 +57,7 @@ async function Page({ params }) {
           </div>
         </div>
 
-        <div className="bg-surface-primary rounded-md shadow-card mt-4 md:mt-6 pt-6.25 px-6 pb-6 md:pt-8.25 md:px-8 md:pb-8">
+        <div className="bg-surface-primary rounded-md shadow-card mt-4 md:mt-6 pt-6.25 px-6 pb-6 md:pt-8.25 lg:pt-12.25 lg:px-12 lg:pb-12 md:px-8 md:pb-8">
           <div className="mb-7.75 md:mb-5.25 md:flex md:justify-between">
             <div className="mb-7.5 md:mt-px">
               <PageHeading
@@ -167,7 +167,7 @@ async function Page({ params }) {
             </div>
           </div>
 
-          <div className="mt-9.5 md:mt-11.75">
+          <div className="mt-9.5 md:mt-11.75 lg:mt-11">
             <InvoiceItemsMobile items={items} />
             <InvoicesItemsTable items={items} />
 
