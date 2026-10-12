@@ -8,6 +8,7 @@ import { getInvoice } from "@/lib/services/data-services";
 import { notFound } from "next/navigation";
 import EmptyFallback from "@/components/ui/EmptyFallback";
 import InvoicesItemsTable from "@/components/invoice/InvoicesItemsTable";
+import DeleteModalWindow from "@/components/ui/DeleteModalWindow";
 
 const EMPTYFALLBACKSTYLES = "text-content-primary heading-S leading-5";
 
@@ -180,10 +181,10 @@ async function Page({ params }) {
           </div>
         </div>
       </div>
-
       <div className="bg-surface-primary shadow-card mt-14  pt-5.25 pb-5.5 px-6 flex md:hidden justify-center  gap-2">
         <InvoiceActions invoice={invoice} />
       </div>
+      <DeleteModalWindow invoiceId={invoiceId} />
     </div>
   );
 }

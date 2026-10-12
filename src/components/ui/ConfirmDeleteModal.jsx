@@ -35,12 +35,12 @@ function ConfirmDeleteModal({
     <>
       <h2
         id={titleId}
-        className="heading-M text-content-primary mb-2 tracking-[-0.5px] leading-8"
+        className="heading-M text-content-primary mb-2 md:mb-3 tracking-[-0.5px] leading-8"
       >
         Confirm Deletion
       </h2>
 
-      <p id={contentId} className="leading-5.5 mb-5.5 text-slate-300">
+      <p id={contentId} className="leading-5.5 mb-5.5 md:mb-3.5 text-slate-300">
         Are you sure you want to delete invoice
         {` ${invoiceId}`}? This action cannot be undone.
       </p>

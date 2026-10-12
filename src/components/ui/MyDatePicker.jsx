@@ -130,7 +130,7 @@ function MyDatePicker({ initialDate, setValue, name, disabled }) {
               Chevron: ChevronIcon,
             }}
             classNames={{
-              root: `${defaultClassNames.root}  w-full max-w-86  mx-auto py-6.25 px-3.75 md:px-2 md:py-4 bg-surface-overlay shadow-dropdown rounded-lg`,
+              root: `${defaultClassNames.root}  w-full max-w-86  mx-auto py-6.25 px-3.75 md:px-1 md:py-3 bg-surface-overlay shadow-dropdown rounded-lg`,
               month_grid: `w-full table-fixed`,
               month_caption: `${defaultClassNames.month_caption}`,
               caption_label: `${defaultClassNames.caption_label} text-calendar-text heading-S2 leading-none`,
