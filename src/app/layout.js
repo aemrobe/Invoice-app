@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
     >
       <body className="bg-surface-app">
         <AppProviders>
-          <div className="flex flex-col md:grid md:grid-cols-[auto_1fr] pt-18 md:pt-20 lg:pt-0">
+          <div className="flex flex-col lg:grid lg:grid-cols-[auto_1fr] pt-18 md:pt-20 lg:pt-0">
             <div className="w-25.75">
               <Header />
             </div>
