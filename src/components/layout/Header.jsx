@@ -21,12 +21,12 @@ function Header() {
   };
 
   return (
-    <header className="bg-surface-sidebar flex justify-between h-18 md:h-20 fixed inset-x-0 top-0 z-40">
+    <header className="bg-surface-sidebar lg:rounded-tr-[20px] flex justify-between lg:flex-col h-18 md:h-20 lg:h-auto fixed inset-x-0 lg:w-[inherit] lg:inset-x-auto top-0 lg:bottom-0 z-40 ">
       <Link
         href={"/invoices"}
         onClick={handleLogoClick}
         aria-label="Go to home page"
-        className="focusable-ring logo relative w-18 h-18 md:w-20 md:h-20 bg-brand-primary flex justify-center items-center rounded-tr-[20px] rounded-br-[20px]"
+        className="focusable-ring logo relative w-18 h-18 md:w-20 md:h-20 lg:w-full lg:h-25.75 bg-brand-primary flex justify-center items-center rounded-tr-[20px] rounded-br-[20px]"
         style={{
           "--ring-color": "var(--color-purple-300)",
           "--ring-offset": "-2px",
@@ -37,15 +37,15 @@ function Header() {
           width={28}
           height={26}
           alt=""
-          className="w-7 h-auto z-10"
+          className="w-7 md:w-10 h-auto z-10"
         />
       </Link>
 
-      <div className="flex  items-center">
+      <div className="flex  items-center lg:flex-col">
         {/* <DevSeedButton /> */}
         <ThemeToggler />
         <div
-          className="border border-border-divider self-stretch ml-6"
+          className="border border-border-divider self-stretch ml-6 lg:ml-0 lg:mb-6"
           aria-hidden="true"
         ></div>
         <div className="px-6 shrink-0">
@@ -54,7 +54,7 @@ function Header() {
             width={32}
             height={32}
             alt="User profile image"
-            className="w-8 h-8 rounded-full "
+            className="w-8 h-8 lg:w-10 lg:h-10 lg:mb-6 rounded-full "
           />
         </div>
       </div>

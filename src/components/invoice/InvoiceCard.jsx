@@ -17,7 +17,7 @@ function InvoiceCard({ invoice }) {
         id={id}
         href={`/invoices/${id}`}
         onClick={handlerCardClick}
-        className="shadow-card focusable-ring px-6 pt-6.25 pb-5.5 md:pt-7.5 md:pb-6.75 bg-surface-primary rounded-lg  grid grid-cols-[auto_auto] md:grid-cols-[6rem_1fr_1fr_1fr_auto]  justify-between md:items-center md:justify-stretch md:gap-2"
+        className="shadow-card focusable-ring px-6 pt-6.25 pb-5.5 md:py-4 lg:pl-8 bg-surface-primary rounded-lg  grid grid-cols-[auto_auto] md:grid-cols-[6rem_1fr_1fr_1fr_auto]  justify-between md:items-center md:justify-stretch md:gap-2"
       >
         <h2 className="heading-S2 text-content-primary ">
           <span aria-hidden="true" className="text-slate-400">
