@@ -300,19 +300,19 @@ function InvoiceForm({
       role="dialog"
       aria-modal="true"
       aria-labelledby={titleId}
-      className={`fixed  z-30 transparent inset-x-0 bottom-0 top-18 md:top-20 ${overlay} bg-black/50`}
+      className={`fixed z-30 transparent inset-x-0 bottom-0 top-18 md:top-20 lg:top-0  lg:max-w-360 lg:mx-auto ${overlay} bg-black/50`}
     >
       <form onSubmit={handleSubmit(handleSaveAndSend, onError)}>
         <div
           ref={modalRef}
-          className={`outline-none fixed flex flex-col  z-20  bg-surface-modal inset-x-0 top-18 md:top-20 bottom-0 pt-2 md:pt-34  ${className} max-w-100 md:max-w-154 md:rounded-tr-[1.25rem] md:rounded-br-[1.25rem]  md:pt-0`}
+          className={`outline-none fixed lg:absolute flex flex-col  z-20  bg-surface-modal inset-x-0 top-18 bottom-0 md:top-20  lg:top-0 lg:left-0 pt-2 md:pt-34  ${className} max-w-100 md:max-w-154 lg:max-w-179.75 md:rounded-tr-[1.25rem] md:rounded-br-[1.25rem]  md:pt-0`}
         >
           <div className="flex-1 min-h-0 flex flex-col pr-2 md:pr-8">
             <div
               ref={scrollRef}
-              className={`pt-6.25 pl-6 pr-4 md:pt-0 md:pl-14 md:pr-6 ${noItemError ? "pb-0" : "pb-22 md:pb-4"} w-full flex-1 min-h-0 overflow-y-auto custom-scrollbar`}
+              className={`pt-6.25 pl-6 pr-4 md:pt-0 md:pl-14 lg:pl-39.75 md:pr-6 ${noItemError ? "pb-0" : "pb-22 md:pb-4"} w-full flex-1 min-h-0 overflow-y-auto custom-scrollbar`}
             >
-              <div className="md:absolute z-50 md:top-14.75 md:w-[calc(100%-112px)] md:bg-surface-modal">
+              <div className="md:absolute z-50 md:top-14.75  md:bg-surface-modal">
                 <GoBackBtn onClick={handleGoback} className={"md:hidden"} />
 
                 <h1
@@ -432,7 +432,7 @@ function InvoiceForm({
                 <FormRow
                   id={"project-description"}
                   label={"Project Description"}
-                  className={"mb-17.25 md:mb-6.75"}
+                  className={"mb-17.25 md:mb-6.75 lg:mb-8.75"}
                   error={errors?.description?.message}
                   {...register("description", {
                     validate: validateRequired,
@@ -511,7 +511,7 @@ function InvoiceForm({
             ></div>
 
             <div
-              className={`bg-surface-primary md:bg-surface-modal md:rounded-tr-[1.25rem]  md:rounded-br-[1.25rem] pt-5.25 pb-5.5 px-6 md:py-7.75 md:px-14 flex ${isEditMode ? "gap-x-2" : "gap-x-1.75 md:gap-x-2"} justify-end`}
+              className={`bg-surface-primary md:bg-surface-modal md:rounded-tr-[1.25rem]  md:rounded-br-[1.25rem] pt-5.25 pb-5.5 px-6 md:py-7.75 md:px-14 lg:pl-39.75  flex ${isEditMode ? "gap-x-2" : "gap-x-1.75 md:gap-x-2"} justify-end`}
             >
               {isEditMode ? (
                 <>
