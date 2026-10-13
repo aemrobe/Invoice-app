@@ -252,14 +252,19 @@ function InvoiceForm({
       }
 
       if (e.key === "Tab") {
-        const focusableElements =
-          modalElement.querySelectorAll(focusableSelector);
+        const allFocusable = modalElement.querySelectorAll(focusableSelector);
+
+        // This filter out the interactive elements which have a hidden class inside them.
+        const focusableElements = Array.from(allFocusable).filter(
+          (el) => el.offsetParent !== null,
+        );
 
         if (focusableElements.length === 0) return;
 
         const firstElement = focusableElements[0];
         const lastElement = focusableElements[focusableElements.length - 1];
 
+        console.log("first element", firstElement);
         if (e.shiftKey) {
           if (document.activeElement === firstElement) {
             e.preventDefault();

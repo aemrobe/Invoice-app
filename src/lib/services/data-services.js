@@ -64,7 +64,7 @@ export async function getInvoice(id) {
     .eq("id", id)
     .single();
 
-  await new Promise((res) => setTimeout(res, 3000));
+  // await new Promise((res) => setTimeout(res, 3000));
   if (error) {
     if (error.code === "PGRST116") {
       return null;

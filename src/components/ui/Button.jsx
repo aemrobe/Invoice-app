@@ -17,7 +17,7 @@ const DANGER_STYLES =
 const buttonVariants = {
   edit: `${SECONDARY_STYLES} pl-6 pr-5.75`,
   cancel: `${SECONDARY_STYLES} px-[1.656rem]`,
-  discard: `${SECONDARY_STYLES}  pl-4.5 pr-4.75`,
+  discard: `${SECONDARY_STYLES} lg:bg-slate-50 lg:text-slate-400  pl-4.5 pr-4.75`,
   cancelModal: `${MUTED_SECONDARY_STYLES} px-6`,
   delete: `${DANGER_STYLES} pl-6 pr-6.25`,
   primary: `${PRIMARY_STYLES} pl-6.75 pr-7`,
