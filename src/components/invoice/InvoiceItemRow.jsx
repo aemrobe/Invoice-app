@@ -41,6 +41,7 @@ function InvoiceItemRow({ index, register, control, errors, remove }) {
           label={"Item Name"}
           error={errors.items?.[index]?.name?.message}
           className={"w-full"}
+          errorPosition="top md:bottom"
           labelClassName={"md:sr-only  mb-3.75"}
           {...register(`items.${index}.name`, {
             required: FIELD_REQUIRED_MESSAGE,
@@ -56,10 +57,7 @@ function InvoiceItemRow({ index, register, control, errors, remove }) {
           labelClassName={"md:sr-only mb-2.25"}
           {...register(`items.${index}.quantity`, {
             required: FIELD_REQUIRED_MESSAGE,
-            min: {
-              value: 1,
-              message: "must be at least 1",
-            },
+            validate: (value) => value > 0 || "must be > 0",
           })}
         />
 

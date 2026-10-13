@@ -5,7 +5,6 @@ function FormRow({
   type = "text",
   className = "",
   labelClassName = "mb-2.25",
-
   onFocus,
   errorId = "",
   error,
@@ -23,8 +22,7 @@ function FormRow({
     if (onFocus) onFocus(e);
   };
 
-  const isTopError = error && errorPosition === "top";
-  const isBottomError = error && errorPosition === "bottom";
+  const isTopResponsive = errorPosition === "top md:bottom";
 
   return (
     <div className={`flex flex-col ${className}`}>
@@ -36,10 +34,10 @@ function FormRow({
           {label}
         </label>
 
-        {isTopError && (
+        {error && errorPosition !== "bottom" && (
           <p
             id={resolvedErrorId}
-            className="body-variant tracking-[-0.1px] text-error"
+            className={`body-variant tracking-[-0.1px] text-error ${isTopResponsive ? "md:hidden" : ""}`}
           >
             {error}
           </p>
@@ -58,10 +56,10 @@ function FormRow({
         {...props}
       />
 
-      {isBottomError && (
+      {error && errorPosition !== "top" && (
         <p
           id={resolvedErrorId}
-          className="mt-1.25 body-variant tracking-[-0.1px] text-error"
+          className={`mt-1.25 body-variant tracking-[-0.1px] text-error ${isTopResponsive ? "hidden md:block" : ""}`}
         >
           {error}
         </p>
