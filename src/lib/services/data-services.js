@@ -21,7 +21,6 @@ export const getInvoices = cache(async ({ filter }) => {
 
   const { data, error, count } = await query;
 
-  // await new Promise((res) => setTimeout(res, 3000));
   if (error) {
     console.error(`${error.message}`);
     throw new Error("Invoices couldn't be loaded");
@@ -64,7 +63,6 @@ export async function getInvoice(id) {
     .eq("id", id)
     .single();
 
-  // await new Promise((res) => setTimeout(res, 3000));
   if (error) {
     if (error.code === "PGRST116") {
       return null;

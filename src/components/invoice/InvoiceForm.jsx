@@ -264,7 +264,6 @@ function InvoiceForm({
         const firstElement = focusableElements[0];
         const lastElement = focusableElements[focusableElements.length - 1];
 
-        console.log("first element", firstElement);
         if (e.shiftKey) {
           if (document.activeElement === firstElement) {
             e.preventDefault();

@@ -10,7 +10,6 @@ import {
   updateInvoiceApi,
 } from "@/lib/services/data-services";
 import { revalidatePath } from "next/cache";
-import { notFound } from "next/navigation";
 
 export async function createNewInvoice(data) {
   const { newInvoice, items } = transformInvoiceFormData(data);
