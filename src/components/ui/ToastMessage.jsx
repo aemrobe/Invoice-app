@@ -1,17 +1,23 @@
 import { useCallback, useEffect, useState } from "react";
 import { CloseIcon, SelectedIcon } from "@/components/icons";
-import { TOAST_DURATION_MS } from "@/lib/constants/durations";
+import {
+  SUCCESS_TOAST_DURATION_MS,
+  ERROR_TOAST_DURATION_MS,
+  ANIMATION_DURATION_TOAST,
+} from "@/lib/constants/durations";
 
 function ToastMessage({ toastMessageContent, onClose, toastId }) {
-  const { text } = toastMessageContent;
+  const { text, type = "action" } = toastMessageContent;
   const [showToastMessage, setShowToastMessage] = useState(true);
+  const duration =
+    type === "error" ? ERROR_TOAST_DURATION_MS : SUCCESS_TOAST_DURATION_MS;
 
   const handleDismiss = useCallback(
     function () {
       setShowToastMessage(false);
       setTimeout(function () {
         onClose(toastId);
-      }, TOAST_DURATION_MS);
+      }, ANIMATION_DURATION_TOAST);
     },
     [onClose, toastId],
   );
@@ -40,13 +46,13 @@ function ToastMessage({ toastMessageContent, onClose, toastId }) {
     function () {
       const timer = setTimeout(function () {
         handleDismiss();
-      }, TOAST_DURATION_MS);
+      }, duration);
 
       return () => {
         clearTimeout(timer);
       };
     },
-    [handleDismiss],
+    [handleDismiss, duration],
   );
 
   return (

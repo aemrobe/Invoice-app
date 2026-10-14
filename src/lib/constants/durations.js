@@ -1,7 +1,9 @@
 export const ANIMATION_DURATION_FILTER_MENU = 150;
 export const MODAL_FOCUS_DURATION = 20;
 export const ACCESSIBILITY_ANNOUNCEMENT_DELAY_MS = 150;
-export const TOAST_DURATION_MS = 2000;
+export const SUCCESS_TOAST_DURATION_MS = 2000;
+export const ERROR_TOAST_DURATION_MS = 5000;
+export const ANIMATION_DURATION_TOAST = 150;
 export const PAGE_TITLE_FOCUS_AFTER_TOAST_DURATION = 1;
 
 // We use a 10px "buffer distance" instead of checking for exact 0 (< 1).

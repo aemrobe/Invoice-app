@@ -35,6 +35,11 @@ function SaveChangesAction({
         });
 
         closeAfterSave();
+      } else {
+        onShowToastMessage({
+          text: res?.error,
+          type: "error",
+        });
       }
     });
   };

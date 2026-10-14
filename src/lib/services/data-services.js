@@ -23,7 +23,7 @@ export const getInvoices = cache(async ({ filter }) => {
 
   if (error) {
     console.error(`${error.message}`);
-    throw new Error("Invoices couldn't be loaded");
+    throw new Error("Failed to load invoices. Please check your connection.");
   }
 
   const invoices = data.map((invoice) => ({
@@ -69,7 +69,7 @@ export async function getInvoice(id) {
     }
 
     console.error("Database Error", error.message);
-    throw new Error("Failed to load invoice details.");
+    throw new Error("Could not load invoice details.");
   }
 
   if (!invoice) {
@@ -111,7 +111,7 @@ export async function createInvoiceApi(newInvoice) {
 
   if (error) {
     console.error(error.message);
-    throw new Error("Invoice couldn't be created");
+    throw new Error("Failed to create invoice. Please check your details.");
   }
 
   return data;
@@ -125,7 +125,7 @@ export async function deleteInvoiceApi(invoiceId) {
 
   if (error) {
     console.error(error.message);
-    throw new Error("Invoice couldn't be deleted");
+    throw new Error("Failed to delete invoice.");
   }
 }
 
@@ -137,7 +137,7 @@ export async function deleteInvoiceItemsApi(invoiceId) {
 
   if (error) {
     console.error(error.message);
-    throw new Error("Invoice items couldn't be deleted");
+    throw new Error("Could not process invoice items.");
   }
 }
 
@@ -149,7 +149,7 @@ export async function createInvoiceItemsApi(newInvoiceItems) {
 
   if (error) {
     console.error(error.message);
-    throw new Error("Invoice Items couldn't be created");
+    throw new Error("Failed to save invoice items.");
   }
 
   return data;
@@ -164,7 +164,7 @@ export async function updateInvoiceApi({ id, updatedData }) {
 
   if (error) {
     console.error(error.message);
-    throw new Error("Invoice couldn't be updated");
+    throw new Error("Failed to update invoice.");
   }
 
   return data;

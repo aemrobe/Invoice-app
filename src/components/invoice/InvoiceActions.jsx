@@ -22,6 +22,11 @@ function InvoiceActions({ invoice }) {
           text: "Invoice marked as paid successfully",
           focusHeaderOnClose: true,
         });
+      } else {
+        onShowToastMessage({
+          text: res?.error,
+          type: "error",
+        });
       }
     });
   };

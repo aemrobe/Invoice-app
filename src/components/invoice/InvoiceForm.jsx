@@ -189,6 +189,11 @@ function InvoiceForm({
         });
 
         closeAfterSave();
+      } else {
+        onShowToastMessage({
+          text: res?.error,
+          type: "error",
+        });
       }
     });
   };
@@ -202,6 +207,11 @@ function InvoiceForm({
         closeAfterSave();
         onShowToastMessage({
           text: `Invoice successfully created`,
+        });
+      } else {
+        onShowToastMessage({
+          text: res?.error,
+          type: "error",
         });
       }
     });

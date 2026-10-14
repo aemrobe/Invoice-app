@@ -27,6 +27,11 @@ function ConfirmDeleteModal({
           text: `Invoice successfully deleted`,
           focusHeaderOnClose: true,
         });
+      } else {
+        onShowToastMessage({
+          text: res?.error,
+          type: "error",
+        });
       }
     });
   }
