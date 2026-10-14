@@ -1,24 +1,28 @@
 "use client";
 
 import Button from "@/components/ui/Button";
-import { seedNewUserData } from "../../lib/services/seedData";
+
+import { seedDatabaseAction } from "@/lib/actions/invoiceActions";
+import { useTransition } from "react";
 
 function DevSeedButton() {
+  const [pending, startTransition] = useTransition();
+
   const handleSeed = async () => {
-    try {
-      const res = await seedNewUserData();
+    startTransition(async () => {
+      const res = await seedDatabaseAction();
 
       if (res?.success) {
         alert("Demo data loaded successfully");
+      } else {
+        alert(`seeding failed: ${res?.error}`);
       }
-    } catch (error) {
-      alert(`seeding failed: ${error}`);
-    }
+    });
   };
 
   return (
-    <Button onClick={handleSeed} variant={"primary"}>
-      Seed Initial data
+    <Button disabled={pending} onClick={handleSeed} variant={"primary"}>
+      {pending ? "Seeding..." : " Seed Test data"}
     </Button>
   );
 }

@@ -8,8 +8,8 @@ function StatusCard({
   isError = false,
 }) {
   return (
-    <div className="flex min-h-[60vh] items-center justify-center px-6 text-center">
-      <div className=" mt-10 bg-surface-primary shadow-card flex w-full max-w-md flex-col items-center rounded-2xl p-8 transition-medium md:p-12">
+    <div className="flex min-h-[60vh] lg:min-h-[80vh] items-center justify-center px-6 text-center">
+      <div className="mt-10 bg-surface-primary shadow-card flex w-full max-w-md lg:max-w-lg flex-col items-center rounded-2xl p-8 transition-medium md:p-12 lg:p-14">
         <PageHeading
           className={"heading-M text-content-primary mb-3"}
           isError={isError}

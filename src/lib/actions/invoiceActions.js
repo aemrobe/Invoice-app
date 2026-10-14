@@ -10,6 +10,23 @@ import {
   updateInvoiceApi,
 } from "@/lib/services/data-services";
 import { revalidatePath } from "next/cache";
+import { seedNewUserData } from "../services/seedData";
+
+export async function seedDatabaseAction() {
+  try {
+    await seedNewUserData();
+    revalidatePath("/invoices");
+
+    return { success: true };
+  } catch (error) {
+    console.error("Seeding action failed", error.message);
+
+    return {
+      success: false,
+      error: error.message,
+    };
+  }
+}
 
 export async function createNewInvoice(data) {
   const { newInvoice, items } = transformInvoiceFormData(data);
