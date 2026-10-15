@@ -107,10 +107,7 @@ function InvoiceItemRow({ index, register, control, errors, remove }) {
           <div className=" pt-4.5 pb-1.75 md:p-0 md:flex md:items-center">
             <button
               type="button"
-              className="focusable-ring rounded-xs"
-              style={{
-                "--ring-offset": "6px",
-              }}
+              className="focusable-ring rounded-xs [--ring-offset:6px]"
               onClick={remove}
             >
               <span className="sr-only">Delete {name}</span>

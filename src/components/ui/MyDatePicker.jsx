@@ -8,7 +8,7 @@ import { useOutsideClicks } from "@/hooks/useOutsideClicks";
 import { ANIMATION_DURATION_FILTER_MENU } from "@/lib/constants/durations";
 
 function MyDatePicker({ initialDate, setValue, name, disabled }) {
-  const inputId = useId();
+  const inputId = useId().replace(/:/g, "");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(() =>
     initialDate ? new Date(initialDate) : new Date(),

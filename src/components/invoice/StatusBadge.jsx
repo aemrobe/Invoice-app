@@ -31,7 +31,7 @@ function StatusBadge({ status = "draft", chevronIcon = false }) {
       {chevronIcon && (
         <ChevronIcon
           orientation={"right"}
-          className={" text-brand-primary w-1.5 hidden md:inline-block"}
+          className={"text-brand-primary w-1.5 hidden md:inline-block"}
         />
       )}
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { CheckMarkIcon, ChevronIcon } from "@/components/icons";
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { ANIMATION_DURATION_FILTER_MENU } from "@/lib/constants/durations";
 import { useOutsideClicks } from "@/hooks/useOutsideClicks";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -140,7 +140,7 @@ function FilterComponent({ options = DEFAULT_OPTIONS }) {
                   />
                 </span>
 
-                <span className="inline-block leading-none translate-y-[1.5px]">
+                <span className="inline-block leading-none translate-y-[1.5px] text-content-primary">
                   {label}
                 </span>
               </label>

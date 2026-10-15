@@ -40,8 +40,7 @@ function GoBackBtn({ to, onClick, autoFocus = false, className }) {
       ref={btnRef}
       type="button"
       onClick={handleClick}
-      className={`focusable-ring rounded-lg inline-flex items-center gap-x-[1.478rem] heading-S2 scroll-mt-27 ${className}`}
-      style={{ "--ring-offset": "8px" }}
+      className={`focusable-ring rounded-lg inline-flex items-center gap-x-[1.478rem] heading-S2 scroll-mt-27 [--ring-offset:8px] ${className}`}
     >
       <ChevronIcon
         orientation={"left"}
