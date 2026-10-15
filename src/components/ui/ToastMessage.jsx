@@ -9,8 +9,11 @@ import {
 function ToastMessage({ toastMessageContent, onClose, toastId }) {
   const { text, type = "action" } = toastMessageContent;
   const [showToastMessage, setShowToastMessage] = useState(true);
-  const duration =
-    type === "error" ? ERROR_TOAST_DURATION_MS : SUCCESS_TOAST_DURATION_MS;
+  const isErrorToast = type === "error";
+
+  const duration = isErrorToast
+    ? ERROR_TOAST_DURATION_MS
+    : SUCCESS_TOAST_DURATION_MS;
 
   const handleDismiss = useCallback(
     function () {
@@ -57,10 +60,12 @@ function ToastMessage({ toastMessageContent, onClose, toastId }) {
 
   return (
     <div
-      className={`${showToastMessage ? "animate-fade-in" : "animate-fade-out"} bg-surface-primary shadow-dropdown p-4 text-content-primary rounded-lg border-l-4 border-status-paid flex gap-4 items-center justify-between w-full max-w-100 text-base pointer-events-auto`}
+      className={`${showToastMessage ? "animate-fade-in" : "animate-fade-out"} bg-surface-primary shadow-dropdown p-4 text-content-primary rounded-lg border-l-4 ${isErrorToast ? "border-error" : "border-status-paid"} flex gap-4 items-center justify-between w-full max-w-100 text-base pointer-events-auto`}
     >
       <div className={"flex items-center gap-3"}>
-        <SelectedIcon className={`text-status-paid w-5 h-5 shrink-0`} />
+        <SelectedIcon
+          className={`${isErrorToast ? "text-error" : "text-status-paid"} w-5 h-5 shrink-0`}
+        />
         <p className={"text-preset-4-bold leading-tight"} role="alert">
           {text}
         </p>

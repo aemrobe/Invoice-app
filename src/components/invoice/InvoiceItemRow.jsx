@@ -23,9 +23,13 @@ function InvoiceItemRow({ index, register, control, errors, remove }) {
     name: `items.${index}.price`,
   });
 
+  const [isVisible, setIsVisible] = useState(false);
+
+  const expandTotalNumber = () => setIsVisible(true);
+  const collapseTotalNumber = () => setIsVisible(false);
+
   const total = ((Number(quantity) || 0) * (Number(price) || 0)).toFixed(2);
 
-  const [isVisible, setIsVisible] = useState(false);
   const showTotalPriceStyle =
     "absolute z-50 bg-surface-modal px-2 py-1 shadow-md hover:border-slate-400 dark:hover:border-slate-600 whitespace-nowrap    top-6 left-0 md:-top-1 md:-left-2";
 
@@ -82,8 +86,10 @@ function InvoiceItemRow({ index, register, control, errors, remove }) {
           <output
             tabIndex={"0"}
             className={`heading-S2 border border-transparent rounded outline-none text-slate-300 pt-4.5 pb-3.75 transition-fast ${isVisible ? `${showTotalPriceStyle}` : "truncate"}`}
-            onMouseOver={() => setIsVisible(true)}
-            onMouseOut={() => setIsVisible(false)}
+            onMouseOver={expandTotalNumber}
+            onMouseOut={collapseTotalNumber}
+            onFocus={expandTotalNumber}
+            onBlur={collapseTotalNumber}
           >
             <span className="sr-only">Total:</span>
             {total}
