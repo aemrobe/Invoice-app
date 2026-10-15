@@ -5,7 +5,6 @@ import Link from "next/link";
 import ThemeToggler from "@/components/ui/ThemeToggler";
 import { useModal } from "@/components/ui/Modal";
 import { usePathname } from "next/navigation";
-import DevSeedButton from "@/components/ui/DevSeedButton";
 
 function Header() {
   const { close } = useModal();
@@ -38,7 +37,6 @@ function Header() {
       </Link>
 
       <div className="flex  items-center lg:flex-col">
-        {/* <DevSeedButton /> */}
         <ThemeToggler />
         <div
           className="border border-border-divider self-stretch ml-6 lg:ml-0 lg:mb-6"
