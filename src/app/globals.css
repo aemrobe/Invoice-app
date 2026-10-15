@@ -1,36 +1,5 @@
 @import "tailwindcss";
 
-/*
-================================================================================
-  INVOICE APP TYPOGRAPHY CHEAT SHEET & LOOKUP GUIDE
-================================================================================
-
-  HOW TO IDENTIFY WHICH UTILITY TO USE IN FIGMA:
-  ------------------------------------------------------------------------------
-  1. Click the text element in Figma and check the Font Size first:
-     • 36px  ==> heading-L
-     • 24px  ==> heading-M
-     • 15px  ==> Check Line Height in Figma:
-                   - Line Height ~24px  ==> heading-S
-                   - Line Height ~15px  ==> heading-S2
-     • 13px  ==> Check Font Weight in Figma:
-                   - Font Weight 500 & Spacing -0.25px ==> body-variant
-                   - Default text / inputs / copy       ==> Applied by <body> automatically!
-
-  ------------------------------------------------------------------------------
-  QUICK LOOKUP MATRIX:
-  ------------------------------------------------------------------------------
-  UTILITY            | SIZE | WEIGHT    | LINE-HEIGHT | SPACING  | UI COMPONENTS / USAGE IN INVOICE APP
-  -------------------|------|-----------|-------------|----------|--------------------------------------------------
-  heading-L          | 36px | Bold (700)| 33px        | -1px     | Total invoice amount ($556.00) in detail drawer
-  heading-M          | 24px | Bold (700)| 22px        | -0.75px  | Main page titles ("Invoices"), grand total price
-  heading-S          | 15px | Bold (700)| 24px        | -0.25px  | Invoice IDs (#RT3080), client names in card list
-  heading-S2         | 15px | Bold (700)| 15px        | -0.25px  | Table item prices/totals ($156.00), compact headers
-  body-variant       | 13px | Med (500) | 15px        | -0.25px  | Invoice due dates, item quantity details (1x $156)
-  body (default)     | 13px | Med (500) | 18px        |  -0.1px   | Form input fields, status badges, global copy
-================================================================================
-*/
-
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -50,7 +19,7 @@
   --color-slate-300: #888eb0;
   --color-slate-200: #dfe3fa;
   --color-slate-100: #f8f8fb;
-  --color-slate-50: #f9fafe; /* # dark #*/ /* # light #*/
+  --color-slate-50: #f9fafe;
 
   --color-red-500: #ec5757;
   --color-red-300: #ff9797;
@@ -384,6 +353,12 @@
   &::after {
     content: ".";
     animation: var(--animate-dots);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --animate-dots: none;
   }
 }
 

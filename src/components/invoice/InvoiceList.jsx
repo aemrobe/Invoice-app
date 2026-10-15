@@ -20,10 +20,7 @@ async function InvoiceList({ filter }) {
       {count === 0 ? (
         <EmptyMessage />
       ) : (
-        <ul
-          className="mt-8 md:mt-13.75 lg:mt-16 grid justify-center grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(280px,auto))] md:grid-cols-1 gap-4"
-          role="list"
-        >
+        <ul className="mt-8 md:mt-13.75 lg:mt-16 grid justify-center grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(280px,auto))] md:grid-cols-1 gap-4">
           {invoices.map((invoice) => (
             <InvoiceCard key={invoice.id} invoice={invoice} />
           ))}

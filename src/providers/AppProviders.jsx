@@ -10,6 +10,7 @@ function AppProviders({ children }) {
       attribute={"class"}
       defaultTheme="system"
       enableSystem
+      enableColorScheme={false}
       disableTransitionOnChange
     >
       <ToastProvider>

@@ -1,7 +1,6 @@
-import { cache } from "react";
 import { supabase } from "./supabase";
 
-export const getInvoices = cache(async ({ filter }) => {
+export const getInvoices = async ({ filter }) => {
   let query = supabase
     .from("invoices")
     .select(
@@ -52,10 +51,10 @@ export const getInvoices = cache(async ({ filter }) => {
   }));
 
   return { invoices, count };
-});
+};
 
 export async function getInvoice(id) {
-  let { data: invoice, error } = await supabase
+  const { data: invoice, error } = await supabase
     .from("invoices")
     .select(
       "id,createdAt:created_at,paymentDue:payment_due,description,paymentTerms:payment_terms,status,total,clientName:client_name,clientEmail:client_email,clientStreet:client_street,clientCity:client_city,clientPostCode:client_post_code,clientCountry:client_country,senderStreet:sender_street,senderCity:sender_city,senderPostCode:sender_post_code,senderCountry:sender_country,items:invoice_items(*)",

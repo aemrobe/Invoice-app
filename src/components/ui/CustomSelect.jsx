@@ -181,7 +181,6 @@ function CustomSelect({ label, name, options, defaultValue, setValue }) {
                   role="presentation"
                   className="py-1 cursor-pointer"
                 >
-                  {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/role-supports-aria-props */}
                   <div
                     role="option"
                     aria-selected={isSelected}

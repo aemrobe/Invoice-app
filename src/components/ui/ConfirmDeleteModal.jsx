@@ -66,7 +66,7 @@ function ConfirmDeleteModal({
           pending={isPending}
           disabled={isPending}
           variant={"delete"}
-          id={initialFocusSelector}
+          id={initialFocusSelector.slice(1)}
           onClick={handleDeleteInvoice}
         >
           Delete

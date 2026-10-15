@@ -217,13 +217,13 @@ function InvoiceForm({
     });
   };
 
-  const onError = (errors) => {
-    const rootError = errors.items?.root;
+  const onError = (formErrors) => {
+    const rootError = formErrors.items?.root;
 
-    const hasOtherErrors = Object.keys(errors).some((key) => {
+    const hasOtherErrors = Object.keys(formErrors).some((key) => {
       if (key !== "items") return true;
 
-      return Array.isArray(errors.items) && errors.items.some(Boolean);
+      return Array.isArray(formErrors.items) && formErrors.items.some(Boolean);
     });
 
     if (rootError && !hasOtherErrors) {
@@ -306,7 +306,7 @@ function InvoiceForm({
       cancelAnimationFrame(outerFrameId);
       cancelAnimationFrame(innerFrameId);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, [handleGoback]);
 
   return (

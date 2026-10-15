@@ -81,7 +81,7 @@ function MyDatePicker({ initialDate, setValue, name, disabled }) {
       ref={dropdownRef}
     >
       <span
-        id={inputId}
+        id={`field-${inputId}`}
         className="leading-tight-s text-form-label/55 capitalize mb-2.25"
       >
         Invoice Date
@@ -91,7 +91,7 @@ function MyDatePicker({ initialDate, setValue, name, disabled }) {
         type="button"
         ref={buttonRef}
         aria-expanded={visible}
-        aria-labelledby={inputId}
+        aria-labelledby={`field-${inputId}`}
         aria-haspopup="dialog"
         onClick={handleDropDown}
         onKeyDown={handleKeyDown}
