@@ -16,7 +16,7 @@ function FilterComponent({ options = DEFAULT_OPTIONS }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const [__, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   const currentStatusParams = searchParams.get("status");
   const urlFilters = currentStatusParams ? currentStatusParams.split(",") : [];

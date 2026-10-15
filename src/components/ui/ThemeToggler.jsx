@@ -14,6 +14,7 @@ function ThemeToggler() {
 
   return (
     <button
+      type="button"
       className="lg:mb-8 group hover:cursor-pointer focusable-ring rounded-md"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
