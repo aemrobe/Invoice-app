@@ -23,13 +23,13 @@ export function useOutsideClicks(handler, options = {}) {
         }
       };
 
-      document.addEventListener("click", handleClick);
+      document.addEventListener("click", handleClick, listenCapturing);
 
       return () => {
-        document.removeEventListener("click", handleClick);
+        document.removeEventListener("click", handleClick, listenCapturing);
       };
     },
-    [handler, ignoreSelectors],
+    [handler, ignoreSelectors, listenCapturing],
   );
 
   return ref;

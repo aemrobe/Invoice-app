@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useSelectedLayoutSegment } from "next/navigation";
+import { useSelectedLayoutSegment } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 function InertWrappers({ children }) {
