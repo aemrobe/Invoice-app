@@ -16,7 +16,8 @@ export function useOutsideClicks(handler, options = {}) {
               (el) => el instanceof HTMLElement && el.matches(ignoreSelectors),
             )
           : false;
-        const isModalClick = ref.current && path.includes(ref.current);
+
+        const isModalClick = Boolean(ref.current) && path.includes(ref.current);
 
         if (!isModalClick && !isIgnored) {
           handler();

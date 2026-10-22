@@ -2,7 +2,9 @@
 const nextConfig = {
   /* config options here */
   devIndicators: false,
-
+  turbopack: {
+    root: process.cwd(),
+  },
   async redirects() {
     return [{ source: "/", destination: "/invoices", permanent: true }];
   },

@@ -9,6 +9,7 @@ function InertWrappers({ children }) {
   // On soft navigation to edit modal, modalSegment will equal "(.)edit" (or "edit")
   // On hard reload or base detail page, modalSegment will equal null
   const isInterceptedModalOpen = modalSegment !== null;
+
   const wasModalOpenRef = useRef(false);
   const containerRef = useRef(null);
 
