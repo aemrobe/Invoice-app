@@ -8,7 +8,7 @@ import { useTransition } from "react";
 import { useToast } from "@/context/ToastContext";
 
 function InvoiceActions({ invoice }) {
-  const { id } = invoice;
+  const { id, status } = invoice;
 
   const [isPending, startTransition] = useTransition();
   const { onShowToastMessage } = useToast();
@@ -33,7 +33,7 @@ function InvoiceActions({ invoice }) {
 
   return (
     <>
-      {invoice.status !== "paid" && (
+      {status !== "paid" && (
         <Button
           disabled={isPending}
           href={`/invoices/${id}/edit`}
@@ -53,7 +53,7 @@ function InvoiceActions({ invoice }) {
         </Button>
       </Modal.Open>
 
-      {invoice.status === "pending" && (
+      {status === "pending" && (
         <Button
           pending={isPending}
           disabled={isPending}
@@ -63,6 +63,16 @@ function InvoiceActions({ invoice }) {
           Mark as Paid
         </Button>
       )}
+
+      {/* {status === "paid" && (
+        <Button
+          onClick={() => window.print()}
+          variant={"print"}
+          className={"print:hidden"}
+        >
+          Print Invoice
+        </Button>
+      )} */}
     </>
   );
 }
