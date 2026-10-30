@@ -32,9 +32,7 @@ export default function RootLayout({ children }) {
               <Header />
             </div>
 
-            <main className="min-h-dvh flex-1 flex flex-col justify-center border-2 border-red-500">
-              {children}
-            </main>
+            <main className="min-h-dvh flex-1 flex flex-col">{children}</main>
           </div>
         </AppProviders>
       </body>

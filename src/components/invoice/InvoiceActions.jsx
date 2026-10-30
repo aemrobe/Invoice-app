@@ -6,6 +6,7 @@ import Modal from "@/components/ui/Modal";
 import { markAsPaidButton } from "@/lib/actions/invoiceActions";
 import { useTransition } from "react";
 import { useToast } from "@/context/ToastContext";
+import InvoicePDFDownload from "./InvoicePDFDownload";
 
 function InvoiceActions({ invoice }) {
   const { id, status } = invoice;
@@ -64,15 +65,7 @@ function InvoiceActions({ invoice }) {
         </Button>
       )}
 
-      {/* {status === "paid" && (
-        <Button
-          onClick={() => window.print()}
-          variant={"print"}
-          className={"print:hidden"}
-        >
-          Print Invoice
-        </Button>
-      )} */}
+      {status === "paid" && <InvoicePDFDownload invoice={invoice} />}
     </>
   );
 }

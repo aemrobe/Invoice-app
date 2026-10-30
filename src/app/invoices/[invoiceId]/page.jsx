@@ -9,8 +9,6 @@ import { notFound } from "next/navigation";
 import EmptyFallback from "@/components/ui/EmptyFallback";
 import InvoicesItemsTable from "@/components/invoice/InvoicesItemsTable";
 import DeleteModalWindow from "@/components/ui/DeleteModalWindow";
-import InvoicePDFPrieview from "@/components/invoice/InvoicePDFPrieview";
-
 const EMPTYFALLBACKSTYLES = "text-content-primary heading-S leading-5";
 
 export async function generateMetadata({ params }) {
@@ -43,168 +41,149 @@ async function Page({ params }) {
 
   const senderAddress = invoice?.senderAddress || {};
   const clientAddress = invoice?.clientAddress || {};
-  //  md:max-w-3xl lg:max-w-182.5 md:mx-auto md:w-full md:pb-12.25 lg:pb-16.25
+  //
   return (
-    <div className="border-2 border-lime-500 flex-1 flex flex-col justify-between">
-      <div className="lg:grid lg:grid-cols-2 lg-gap-8 lg:items-start px-6 md:px-10 lg:px-12 mt-8.25 md:mt-12.25 lg:mt-16.25">
-        {/* Column 1 */}
-        <div>
-          <div className="px-6 md:px-10  lg:px-0 mt-8.25 md:mt-12.25 lg:mt-16.25 max-w-112.5 md:max-w-none mx-auto md:mx-0">
-            <GoBackBtn to={"/invoices"} autoFocus={true} />
+    <div className="flex-1 flex flex-col md:max-w-3xl lg:max-w-182.5 md:mx-auto md:w-full md:pb-12.25 lg:pb-16.25">
+      <div className="px-6 md:px-10  lg:px-0 mt-8.25 md:mt-12.25 lg:mt-16.25 max-w-112.5 md:max-w-none mx-auto md:mx-0">
+        <GoBackBtn to={"/invoices"} autoFocus={true} />
 
-            <div className="mt-7.75 shadow-card px-6 pt-6 pb-6.75 md:px-8 rounded-md bg-surface-primary flex justify-between md:justify-start items-center ">
-              <p className="text-status-label capitalize md:mr-5">Status</p>
-              <StatusBadge status={status} />
+        <div className="mt-7.75 shadow-card px-6 pt-6 pb-6.75 md:px-8 rounded-md bg-surface-primary flex justify-between md:justify-start items-center ">
+          <p className="text-status-label capitalize md:mr-5">Status</p>
+          <StatusBadge status={status} />
 
-              <div className="hidden md:ml-auto md:flex md:gap-x-2">
-                <InvoiceActions invoice={invoice} />
-              </div>
-            </div>
-
-            <div className="bg-surface-primary rounded-md shadow-card mt-4 md:mt-6 pt-6.25 px-6 pb-6 md:pt-8.25 lg:pt-12.25 lg:px-12 lg:pb-12 md:px-8 md:pb-8">
-              <div className="mb-7.75 md:mb-5.25 md:flex md:justify-between">
-                <div className="mb-7.5 md:mt-px">
-                  <PageHeading
-                    shouldFocus={false}
-                    className="uppercase mb-1 heading-S2 md:leading-6 text-content-primary"
-                  >
-                    <span aria-hidden="true" className="text-slate-400">
-                      #
-                    </span>
-                    <span className="sr-only">Invoice</span>
-                    {invoiceId}
-                  </PageHeading>
-
-                  <p
-                    className={`${description ? "text-content-muted" : EMPTYFALLBACKSTYLES}`}
-                  >
-                    {description || (
-                      <EmptyFallback text={"description not provided"} />
-                    )}
-                  </p>
-                </div>
-
-                <address
-                  className={`not-italic ${senderAddress?.street ? "text-content-muted" : EMPTYFALLBACKSTYLES}`}
-                >
-                  {senderAddress?.street ? (
-                    <>
-                      <p>{senderAddress.street}</p>
-                      <p>{senderAddress.city}</p>
-                      <p>{senderAddress.postCode}</p>
-                      <p>{senderAddress.country}</p>
-                    </>
-                  ) : (
-                    <p>
-                      <EmptyFallback text={"Sender address not provided"} />
-                    </p>
-                  )}
-                </address>
-              </div>
-
-              <div className="flex gap-x-15.25 md:gap-x-29.5 flex-wrap">
-                <div className="flex flex-col gap-7.75">
-                  <div>
-                    <p className="text-content-muted leading-tight-s mb-3.25">
-                      Invoice Date
-                    </p>
-                    <p className="text-content-primary  heading-S leading-5">
-                      {invoiceDate ? (
-                        formatDate(invoiceDate)
-                      ) : (
-                        <EmptyFallback text={"Not Provided"} />
-                      )}
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="text-content-muted leading-tight-s mb-3.25">
-                      Payment Due
-                    </p>
-                    <p className="text-content-primary heading-S leading-5">
-                      {paymentDue ? (
-                        formatDate(paymentDue)
-                      ) : (
-                        <EmptyFallback text={"Not Provided"} />
-                      )}
-                    </p>
-                  </div>
-                </div>
-
-                <div>
-                  <p className="leading-tight-s text-content-muted mb-3.25">
-                    Bill To
-                  </p>
-                  <p className="heading-S leading-5 text-content-primary">
-                    {clientName || (
-                      <EmptyFallback text="Client name not provided" />
-                    )}
-                  </p>
-
-                  <address
-                    className={`mt-1.75 not-italic ${clientAddress?.street ? "text-content-muted" : EMPTYFALLBACKSTYLES}`}
-                  >
-                    {clientAddress?.street ? (
-                      <>
-                        <p>{clientAddress.street}</p>
-                        <p>{clientAddress.city}</p>
-                        <p>{clientAddress.postCode}</p>
-                        <p>{clientAddress.country}</p>
-                      </>
-                    ) : (
-                      <p>
-                        <EmptyFallback text="Client address not provided" />
-                      </p>
-                    )}
-                  </address>
-                </div>
-
-                <div className="w-full md:w-auto mt-8 md:mt-0">
-                  <p className="text-content-muted leading-tight-s mb-3.25">
-                    Sent to
-                  </p>
-                  <p className="heading-S leading-5 text-content-primary">
-                    {clientEmail || (
-                      <EmptyFallback text={"Client email not provided"} />
-                    )}
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-9.5 md:mt-11.75 lg:mt-11">
-                <InvoiceItemsMobile items={items} />
-                <InvoicesItemsTable items={items} />
-
-                <div className="bg-surface-summary px-6 pt-6.5 pb-5.5 md:px-8 md:pt-6.75 md:pb-5.25 rounded-bl-lg rounded-br-lg flex justify-between items-center">
-                  <p className="text-content-inverse md:hidden">Grand Total</p>
-                  <p className="text-content-inverse hidden md:block">
-                    Amount Due
-                  </p>
-                  <p className="text-content-inverse heading-M leading-8 tracking-[-0.031rem]">
-                    {formatCurrency(total)}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="bg-surface-primary shadow-card mt-14  pt-5.25 pb-5.5 px-6 flex md:hidden justify-center  gap-2">
+          <div className="hidden md:ml-auto md:flex md:gap-x-2">
             <InvoiceActions invoice={invoice} />
           </div>
         </div>
 
-        {/* Column 2  */}
-        <div className="border-2 border-red-500 mt-8 lg:mt-0 sticky top-10">
-          <div className="bg-surface-primary p-4 rounded-md shadow-card mb-4 flex justify-between items-center">
-            <p className="heading-S text-content-primary">PDF Live Preview</p>
-            <span className="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded font-semibold">
-              Dev Mode
-            </span>
+        <div className="bg-surface-primary rounded-md shadow-card mt-4 md:mt-6 pt-6.25 px-6 pb-6 md:pt-8.25 lg:pt-12.25 lg:px-12 lg:pb-12 md:px-8 md:pb-8">
+          <div className="mb-7.75 md:mb-5.25 md:flex md:justify-between">
+            <div className="mb-7.5 md:mt-px">
+              <PageHeading
+                shouldFocus={false}
+                className="uppercase mb-1 heading-S2 md:leading-6 text-content-primary"
+              >
+                <span aria-hidden="true" className="text-slate-400">
+                  #
+                </span>
+                <span className="sr-only">Invoice</span>
+                {invoiceId}
+              </PageHeading>
+
+              <p
+                className={`${description ? "text-content-muted" : EMPTYFALLBACKSTYLES}`}
+              >
+                {description || (
+                  <EmptyFallback text={"description not provided"} />
+                )}
+              </p>
+            </div>
+
+            <address
+              className={`not-italic ${senderAddress?.street ? "text-content-muted" : EMPTYFALLBACKSTYLES}`}
+            >
+              {senderAddress?.street ? (
+                <>
+                  <p>{senderAddress.street}</p>
+                  <p>{senderAddress.city}</p>
+                  <p>{senderAddress.postCode}</p>
+                  <p>{senderAddress.country}</p>
+                </>
+              ) : (
+                <p>
+                  <EmptyFallback text={"Sender address not provided"} />
+                </p>
+              )}
+            </address>
           </div>
 
-          {/* Drop your preview component here */}
-          <InvoicePDFPrieview invoice={invoice} />
+          <div className="flex gap-x-15.25 md:gap-x-29.5 flex-wrap">
+            <div className="flex flex-col gap-7.75">
+              <div>
+                <p className="text-content-muted leading-tight-s mb-3.25">
+                  Invoice Date
+                </p>
+                <p className="text-content-primary  heading-S leading-5">
+                  {invoiceDate ? (
+                    formatDate(invoiceDate)
+                  ) : (
+                    <EmptyFallback text={"Not Provided"} />
+                  )}
+                </p>
+              </div>
+
+              <div>
+                <p className="text-content-muted leading-tight-s mb-3.25">
+                  Payment Due
+                </p>
+                <p className="text-content-primary heading-S leading-5">
+                  {paymentDue ? (
+                    formatDate(paymentDue)
+                  ) : (
+                    <EmptyFallback text={"Not Provided"} />
+                  )}
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <p className="leading-tight-s text-content-muted mb-3.25">
+                Bill To
+              </p>
+              <p className="heading-S leading-5 text-content-primary">
+                {clientName || (
+                  <EmptyFallback text="Client name not provided" />
+                )}
+              </p>
+
+              <address
+                className={`mt-1.75 not-italic ${clientAddress?.street ? "text-content-muted" : EMPTYFALLBACKSTYLES}`}
+              >
+                {clientAddress?.street ? (
+                  <>
+                    <p>{clientAddress.street}</p>
+                    <p>{clientAddress.city}</p>
+                    <p>{clientAddress.postCode}</p>
+                    <p>{clientAddress.country}</p>
+                  </>
+                ) : (
+                  <p>
+                    <EmptyFallback text="Client address not provided" />
+                  </p>
+                )}
+              </address>
+            </div>
+
+            <div className="w-full md:w-auto mt-8 md:mt-0">
+              <p className="text-content-muted leading-tight-s mb-3.25">
+                Sent to
+              </p>
+              <p className="heading-S leading-5 text-content-primary">
+                {clientEmail || (
+                  <EmptyFallback text={"Client email not provided"} />
+                )}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-9.5 md:mt-11.75 lg:mt-11">
+            <InvoiceItemsMobile items={items} />
+            <InvoicesItemsTable items={items} />
+
+            <div className="bg-surface-summary px-6 pt-6.5 pb-5.5 md:px-8 md:pt-6.75 md:pb-5.25 rounded-bl-lg rounded-br-lg flex justify-between items-center">
+              <p className="text-content-inverse md:hidden">Grand Total</p>
+              <p className="text-content-inverse hidden md:block">Amount Due</p>
+              <p className="text-content-inverse heading-M leading-8 tracking-[-0.031rem]">
+                {formatCurrency(total)}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
+      <div className="bg-surface-primary shadow-card mt-14  pt-5.25 pb-5.5 px-6 flex md:hidden justify-center  gap-2">
+        <InvoiceActions invoice={invoice} />
+      </div>
+
       <DeleteModalWindow invoiceId={invoiceId} />
     </div>
   );
