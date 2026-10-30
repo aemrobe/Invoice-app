@@ -44,7 +44,7 @@ Beyond the standard Frontend Mentor requirements, I implemented a custom product
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
+- Solution URL: [solution URL](https://www.frontendmentor.io/solutions/invoice-app-solution-6Z-QNfER7c)
 - Live Site URL: [live site URL](https://invoice-app-amro.vercel.app/)
 
 ## My process
