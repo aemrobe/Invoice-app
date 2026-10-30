@@ -6,6 +6,7 @@ This is a solution to the [Invoice app challenge on Frontend Mentor](https://www
 
 - [Overview](#overview)
   - [The challenge](#the-challenge)
+  - [Enhanced Features](#enhanced-features)
   - [Screenshot](#screenshot)
   - [Links](#links)
 - [My process](#my-process)
@@ -29,6 +30,12 @@ Users should be able to:
 - Filter invoices by status (draft/pending/paid)
 - Toggle light and dark mode
 - **Bonus**: Keep track of any changes, even after refreshing the browser (`localStorage` or backend persistence via Supabase)
+
+### Enhanced Features
+
+Beyond the standard Frontend Mentor requirements, I implemented a custom production-ready feature to elevate the app's real-world utility:
+
+- On-the-Fly PDF Invoice Export (`@react-pdf/renderer`): Integrated client-side PDF document generation mapped directly to the app's design tokens and print-safe typography. Users can instantly download professional, structured invoices (`.pdf`) on demand directly from the invoice actions panel without layout lag or heavy server overhead.
 
 ### Screenshot
 
