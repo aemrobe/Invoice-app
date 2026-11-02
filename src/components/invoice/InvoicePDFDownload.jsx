@@ -13,11 +13,18 @@ function InvoicePDFDownload({ invoice }) {
     }, 0);
   }, []);
 
+  const buttonStyle =
+    "bg-action-secondary-bg text-action-secondary-text pl-6 pr-6 relative focusable-ring heading-S2 pt-4.5 pb-3.75 text-center rounded-3xl transition-fast inline-block";
+
   if (!isClient) {
     return (
-      <div className="w-full h-200 bg-surface-primary flex items-center justify-center rounded-md border border-slate-200 shadow-card">
-        <p className="text-content-muted">Loading PDF Download...</p>
-      </div>
+      <button
+        disabled
+        aria-disabled="true"
+        className={`${buttonStyle} opacity-70 cursor-not-allowed`}
+      >
+        Download Pdf
+      </button>
     );
   }
 
@@ -25,9 +32,9 @@ function InvoicePDFDownload({ invoice }) {
     <PDFDownloadLink
       document={<InvoicePDFDocument invoice={invoice} />}
       fileName={`invoice-${invoice.id}.pdf`}
-      className="bg-action-secondary-bg hover:bg-action-secondary-hover aria-disabled:hover:bg-action-secondary-bg  text-action-secondary-text hover:text-action-secondary-text-hover aria-disabled:hover:text-action-secondary-text pl-6 pr-6 relative focusable-ring heading-S2 pt-4.5 pb-3.75 text-center rounded-3xl transition-fast disabled-button"
+      className={`${buttonStyle} hover:bg-action-secondary-hover hover:text-action-secondary-text-hover`}
     >
-      {({ loading }) => (loading ? "Preparing document..." : "Download Pdf")}
+      {({ loading }) => (loading ? "Download Pdf" : "Download Pdf")}
     </PDFDownloadLink>
   );
 }
