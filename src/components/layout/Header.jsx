@@ -32,6 +32,7 @@ function Header() {
           width={28}
           height={26}
           alt=""
+          priority
           className="w-7 md:w-10 h-auto z-10"
         />
       </Link>
