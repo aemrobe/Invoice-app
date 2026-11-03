@@ -24,7 +24,6 @@ const buttonVariants = {
   save: `${PRIMARY_STYLES} pl-6 pr-[1.4375rem]`,
   saveAndSend: `${PRIMARY_STYLES} pl-4 pr-3.75`,
   draft: `${TERTIARY_STYLES}  pl-[1.006rem] pr-[0.868rem]`,
-  print: `${SECONDARY_STYLES} pl-6 pr-6`,
 };
 
 function Button({
