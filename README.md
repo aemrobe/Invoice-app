@@ -37,6 +37,8 @@ Beyond the standard Frontend Mentor requirements, I implemented a custom product
 
 - On-the-Fly PDF Invoice Export (`@react-pdf/renderer`): Integrated client-side PDF document generation mapped directly to the app's design tokens and print-safe typography. Users can instantly download professional, structured invoices (`.pdf`) on demand directly from the invoice actions panel without layout lag or heavy server overhead.
 
+- Browser-Native CSV & Spreadsheet Export: Implemented a client-side data export utility using the native `Blob` API that transforms invoice datasets into formatted comma-separated value structures on the fly. Users can instantly download their complete or filtered financial ledger (`.csv`) directly from the invoice list panel, ensuring seamless integration with Excel, Google Sheets, and standard accounting software without external library bloat.
+
 ### Screenshot
 
 ![](./screenshots/invoice-app-desktop-view.png)
